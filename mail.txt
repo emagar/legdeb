@@ -1,0 +1,20 @@
+Dear Carlos, 
+
+I think that I should be able to do the Mexican chapter but it involves a much larger than normal degree of uncertainty.
+
+Major obstacles are the short deadline supplied and covid-19 reclusion with small kids at home. 
+
+I must say that I have used text as data to some extent in my past research, but it is *not* an area that I specialize in. I am self-taught in these skills. 
+
+I did a preliminary attempt at data retrieval and processing to get an idea of the difficulties ahead towards systematization.
+Getting the data seems straightforward, I already had several years of legislative diaries stored in my machine. Different character encodings (always a nightmare to me) might complicate raw data preparation. Locating the start of members' interventions in each day's text is easy using simple regular expressions. Locating the end of each intervention, however, is much trickier. Quite often the text of the committee report, amendments, or motions of order appears inter-mixed with the speech itself. I anticipate having to dedicate a good portion of time to deal with these exceptions.
+
+But the chapter guidelines are clear and indicate a manuscript that should, a priori, be feasible. So count me in. 
+
+
+1. Major obstacles are the short deadline supplied and covid-19 reclusion with small kids at home. On the positive side, the chapter guidelines are clear and indicate a manuscript that should, a priori, be feasible. 
+2. While I have used text as data to some extent in the past, it is *not* an area that I specialize in. I am self-taught in these skills. 
+3. I did a preliminary attempt at data retrieval and processing to get an idea of the difficulties ahead towards systematization.
+   - Getting the data seems straightforward, I already had several years of legislative diaries stored in my machine. Different character encodings (always a nightmare to me) might complicate raw data preparation. 
+   - Locating the start of members' interventions in each day's text is easy using simple regular expressions. Locating the end of each intervention, however, is much trickier. Quite often the text of the committee report, amendments, or motions of order appears inter-mixed with the speech itself. I anticipate having to dedicate a good portion of time to deal with these exceptions.
+4. In sum, I believe that I should be able to do the chapter but with a much larger than normal degree of uncertainty. 

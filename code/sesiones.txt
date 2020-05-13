@@ -1,0 +1,645 @@
+# 60 Legislatura 2006-2009
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/ago/20060829.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060901.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060905.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060907.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060912.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060914.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060919.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060921.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060926.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/sep/20060929.html  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061003.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061004.html  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061005.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061010.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061011.html  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061012.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061017.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061019.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061024.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061026.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061030.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/oct/20061031.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061107.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061109.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061114.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061116.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061121.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061124.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/nov/20061128.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061201.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061205.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061207.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061212.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061214.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061218.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061219.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061221.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/1P/Ord/dic/20061222.html 
+#
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070201.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070201-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070206.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070208.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070213.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070215.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070220.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070222.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/feb/20070227.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070301.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070306.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070308.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070313.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070315.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070320.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070320-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070322.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070327.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070328.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/mar/20070329.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070410.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070411.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070412.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070417.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070419.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070424.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070425.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/1er/2P/Ord/abr/20070426.html
+#
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/ago/20070830.html 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070901.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070903.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070904.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070906.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070911.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070912.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070913.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070914.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070918.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070920.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070925.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/sep/20070927.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071002.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071004.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071009.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071011.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071016.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071018.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071025.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071030.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/oct/20071031.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071106.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071108.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071112.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071114.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071120.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071122.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071127.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/nov/20071129.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/dic/20071204.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/dic/20071206.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/dic/20071211.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/dic/20071212.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/1P/Ord/dic/20071213.html
+#
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080201.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080201-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080205.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080207.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080212.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080214.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080219.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080221.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080226.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/feb/20080228.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080304.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080308.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080311.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080313.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080325.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080326.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/mar/20080327.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080401.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080403.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080408.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080410.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080415.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080417.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080422.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080424.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080429.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/2do/2P/Ord/abr/20080430.html
+#
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/ago/20080828.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080901.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080902.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080909.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080911.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080917.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080918.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080923.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080925.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/sep/20080930.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081002.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081007.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081009.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081014.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081015.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081016.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081021.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081023.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081028.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/oct/20081030.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081104.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081106.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081111.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081118.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081119.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081125.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/nov/20081127.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/dic/20081202.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/dic/20081204.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/dic/20081209.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/1P/Ord/dic/20081211.html
+#
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090201.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090201-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090204.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090205.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090210.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090212.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090217.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090219.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090224.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/feb/20090226.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090303.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090305.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090310.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090312.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090318.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090319.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090324.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090324-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090326.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/mar/20090331.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090401.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090402.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090414.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090415.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090416.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090421.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090423.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090423-I.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090428.html
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LX/3er/2P/Ord/abr/20090430.html
+
+
+
+# 62 Legislatura 2012-2015
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/ago/20120829.html #  Miércoles 29  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120901.html #  Sábado 1  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120904.html #  Martes 4  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120906.html #  Jueves 6  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120911.html #  Martes 11  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120913.html #  Jueves 13  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120918.html #  Jueves 18  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120920.html #  Martes 20  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120925.html #  Miércoles 25  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120927.html #  Jueves 27  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120928.html #  Viernes 28  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/sep/20120928v.html # Viernes 28 vespertina  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121002.html #  Martes 2 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121004.html #  Jueves 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121009.html #  Martes 9 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121011.html #  Jueves 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121016.html #  Martes 16 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121018.html #  Jueves 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121023.html #  Martes 23 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121025.html #  Jueves 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121030.html #  Martes 30 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/oct/20121031.html #  Miércoles 31 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121106.html #  Martes 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121108.html #  Jueves 8 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121113.html #  Martes 13 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121115.html #  Jueves 15 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121120.html #  Martes 20  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121122.html #  Jueves 22 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121127.html #  Martes 27  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/nov/20121128.html #  Miércoles 28  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121201.html #  Sábado 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121204.html #  Martes 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121206.html #  Jueves 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121211.html #  Martes 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121212.html #  Miércoles 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121213.html #  Jueves 13 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121218.html #  Martes 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121219.html #  Miércoles 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121220.html #  Jueves 20 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2012/dic/20121221.html #  Viernes 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130201-2.html #  Viernes 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130206.html #  Miércoles 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130207.html #  Jueves 7 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130212.html #  Martes 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130214.html #  Jueves 14 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130219.html #  Martes 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130221.html #  Jueves 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130222.html #  Viernes 22 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130226.html #  Martes 26 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/feb/20130228.html #  Jueves 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130305.html #  Martes 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130307.html #  Jueves 7 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130312.html #  Martes 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130314.html #  Jueves 14 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130319.html #  Martes 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130320.html #  Miércoles 20 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130321-I.html # Jueves 21-I 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/mar/20130321-II.html # Jueves 21-II 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130402.html #  Martes 2 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130403.html #  Miércoles 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130404.html #  Jueves 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130409.html #  Martes 9 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130411.html #  Jueves 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130416-I.html #  Martes 16-I 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130416-II.html #  Martes 16-II 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130417.html #  Miércoles 17 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130418.html #  Jueves 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130423.html #  Martes 23 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130424.html #  Miércoles 24 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130425.html #  Jueves 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130429.html #  Lunes 29 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130430-I.html #  Martes 30-I 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/abr/20130430-II.html #  Martes 30-II
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/jul/20130716-1.html #  Martes 16 Instalación 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/jul/20130716-2.html #  Martes 16 - Sesion ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/jul/20130717.html #  Miércoles 17 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/ago/20130821.html #  Miércoles 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/ago/20130822.html #  Jueves 22 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/ago/20130831.html #  Sábado 31  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130901-1.html #  Domingo 1 Instalación  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130901-2.html #  Domingo 1 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130903.html #  Martes 3  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130905.html #  Jueves 5  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130910.html #  Martes 10  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130911.html #  Miércoles 11  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130912.html #  Jueves 12  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130918.html #  Miércoles 18  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130919.html #  Jueves 19  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130924.html #  Martes 24  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/sep/20130926.html #  Jueves 26  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131001.html #  Martes 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131002.html #  Miércoles 2 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131003.html #  Jueves 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131008.html #  Martes 8 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131009-1.html #  Miércoles 9 solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131009-2.html #  Miércoles 9 ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131010.html #  Jueves 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131015.html #  Martes 15 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131016.html #  Miércoles 16 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131017-1.html #  Jueves 17  solemne 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131017-2.html #  Jueves 17  ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131018.html #  Viernes 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131022.html #  Martes 22 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131024.html #  Jueves 24 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131029.html #  Martes 29 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/oct/20131031.html #  Jueves 31 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131105.html #  Martes 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131107.html #  Jueves 7 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131112.html #  Martes 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131113.html #  Miércoles 13  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131120.html #  Miércoles 20  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131121.html #  Jueves 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131126.html #  Martes 26  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131127.html #  Miércoles 27  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/nov/20131128.html #  Jueves 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/dic/20131203.html #  Martes 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/dic/20131204.html #  Miércoles 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/dic/20131205.html #  Jueves 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/dic/20131210.html #  Martes 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2013/dic/20131211.html #  Miércoles 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140201-2.html #  Sábado 1 Congreso General
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140204.html #  Martes 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140205.html #  Miércoles 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140206.html #  Jueves 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140211.html #  Martes 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140212.html #  Miércoles 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140213.html #  Jueves 13 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140218.html #  Martes 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140220.html #  Jueves 20 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140225.html #  Martes 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/feb/20140227.html #  Jueves 27 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140304.html #  Martes 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140305.html #  Miércoles 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140306.html #  Jueves 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140311.html #  Martes 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140313.html #  Jueves 13 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140318.html #  Martes 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140319.html #  Miércoles 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140320-1.html #  Jueves 20-I Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140320-2.html #  Jueves 20-II Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140325.html #  Martes 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/mar/20140327.html #  Jueves 27 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140401.html #  Martes 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140403.html #  Jueves 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140408.html #  Martes 8 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140409.html #  Miércoles 9 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140410.html #  Jueves 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140422-1.html #  Martes 22-I Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140422-2.html #  Martes 22-II Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140423.html #  Miércoles 23 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140424.html #  Jueves 24 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140428.html #  Lunes 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140429.html #  Martes 29 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/abr/20140430.html #  Miércoles 30 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/may/20140514-1.html #  Miércoles 14 Instalación 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/may/20140514-2.html #  Miércoles 14 Sesion  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/may/20140515.html #    Jueves 15 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jun/20140619-1.html #  Jueves 19 Instalación 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jun/20140619-2.html #  Jueves 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jul/20140708.html #  Martes 8
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jul/20140728.html #  Lunes 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jul/20140729.html #  Martes 29 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jul/20140730.html #  Miércoles 30 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/jul/20140731.html #  Jueves 31 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/ago/20140801.html #  Viernes 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/ago/20140828.html #  Jueves 28  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140901.html #  Lunes 1  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140902.html #  Martes 2  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140904.html #  Jueves 4  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140909.html #  Martes 9  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140910.html #  Miércoles 10  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140911.html #  Jueves 11  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140917.html #  Miércoles 17  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140918.html #  Jueves 18  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140923.html #  Martes 23  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140925.html #  Jueves 25  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/sep/20140930.html #  Martes 30  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141002.html #  Jueves 2 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141007.html #  Martes 7 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141009-1.html #  Jueves 9 Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141009-2.html #  Jueves 9 Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141014.html #  Martes 14 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141016.html #  Jueves 16 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141021.html #  Martes 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141022-1.html #  Miércoles 22 Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141022-2.html #  Miércoles 22 Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141023.html #  Jueves 23 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141028.html #  Martes 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141030-1.html #  Jueves 30 Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/oct/20141030-2.html #  Jueves 30 Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141104.html #  Martes 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141106.html #  Jueves 6 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141111.html #  Martes 11 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141113.html #  Jueves 13 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141119-1.html #  Miércoles 19 Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141119-2.html #  Miércoles 19 Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141120.html #  Jueves 20 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141125.html #  Martes 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/nov/20141127.html #  Jueves 27 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141202.html #  Martes 2 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141203.html #  Miércoles 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141204.html #  Jueves 4 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141209.html #  Martes 9 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141210.html #  Miércoles 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141211-1.html #  Jueves 11 Solemne
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141211-2.html #  Jueves 11 Ordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2014/dic/20141215-1.html #  Lunes 15 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150201.html #  Domingo 1 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150203.html #  Martes 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150205.html #  Jueves 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150210.html #  Martes 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150212.html #  Jueves 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150217.html #  Martes 17 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150219.html #  Jueves 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150224.html #  Martes 24 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/feb/20150226.html #  Jueves 26 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150303.html #  Martes 3 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150305.html #  Jueves 5 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150310.html #  Martes 10 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150312.html #  Jueves 12 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150318.html #  Miércoles 18 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150319.html #  Jueves 19 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150324.html #  Martes 24 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150325.html #  Miércoles 25 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/mar/20150326.html #  Jueves 26 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150407.html #  Martes 7 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150408.html #  Miércoles 8 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150409.html #  Jueves 9 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150414.html #  Martes 14 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150416.html #  Jueves 16 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150421.html #  Martes 21 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150422.html #  Miércoles 22 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150423.html #  Jueves 23 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150428.html #  Martes 28 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150429.html #  Miércoles 29 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/LXII/2015/abr/20150430.html #  Jueves 30
+
+
+
+# 64 Legislatura 2018-2021
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/ago/20180829.html    #    Miércoles 29 de agosto 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180901.html    #    Sábado 1  de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180904.html    #    Martes 4   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180906.html    #    Jueves 6   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180911.html    #    Martes 11   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180913.html    #    Jueves 13   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180918.html    #    Martes 18   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180919.html    #    Miércoles 19   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180920.html    #    Jueves 20   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180925.html    #    Martes 25   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/sep/20180927.html    #    Jueves 27   de septiembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181002-1.html  #  Martes 2 de octubre 2018 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181002-2.html  #  Martes 2 de octubre 2018 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181003.html    #    Miércoles 3  de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181004.html    #    Jueves 4 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181009.html    #    Martes 9 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181011.html    #    Jueves 11 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181016.html    #    Martes 16 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181018-1.html  #  Jueves 18 de octubre 2018 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181018-2.html  #  Jueves 18 de octubre 2018 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181023.html    #    Martes 23 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181025.html    #    Jueves 25 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181030.html    #    Martes 30 de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/oct/20181031.html    #    Miércoles 31  de octubre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181106.html    #    Martes 6 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181108.html    #    Jueves 8 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181113-1.html  #  Martes 13 de noviembre 2018 Matutina  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181113-2.html  #  Martes 13 de noviembre 2018 Vespertina  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181115.html    #    Jueves 15 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181120.html    #    Martes 20 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181122.html    #    Jueves 22 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181127.html    #    Martes 27 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/nov/20181128.html    #    Miércoles 28 de noviembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181201.html    #    Sábado 1 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181204.html    #    Martes 4 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181206.html    #    Jueves 6 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181211.html    #    Martes 11 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181213.html    #    Jueves 13 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181217.html    #    Lunes 17 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181218.html    #    Martes 18 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181219.html    #    Miércoles 19 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181221.html    #    Viernes 21 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2018/dic/20181223.html    #    Domingo 23 de diciembre 2018
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/ene/20190116-1.html  #  Miércoles 16 de enero 2019 Congreso General 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/ene/20190116-2.html  #  Miércoles 16 de enero 2019 Sesión extraordinaria
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190201-1.html  #    Viernes 1 de febrero 2019 NO APARECE EN RESUMEN
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190201-2.html  #    Viernes 1 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190206.html    #    Miércoles 6 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190207.html    #    Jueves 7 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190212-1.html  #  Martes 12 de febrero 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190212-2.html  #  Martes 12 de febrero 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190214.html    #    Jueves 14 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190219-1.html  #  Martes 19 de febrero 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190219-2.html  #  Martes 19 de febrero 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190221.html    #    Jueves 21 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190226.html    #    Martes 26 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/feb/20190228.html    #    Jueves 28 de febrero 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/mar/20190305.html    #    Martes 5 de marzo 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/mar/20190307-1.html  #  Jueves 7 de marzo 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/mar/20190307-2.html  #  Jueves 7 de marzo 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/mar/20190312.html    #    Martes 12 de marzo 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/mar/20190314.html    #    Jueves 14 de marzo 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190402.html    #    Martes 2 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190403.html    #    Miércoles 3 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190404.html    #    Jueves 4 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190408.html    #    Lunes 8 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190409.html    #    Martes 9 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190410-1.html  #  Miércoles 10 de abril 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190410-2.html  #  Miércoles 10 de abril 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190411-1.html  #  Jueves 11 de abril 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190411-2.html  #  Jueves 11 de abril 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190423.html    #    Martes 23 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190424-1.html  #  Miércoles 24 de abril 2019 Jurado
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190424-2.html  #  Miércoles 24 de abril 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190425.html    #    Jueves 25 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190426.html    #    Viernes 26 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190429.html    #    Lunes 29 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/abr/20190430.html    #    Martes 30 de abril 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/may/20190508-1.html  #  Miércoles 8 de mayo 2019 Congreso General 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/may/20190508-2.html  #  Miércoles 8 de mayo 2019 Sesión matutina 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/may/20190508-3.html  #  Miércoles 8 de mayo 2019 Sesión vespertina 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/may/20190523-1.html  #  Jueves 23 de mayo 2019 Sesión de instalación 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/may/20190523-2.html  #  Jueves 23 de mayo 2019 Sesión extraordinaria 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/jun/20190627.html    #    Jueves 27 de junio 2019 Sesión extraordinaria 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/jun/20190628-1.html  #  Viernes 28 de junio 2019 Sesión solemne 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/jun/20190628-2.html  #  Viernes 28 de junio 2019 Sesión extraordinaria 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/jul/20190718.html    #    Jueves 18  de julio 2019 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/jul/20190725.html    #    Jueves 25  de julio 2019 
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/ago/20190831.html    #    Sábado 31  de agosto 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190901.html    #    Domingo 1  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190903.html    #    Martes 3  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190905.html    #    Jueves 5  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190910.html    #    Martes 10  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190918.html    #    Miércoles 18  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190919.html    #    Jueves 19  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190924.html    #    Martes 24  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/sep/20190926.html    #    Jueves 26  de septiembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191001.html    #    Martes 1 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191002.html    #    Miércoles 2  de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191003.html    #    Jueves 3 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191008.html    #    Martes 8 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191009.html    #    Miércoles 9  de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191010.html    #    Jueves 10 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191015.html    #    Martes 15 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191016.html    #    Miércoles 16  de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191017.html    #    Jueves 17 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191022-1.html  #  Martes 22 de octubre 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191022-2.html  #  Martes 22 de octubre 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191023.html    #    Miércoles 23  de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191024.html    #    Jueves 24 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191029.html    #    Martes 29 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191030.html    #    Miércoles 30  de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/oct/20191031.html    #    Jueves 31 de octubre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/nov/20191105.html    #    Martes 5 de noviembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/nov/20191106.html    #    Miércoles 6 de noviembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/nov/20191126.html    #    Martes 26  de noviembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/nov/20191128.html    #    Jueves 28de noviembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191203.html    #    Martes 3 de diciembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191205.html    #    Jueves 5 de diciembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191210-1.html  #  Martes 10 de diciembre 2019 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191210-2.html  #  Martes 10 de diciembre 2019 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191211.html    #    Miércoles 11 de diciembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2019/dic/20191212.html    #    Jueves 12 de diciembre 2019
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200201.html    #    Sábado 1 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200205.html    #    Miércoles 5 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200206.html    #    Jueves 6 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200211.html    #    Martes 11 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200213.html    #    Jueves 13 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200218.html    #    Martes 18 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200220.html    #    Jueves 20 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200225.html    #    Martes 25 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/feb/20200227.html    #    Jueves 27 de febrero 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/mar/20200303.html    #    Martes 3 de marzo 2020
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/mar/20200305-1.html  #  Jueves 5 de marzo 2020 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/mar/20200305-2.html  #  Jueves 5 de marzo 2020 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/mar/20200310-1.html  #  Martes 10 de marzo 2020 Solemne  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Estenografia/64/2020/mar/20200310-2.html  #  Martes 10 de marzo 2020 Ordinaria  
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve12mar2020.html    #    
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve18mar2020.html    #    
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve19mar2020-JP.html # Juicio Pol
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve19mar2020.html    #    
+
+# copy this in R's code to get full list of files
+ves60 <- c(   "20060829",   "20060901",   "20060905",   "20060907",   "20060912",   "20060914",   "20060919",   "20060921",   "20060926",
+"20060929",   "20061003",   "20061004",   "20061005",   "20061010",   "20061011",   "20061012",   "20061017",   "20061019",   "20061024",
+"20061026",   "20061030",   "20061031",   "20061107",   "20061109",   "20061114",   "20061116",   "20061121",   "20061124",   "20061128",
+"20061201",   "20061205",   "20061207",   "20061212",   "20061214",   "20061218",   "20061219",   "20061221",   "20061222",   "20070201",
+"20070201-I", "20070206",   "20070208",   "20070213",   "20070215",   "20070220",   "20070222",   "20070227",   "20070301",   "20070306",
+"20070308",   "20070313",   "20070315",   "20070320",   "20070320-I", "20070322",   "20070327",   "20070328",   "20070329",   "20070410",
+"20070411",   "20070412",   "20070417",   "20070419",   "20070424",   "20070425",   "20070426",   "20070830",   "20070901",   "20070903",
+"20070904",   "20070906",   "20070911",   "20070912",   "20070913",   "20070914",   "20070918",   "20070920",   "20070925",   "20070927",
+"20071002",   "20071004",   "20071009",   "20071011",   "20071016",   "20071018",   "20071025",   "20071030",   "20071031",   "20071106",
+"20071108",   "20071112",   "20071114",   "20071120",   "20071122",   "20071127",   "20071129",   "20071204",   "20071206",   "20071211",
+"20071212",   "20071213",   "20080201",   "20080201-I", "20080205",   "20080207",   "20080212",   "20080214",   "20080219",   "20080221",
+"20080226",   "20080228",   "20080304",   "20080308",   "20080311",   "20080313",   "20080325",   "20080326",   "20080327",   "20080401",
+"20080403",   "20080408",   "20080410",   "20080415",   "20080417",   "20080422",   "20080424",   "20080429",   "20080430",   "20080828",
+"20080901",   "20080902",   "20080909",   "20080911",   "20080917",   "20080918",   "20080923",   "20080925",   "20080930",   "20081002",
+"20081007",   "20081009",   "20081014",   "20081015",   "20081016",   "20081021",   "20081023",   "20081028",   "20081030",   "20081104",
+"20081106",   "20081111",   "20081118",   "20081119",   "20081125",   "20081127",   "20081202",   "20081204",   "20081209",   "20081211",
+"20090201",   "20090201-I", "20090204",   "20090205",   "20090210",   "20090212",   "20090217",   "20090219",   "20090224",   "20090226",
+"20090303",   "20090305",   "20090310",   "20090312",   "20090318",   "20090319",   "20090324",   "20090324-I", "20090326",   "20090331",
+"20090401",   "20090402",   "20090414",   "20090415",   "20090416",   "20090421",   "20090423",   "20090423-I", "20090428",   "20090430")
+
+ves62 <- c(   "20120829",   "20120901",   "20120904",   "20120906",   "20120911",   "20120913",   "20120918",   "20120920",   "20120925",
+"20120927",   "20120928",   "20120928v",   "20121002",   "20121004",   "20121009",   "20121011",   "20121016",   "20121018",   "20121023",
+"20121025",   "20121030",   "20121031",   "20121106",   "20121108",   "20121113",   "20121115",   "20121120",   "20121122",   "20121127",
+"20121128",   "20121201",   "20121204",   "20121206",   "20121211",   "20121212",   "20121213",   "20121218",   "20121219",   "20121220",
+"20121221",   "20130201-2", "20130206",   "20130207",   "20130212",   "20130214",   "20130219",   "20130221",   "20130222",   "20130226",
+"20130228",   "20130305",   "20130307",   "20130312",   "20130314",   "20130319",   "20130320",   "20130321-I", "20130321-II","20130402",
+"20130403",   "20130404",   "20130409",   "20130411",   "20130416-I", "20130416-II","20130417",   "20130418",   "20130423",   "20130424",
+"20130425",   "20130429",   "20130430-I", "20130430-II","20130716-1", "20130716-2", "20130717",   "20130821",   "20130822",   "20130831",
+"20130901-1", "20130901-2", "20130903",   "20130905",   "20130910",   "20130911",   "20130912",   "20130918",   "20130919",   "20130924",
+"20130926",   "20131001",   "20131002",   "20131003",   "20131008",   "20131009-1", "20131009-2", "20131010",   "20131015",   "20131016",   "20131017-1", "20131017-2",
+"20131018",   "20131022",   "20131024",   "20131029",   "20131031",   "20131105",   "20131107",   "20131112",   "20131113",   "20131120",
+"20131121",   "20131126",   "20131127",   "20131128",   "20131203",   "20131204",   "20131205",   "20131210",   "20131211",   "20140201-2",
+"20140204",   "20140205",   "20140206",   "20140211",   "20140212",   "20140213",   "20140218",   "20140220",   "20140225",   "20140227",
+"20140304",   "20140305",   "20140306",   "20140311",   "20140313",   "20140318",   "20140319",   "20140320-1", "20140320-2", "20140325",
+"20140327",   "20140401",   "20140403",   "20140408",   "20140409",   "20140410",   "20140422-1", "20140422-2", "20140423",   "20140424",
+"20140428",   "20140429",   "20140430",   "20140514-1", "20140514-2", "20140515",   "20140619-1", "20140619-2", "20140708",   "20140728",
+"20140729",   "20140730",   "20140731",   "20140801",   "20140828",   "20140901",   "20140902",   "20140904",   "20140909",   "20140910",
+"20140911",   "20140917",   "20140918",   "20140923",   "20140925",   "20140930",   "20141002",   "20141007",   "20141009-1", "20141009-2",
+"20141014",   "20141016",   "20141021",   "20141022-1", "20141022-2", "20141023",   "20141028",   "20141030-1", "20141030-2", "20141104",
+"20141106",   "20141111",   "20141113",   "20141119-1", "20141119-2", "20141120",   "20141125",   "20141127",     "20141202", "20141203",
+"20141204",   "20141209",   "20141210",   "20141211-1", "20141211-2", "20141215-1", "20150201",   "20150203",   "20150205",   "20150210",
+"20150212",   "20150217",   "20150219",   "20150224",   "20150226",   "20150303",   "20150305",   "20150310",   "20150312",   "20150318",
+"20150319",   "20150324",   "20150325",   "20150326",   "20150407",   "20150408",   "20150409",   "20150414",   "20150416",   "20150421",
+"20150422",   "20150423",   "20150428",   "20150429",   "20150430")
+
+ves64 <- c(   "20180829",   "20180901",   "20180904",   "20180906",   "20180911",   "20180913",   "20180918",   "20180919",   "20180920",
+"20180925",   "20180927",   "20181002-1", "20181002-2", "20181003",   "20181004",   "20181009",   "20181011",   "20181016",   "20181018-1",
+"20181018-2", "20181023",   "20181025",   "20181030",   "20181031",   "20181106",   "20181108",   "20181113-1", "20181113-2", "20181115",
+"20181120",   "20181122",   "20181127",   "20181128",   "20181201",   "20181204",   "20181206",   "20181211",   "20181213",   "20181217",
+"20181218",   "20181219",   "20181221",   "20181223",   "20190116-1", "20190116-2", "20190201-1", "20190201-2", "20190206",   "20190207",
+"20190212-1", "20190212-2", "20190214",   "20190219-1", "20190219-2", "20190221",   "20190226",   "20190228",   "20190305",   "20190307-1",
+"20190307-2", "20190312",   "20190314",   "20190402",   "20190403",   "20190404",   "20190408",   "20190409",   "20190410-1", "20190410-2",
+"20190411-1", "20190411-2", "20190423",   "20190424-1", "20190424-2", "20190425",   "20190426",   "20190429",   "20190430",   "20190508-1",
+"20190508-2", "20190508-3", "20190523-1", "20190523-2", "20190627",   "20190628-1", "20190628-2", "20190718",   "20190725",   "20190831",
+"20190901",   "20190903",   "20190905",   "20190910",   "20190918",   "20190919",   "20190924",   "20190926",   "20191001",   "20191002",
+"20191003",   "20191008",   "20191009",   "20191010",   "20191015",   "20191016",   "20191017",   "20191022-1", "20191022-2", "20191023",
+"20191024",   "20191029",   "20191030",   "20191031",   "20191105",   "20191106",   "20191126",   "20191128",   "20191203",   "20191205",
+"20191210-1", "20191210-2", "20191211",   "20191212",   "20200201",   "20200205",   "20200206",   "20200211",   "20200213",   "20200218",
+"20200220",   "20200225",   "20200227",   "20200303",   "20200305-1", "20200305-2", "20200310-1", "20200310-2",
+"Ve12mar2020",   "Ve18mar2020",   "Ve19mar2020-JP",   "Ve19mar2020")
+
+
+
