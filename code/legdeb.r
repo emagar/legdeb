@@ -89,9 +89,48 @@ ves64 <- c(   "20180829",   "20180901",   "20180904",   "20180906",   "20180911"
 setdiff(dir("../estenograficas/"),
         paste(c(ves60, ves62, ves64), ".html", sep = ""))
 # how many files? 
-ves <- c(ves60, ves62, ves64) # pick all
-ves <- ves62; leg <- 62 # pick one
-length(ves)
+all.ves <- data.frame(ves = c(ves60, ves62, ves64), stringsAsFactors = FALSE)
+all.ves$leg <- c(rep(60, length(ves60)),
+                 rep(62, length(ves62)),
+                 rep(64, length(ves64)))
+
+# function to drops accents CAPITALIZE
+cap.emm <- function(x=dips$nom){
+    x <- gsub.e("á", "a", x)
+    x <- gsub.e("é", "e", x)
+    x <- gsub.e("í", "i", x)
+    x <- gsub.e("ó", "o", x)
+    x <- gsub.e("ú", "u", x)
+    x <- gsub.e("ü", "u", x)
+    x <- toupper(x)
+    return(x)
+}
+#cap.emm(x = "áÁéíóú")
+
+# read diputado csv files
+all.legs <- c(60,62,64)
+all.dips <- vector("list", 3) # will receive all data
+#
+for (l in 1:length(all.legs)){
+    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
+    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
+    # add leg
+    dips$leg <- all.legs[l];
+    # consolidate name last name
+    dips$nom <- paste(dips$pila, dips$patmat)
+    # CAPITALIZE
+    dips$nom <- cap.emm(x = dips$nom)
+    # insert to data list
+    all.dips[[l]] <- dips
+}
+summary(all.dips)
+
+# LOOP OVER all.legs WILL START HERE
+leg <- 62 # pick one
+sel <- which(all.ves$leg==leg)
+ves <- all.ves$ves[sel]; 
+dips <- all.dips[[2]]
+length(ves) # debug
 
 # read one file
 ## tmp <- readLines(con = "Ve18mar2020.html", encoding = "latin1")
@@ -227,18 +266,6 @@ source("../code/fix-names.r")
 ## sel <- which(nchar(speeches$fch)==max(nchar(speeches$fch), na.rm = TRUE)) # report longest string
 ## speeches$fch[sel]
 
-# A block here to read dip62.csv and use to get some diputado data 
-dips <- read.csv(file = "../../rollcall/DipMex/data/diputados/dip62.csv", stringsAsFactors = FALSE)
-dips$nom <- paste(dips$pila, dips$patmat)
-# CAPITALIZE
-dips$nom <- gsub.e("á", "a", dips$nom)
-dips$nom <- gsub.e("é", "e", dips$nom)
-dips$nom <- gsub.e("í", "i", dips$nom)
-dips$nom <- gsub.e("ó", "o", dips$nom)
-dips$nom <- gsub.e("ú", "u", dips$nom)
-dips$nom <- gsub.e("ü", "u", dips$nom)
-dips$nom <- toupper(dips$nom)
-
 # CAPITALIZE speeches$who
 speeches$who <- gsub.e("á", "a", speeches$who)
 speeches$who <- gsub.e("é", "e", speeches$who)
@@ -305,16 +332,21 @@ dips$out1[sel] <- ymd("20150827")
 all.ses <- speeches[,c("date","leg")]
 all.ses <- all.ses[duplicated(all.ses$date)==FALSE,]
 
+# open slots for new data
+dips$pot.sh <- dips$pot.days <- NA
+# fill them up
+dips[1,]
 for (i in 1:dips){
     i <- 1 # debug
     interval(dips$in1, dips$out1)[i]
+    interval(dips$in2, dips$out2)[i]
     # number of sessions diputado could have attended given tenure
     dips$pot.days[i] <- length(
         which(all.ses$date %within% interval(dips$in1, dips$out1)[i])
         )
-# number of sessions diputado could have attended relative to all sessions in legislatura
-tmp.all <- length()
-dips$pot.sh[i] <- dips$pot.days[i] / tmp.all
+    # number of sessions diputado could have attended relative to all sessions in legislatura
+    tmp.all <- nrow(all.ses[all.ses$leg==leg,])
+    dips$pot.sh[i] <- dips$pot.days[i] / tmp.all
 
     
 x
