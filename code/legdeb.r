@@ -123,14 +123,17 @@ for (l in 1:length(all.legs)){
     # insert to data list
     all.dips[[l]] <- dips
 }
-summary(all.dips)
+#summary(all.dips)
 
-# LOOP OVER all.legs WILL START HERE
+########################################
+## LOOP OVER all.legs WILL START HERE ##
+########################################
 leg <- 62 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 dips <- all.dips[[2]]
 length(ves) # debug
+nrow(dips) # debug
 
 # read one file
 ## tmp <- readLines(con = "Ve18mar2020.html", encoding = "latin1")
@@ -240,7 +243,7 @@ for (f in 1:length(ves)){
 # export to visualize
 #write.csv(speeches, file = "tmp.csv", row.names = FALSE)
 
-# Search new diputados
+# Search new diputados, one by one...
 sel <- grep.e("sí,? protesto", speeches$text)
 sel <- sel[2]; speeches$fch[sel] # check one by one
 sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
@@ -267,13 +270,7 @@ source("../code/fix-names.r")
 ## speeches$fch[sel]
 
 # CAPITALIZE speeches$who
-speeches$who <- gsub.e("á", "a", speeches$who)
-speeches$who <- gsub.e("é", "e", speeches$who)
-speeches$who <- gsub.e("í", "i", speeches$who)
-speeches$who <- gsub.e("ó", "o", speeches$who)
-speeches$who <- gsub.e("ú", "u", speeches$who)
-speeches$who <- gsub.e("ü", "u", speeches$who)
-speeches$who <- toupper(speeches$who)
+speeches$who <- cap.emm(speeches$who)
 
 # list hits
 unique(speeches$who)[order(unique(speeches$who))]
@@ -297,6 +294,41 @@ sel <- grep.e("no.registrado", speeches$who)
 #speeches$text[sel]
 speeches <- speeches[-sel,]
 
+# add periodo indicator function to data frame
+add.periodo <- function(x){
+    x$periodo <- NA # open slot in data.frame
+    sel <- which(x$date >= ymd("20060825") & x$date < ymd("20070101")) ; x$periodo[sel] <- "60y1-1"
+    sel <- which(x$date >= ymd("20070201") & x$date < ymd("20070501")) ; x$periodo[sel] <- "60y1-2"
+    sel <- which(x$date >= ymd("20070501") & x$date < ymd("20070825")) ; x$periodo[sel] <- "60y1-extra"
+    sel <- which(x$date >= ymd("20070825") & x$date < ymd("20080101")) ; x$periodo[sel] <- "60y2-1"
+    sel <- which(x$date >= ymd("20080201") & x$date < ymd("20080501")) ; x$periodo[sel] <- "60y2-2"
+    sel <- which(x$date >= ymd("20080501") & x$date < ymd("20080825")) ; x$periodo[sel] <- "60y2-extra"
+    sel <- which(x$date >= ymd("20080825") & x$date < ymd("20090101")) ; x$periodo[sel] <- "60y3-1"
+    sel <- which(x$date >= ymd("20090201") & x$date < ymd("20090501")) ; x$periodo[sel] <- "60y3-2"
+    sel <- which(x$date >= ymd("20090501") & x$date < ymd("20090825")) ; x$periodo[sel] <- "60y3-extra"
+                                        #
+    sel <- which(x$date >= ymd("20120825") & x$date < ymd("20130101")) ; x$periodo[sel] <- "62y1-1"
+    sel <- which(x$date >= ymd("20130201") & x$date < ymd("20130501")) ; x$periodo[sel] <- "62y1-2"
+    sel <- which(x$date >= ymd("20130501") & x$date < ymd("20130825")) ; x$periodo[sel] <- "62y1-extra"
+    sel <- which(x$date >= ymd("20130825") & x$date < ymd("20140101")) ; x$periodo[sel] <- "62y2-1"
+    sel <- which(x$date >= ymd("20140201") & x$date < ymd("20140501")) ; x$periodo[sel] <- "62y2-2"
+    sel <- which(x$date >= ymd("20140501") & x$date < ymd("20140825")) ; x$periodo[sel] <- "62y2-extra"
+    sel <- which(x$date >= ymd("20140825") & x$date < ymd("20150101")) ; x$periodo[sel] <- "62y3-1"
+    sel <- which(x$date >= ymd("20150201") & x$date < ymd("20150501")) ; x$periodo[sel] <- "62y3-2"
+    sel <- which(x$date >= ymd("20150501") & x$date < ymd("20150825")) ; x$periodo[sel] <- "62y3-extra"
+                                        #
+    sel <- which(x$date >= ymd("20180825") & x$date < ymd("20190101")) ; x$periodo[sel] <- "64y1-1"
+    sel <- which(x$date >= ymd("20190201") & x$date < ymd("20190501")) ; x$periodo[sel] <- "64y1-2"
+    sel <- which(x$date >= ymd("20190501") & x$date < ymd("20190825")) ; x$periodo[sel] <- "64y1-extra"
+    sel <- which(x$date >= ymd("20190825") & x$date < ymd("20200101")) ; x$periodo[sel] <- "64y2-1"
+    sel <- which(x$date >= ymd("20200201") & x$date < ymd("20200501")) ; x$periodo[sel] <- "64y2-2"
+    sel <- which(x$date >= ymd("20200501") & x$date < ymd("20200825")) ; x$periodo[sel] <- "64y2-extra"
+    sel <- which(x$date >= ymd("20200825") & x$date < ymd("20210101")) ; x$periodo[sel] <- "64y3-1"
+    sel <- which(x$date >= ymd("20210201") & x$date < ymd("20210501")) ; x$periodo[sel] <- "64y3-2"
+    sel <- which(x$date >= ymd("20210501") & x$date < ymd("20210825")) ; x$periodo[sel] <- "64y3-extra"
+    return(x)
+}
+
 # posix date
 tmp <- speeches$file
 # drop suffixes, if any
@@ -308,50 +340,62 @@ tmp <- gsub.e("[-].+$", "", tmp)
 # date
 tmp <- ymd(tmp)
 speeches$date <- tmp # return to data
+# add periodo
+speeches <- add.periodo(speeches)
 
-
-# figure out intervals when diputado was active
-dips$in1  <- ymd(dips$yrin1*10000  + dips$moin1*100  + dips$dyin1)
+###################################################
+## figure out intervals when diputado was active ##
+###################################################
+dips$in1  <- ymd(dips$ yrin1*10000 + dips$ moin1*100 + dips$ dyin1)
 dips$out1 <- ymd(dips$yrout1*10000 + dips$moout1*100 + dips$dyout1)
-dips$in2 <- ymd(dips$yrin2*10000  + dips$moin2*100  + dips$dyin2)
+dips$in2  <- ymd(dips$ yrin2*10000 + dips$ moin2*100 + dips$ dyin2)
 dips$out2 <- ymd(dips$yrout2*10000 + dips$moout2*100 + dips$dyout2)
-#
-dips$yrin1<- dips$moin1 <- dips$dyin1 dips$yrout1<- dips$moout1 <- dips$dyout1 dips$yrin2<- dips$moin2 <- dips$dyin2 dips$yrout2<- dips$moout2 <- dips$dyout2 <- NULL
-#
-dips[1,]
+# clean
+dips$yrin1<- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- NULL
 # fix these, if any, in dip.csv file
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out1)==TRUE)
 sel
 # fill exit dates
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out2)==TRUE)
-dips$out2[sel] <- ymd("20150827")
+if (length(sel)>0) dips$out2[sel] <- ymd("20150827")
 sel <- which(is.na(dips$in1)==FALSE & is.na(dips$in2)==TRUE & is.na(dips$out1)==TRUE)
-dips$out1[sel] <- ymd("20150827")
+if (length(sel)>0) dips$out1[sel] <- ymd("20150827")
+# intervals
+dips$int1 <- interval(dips$in1,dips$out1)
+dips$int2 <- interval(dips$in2,dips$out2)
+#dips[19,] # debug
 
 # all dates when assembly convened
 all.ses <- speeches[,c("date","leg")]
 all.ses <- all.ses[duplicated(all.ses$date)==FALSE,]
+all.ses <- all.ses[order(all.ses$date),] # sort
+# add periodo
+all.ses <- add.periodo(all.ses)
 
-# open slots for new data
-dips$pot.sh <- dips$pot.days <- NA
-# fill them up
-dips[1,]
-for (i in 1:dips){
-    i <- 1 # debug
-    interval(dips$in1, dips$out1)[i]
-    interval(dips$in2, dips$out2)[i]
-    # number of sessions diputado could have attended given tenure
-    dips$pot.days[i] <- length(
-        which(all.ses$date %within% interval(dips$in1, dips$out1)[i])
-        )
-    # number of sessions diputado could have attended relative to all sessions in legislatura
-    tmp.all <- nrow(all.ses[all.ses$leg==leg,])
-    dips$pot.sh[i] <- dips$pot.days[i] / tmp.all
-
-    
-x
-
-
+# list will receive vector with session dates when diputado was potential speaker --- EXPOSURE
+pot  <- lapply(X = dips$int1, FUN = function(X) X) # list of intervals
+pot2 <- lapply(X = dips$int2, FUN = function(X) X) # list of 2nd intervals
+sel  <- which(is.na(dips$int1)==FALSE)            # selection to manipulate
+sel2 <- which(is.na(dips$int2)==FALSE)       # subselection to manipulate
+# turn in/out into all its days, then intersect with all session dates
+pot[sel]   <- lapply(X = pot [sel] , FUN = function(X) as.Date( seq(int_start(X), int_end(X), by = "1 day")))
+pot2[sel2] <- lapply(X = pot2[sel2], FUN = function(X) as.Date( seq(int_start(X), int_end(X), by = "1 day")))
+# merge cases with two intervals
+pot[sel2] <- Map(na.omit(c), pot[sel2], pot2[sel2])
+# intersect with sessions to get list of sessions where dips was potential speaker
+pot[sel] <- lapply(X = pot[sel], FUN = function(X) all.ses$date[all.ses$date %in% X])
+#
+# days potential speaker given tenure
+tmp <- vector("list", nrow(dips)) # will receive all data
+tmp[] <- 0 # fill with zero days
+tmp2 <- lapply(X = ins[sel], FUN = function(X) length(X)) # n potential dates
+tmp[sel] <- tmp2
+dips$pot.days <- unlist(tmp) # plug to data
+dips$pot.sh <- dips$pot.days / length(all.ses$date) # n session days dip could have attended relative to all legislatura
+dips$all.days <- length(all.ses$date)
+#dips[19,]   # debug
+#ins[[1001]] # debug
+rm(pot2,sel,sel2) # clean
 
 # DE-HTMLIZE TEXT
 # rvest is supposed to achieve this as Beautiful Soup does, couldn't get it to work
@@ -394,6 +438,32 @@ speeches$nword <- lengths(gregexpr(pattern = "\\W+", speeches$text.only)) + 1
 speeches$nchar <- nchar(speeches$text.only)
 speeches[3,]
 
+
+# create a list with subsets of each speaker's lines 
+speech.list <- split(speeches, speeches$who)
+# produce word counts for each speaker, agg all leg, by month, by session...
+speech.list <- lapply(speech.list, FUN = function(x)                    # agg by day
+    cbind(x, nword.dy = ave(x$nword,                                   
+                            as.factor(x$date), 
+                            FUN=sum, na.rm=TRUE)))                     
+speech.list <- lapply(speech.list, FUN = function(x)                    # agg by month
+    cbind(x, nword.mo = ave(x$nword,                                   
+                            as.factor(year(x$date)*100+month(x$date)), 
+                            FUN=sum, na.rm=TRUE)))                     
+speech.list <- lapply(speech.list, FUN = function(x)                    # agg by periodo 1,2,extras
+    cbind(x, nword.per = ave(x$nword,                                   
+                            as.factor(x$periodo), 
+                            FUN=sum, na.rm=TRUE)))                     
+speech.list <- lapply(speech.list, FUN = function(x)                    # agg by legislatura
+    cbind(x, nword.leg = ave(x$nword,                                   
+                            as.factor(x$leg), 
+                            FUN=sum, na.rm=TRUE)))                     
+speech.list[[1]][1,]
+# search each speaker's lines in dips, paste aggs
+
+
+
+
 ## matched names
 uni <- unique(speeches$who); 
 uni <- data.frame(nom = uni, id = NA, stringsAsFactors = FALSE)
@@ -411,9 +481,10 @@ for (i in 1:nrow(uni)){
     }
 }
 # debug: WHICH NAMES WON'T MATCH
-## uni <- uni[order(uni$nom),]
-## uni
-## x
+uni <- uni[order(uni$nom),]
+uni
+length(uni$id)
+x
 
 # A block here to get each diputado's words each session
 #dip.words  <- list()
