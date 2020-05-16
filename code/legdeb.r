@@ -106,6 +106,14 @@ cap.emm <- function(x=dips$nom){
     return(x)
 }
 #cap.emm(x = "áÁéíóú")
+#
+## # Figure this out, looks useful for encoding issues
+## # https://stackoverflow.com/questions/39148759/remove-accents-from-a-dataframe-column-in-r
+## library(stringi)
+## terme  <- c("Millésime", 
+##             "boulangère", 
+##             "üéâäàåçêëèïîì")
+## stri_trans_general(str = terme, id = "Latin-ASCII")
 
 # read diputado csv files
 all.legs <- c(60,62,64)
@@ -123,6 +131,7 @@ for (l in 1:length(all.legs)){
     # insert to data list
     all.dips[[l]] <- dips
 }
+names(all.dips) <- paste("leg", all.legs, sep = "")
 #summary(all.dips)
 
 ########################################
@@ -248,17 +257,9 @@ sel <- grep.e("sí,? protesto", speeches$text)
 sel <- sel[2]; speeches$fch[sel] # check one by one
 sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
 
-# Figure this out, looks useful for encoding issues
-# https://stackoverflow.com/questions/39148759/remove-accents-from-a-dataframe-column-in-r
-library(stringi)
-terme  <- c("Millésime", 
-            "boulangère", 
-            "üéâäàåçêëèïîì")
-stri_trans_general(str = terme, id = "Latin-ASCII")
-
 # fix name misspellings
 tmp <- speeches # duplicate
-speeches <- tmp # restore
+speeches <- tmp # restore when debugging
 source("../code/fix-names.r")
 # tabulate names to spot mispellings
 #table(speeches$who)
@@ -375,27 +376,43 @@ all.ses <- add.periodo(all.ses)
 # list will receive vector with session dates when diputado was potential speaker --- EXPOSURE
 pot  <- lapply(X = dips$int1, FUN = function(X) X) # list of intervals
 pot2 <- lapply(X = dips$int2, FUN = function(X) X) # list of 2nd intervals
-sel  <- which(is.na(dips$int1)==FALSE)            # selection to manipulate
-sel2 <- which(is.na(dips$int2)==FALSE)       # subselection to manipulate
+sel  <- which(is.na(dips$int1)==FALSE)             # selection to manipulate
+sel2 <- which(is.na(dips$int2)==FALSE)             # subselection to manipulate
 # turn in/out into all its days, then intersect with all session dates
-pot[sel]   <- lapply(X = pot [sel] , FUN = function(X) as.Date( seq(int_start(X), int_end(X), by = "1 day")))
-pot2[sel2] <- lapply(X = pot2[sel2], FUN = function(X) as.Date( seq(int_start(X), int_end(X), by = "1 day")))
+pot[sel]   <- lapply(pot [sel] , FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
+pot2[sel2] <- lapply(pot2[sel2], FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
 # merge cases with two intervals
 pot[sel2] <- Map(na.omit(c), pot[sel2], pot2[sel2])
 # intersect with sessions to get list of sessions where dips was potential speaker
-pot[sel] <- lapply(X = pot[sel], FUN = function(X) all.ses$date[all.ses$date %in% X])
+pot[sel] <- lapply(pot[sel], FUN = function(x) all.ses$date[all.ses$date %in% x])
 #
+# change potential dates vector with dataframe also reporting period (for subsetting)  
+pot[sel] <- lapply(pot[sel], FUN = function(x){
+    sel <- which(all.ses$date %in% x)
+    x <- data.frame(date = x) # change into data frame format
+    x$periodo <- all.ses$periodo[sel]
+    return(x)})
+
 # days potential speaker given tenure
 tmp <- vector("list", nrow(dips)) # will receive all data
 tmp[] <- 0 # fill with zero days
-tmp2 <- lapply(X = ins[sel], FUN = function(X) length(X)) # n potential dates
+tmp2 <- lapply(pot[sel], FUN = function(x) nrow(x[
+#                                               grep("^62", x$periodo)                          # choose one full legislatura
+#                                               grep("y1", x$periodo)                           # choose one year
+                                               which(x$periodo=="62y1-extra")                  # or choose a periodo
+#                                               which(year(x$date)*100 + month(x$date)==200702) # or choose a month
+                                                    , ])) # n potential dates
 tmp[sel] <- tmp2
+tmp[[1004]]
+x
+#
 dips$pot.days <- unlist(tmp) # plug to data
 dips$pot.sh <- dips$pot.days / length(all.ses$date) # n session days dip could have attended relative to all legislatura
 dips$all.days <- length(all.ses$date)
 #dips[19,]   # debug
 #ins[[1001]] # debug
 rm(pot2,sel,sel2) # clean
+
 
 # DE-HTMLIZE TEXT
 # rvest is supposed to achieve this as Beautiful Soup does, couldn't get it to work
