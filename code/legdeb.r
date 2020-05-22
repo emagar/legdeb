@@ -196,7 +196,7 @@ for (f in 1:length(ves)){
         text  <-  tmp[start:end]
         rm(start,end)
     } else {
-        text  <- tmp # if no bokmarks (as in 2009) then take all readLines
+        text  <- tmp # if no bookmarks (as in 2009) then take all readLines
     }
     # subset speech lines
     speech <- data.frame(n = 1:length(text),
@@ -209,12 +209,18 @@ for (f in 1:length(ves)){
                          stringsAsFactors = FALSE)
     #speech$who3 <- speech$who2 <- NA # debug
     #
+    # diputado presidente inverted
+    sel <- grep.e(pattern = "<[pb]>(?:<a.+/a>)?<[bp]>(?:El|La) diputad[oa] president[ea]", text)
+    text[sel] <- sub.e("(diputad[oa]) (president[ea])", "//2 //1", text[sel])
     # presiding officer's lines
     sel <- grep.e(pattern = "<[pb]( style.+)?>(?:<a.+/a>)?<[bp]>(?:El|La) president[ea],? diputad[oa]", text) 
 #    sel <- grep.e(pattern = "<[pb]>(?:<a.+/a>)?<[bp]>(?:El|La) president[ea],? diputad[oa]", text) 
     speech$role[sel] <- "pres"
     speech$who[sel] <- sub.e(pattern = "^.*president[ea],? diputad[oa]s? ([-a-záéíóúüñ. ]+)[ QM:;]*</b>.*$", replacement = "\\1", text[sel])
     #
+    # diputado secretario inverted
+    sel <- grep.e(pattern = "<[pb]>(?:<a.+/a>)?<[bp]>(?:El|La) diputad[oa] secretari[oa]", text)
+    text[sel] <- sub.e("(diputad[oa]) (secretari[oa])", "//2 //1", text[sel])
     # secretario's lines
     sel <- grep.e(pattern = "<[pb]>(?:<a.+/a>)?<[bp]>(?:El|La) secretari[oa] diputad[oa]", text) 
     speech$role[sel] <- "secr"
@@ -255,32 +261,32 @@ for (f in 1:length(ves)){
 
 # drop some empty lines in leg60
 sel <- grep("^</I>$", speeches$text)
-speeches <- speeches[-sel,]
+if (length(sel) > 0) speeches <- speeches[-sel,]
 
 # Search new diputados, one by one...
-sel <- grep.e("sí,? protesto", speeches$text)
-i <- i+1; print(i)
-sel <- sel[i]; speeches$fch[sel] # check one by one
-#speeches[i,]
-#sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-x
+## sel <- grep.e("sí,? protesto", speeches$text)
+## i <- i+1; print(i)
+## sel <- sel[i]; speeches$fch[sel] # check one by one
+## #speeches[i,]
+## #sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+## sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+## x
 
 # fix name misspellings
 tmp <- speeches # duplicate
+
 speeches <- tmp # restore when debugging
+# CAPITALIZE speeches$who
+speeches$who <- cap.emm(speeches$who)
 source("../code/fix-names.r")
 # tabulate names to spot mispellings
 #table(speeches$who)
 
-## # debug
-## sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string
-## speeches$who[sel[1]]
-## sel <- which(nchar(speeches$fch)==max(nchar(speeches$fch), na.rm = TRUE)) # report longest string
-## speeches$fch[sel]
-
-# CAPITALIZE speeches$who
-speeches$who <- cap.emm(speeches$who)
+# debug
+sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string
+speeches$who[sel[1]]
+sel <- which(nchar(speeches$fch)==max(nchar(speeches$fch), na.rm = TRUE)) # report longest string
+speeches$fch[sel]
 
 # list hits
 unique(speeches$who)[order(unique(speeches$who))]
@@ -391,7 +397,8 @@ speeches$text.only <- text # return manipulation to data
 ## Should be able to count words with this text...
 #
 # drop roll calls
-sel <- grep.e("[:][ ]*(?:A favor|En contra)[. ]*</p>$", speeches$text)
+sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
+sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
 #sel <- grep.e("A favor.", speeches$text) # debug
 #speeches$text[sel]
 speeches <- speeches[-sel,]
