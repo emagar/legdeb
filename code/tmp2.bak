@@ -132,7 +132,7 @@ for (l in 1:length(all.legs)){
     all.dips[[l]] <- dips
 }
 names(all.dips) <- paste("leg", all.legs, sep = "")
-summary(all.dips)
+#summary(all.dips)
 
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
@@ -274,8 +274,8 @@ if (length(sel) > 0) speeches <- speeches[-sel,]
 
 # fix name misspellings
 tmp <- speeches # duplicate
-# speeches <- tmp # restore when debugging
 
+speeches <- tmp # restore when debugging
 # CAPITALIZE speeches$who
 speeches$who <- cap.emm(speeches$who)
 source("../code/fix-names.r")
@@ -288,7 +288,7 @@ speeches$who[sel[1]]
 sel <- which(nchar(speeches$fch)==max(nchar(speeches$fch), na.rm = TRUE)) # report longest string
 speeches$fch[sel]
 
-# list hits debug
+# list hits
 unique(speeches$who)[order(unique(speeches$who))]
 
 # CLEAN
@@ -395,14 +395,14 @@ text <- gsub.e("[.,;]", "", text) # drop periods and commas
 speeches$text.only <- text # return manipulation to data
 #rm(text)
 ## Should be able to count words with this text...
-
-## # drop roll calls
-## sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
-## sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
-## #sel <- grep.e("A favor.", speeches$text) # debug
-## #speeches$text[sel]
-## speeches <- speeches[-sel,]
-## # search for more "non-speeches" of less than xx words?
+#
+# drop roll calls
+sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
+sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
+#sel <- grep.e("A favor.", speeches$text) # debug
+#speeches$text[sel]
+speeches <- speeches[-sel,]
+# search for more "non-speeches" of less than xx words?
 
 # count words and characters
 speeches$nword <- lengths(gregexpr(pattern = "\\W+", speeches$text.only)) + 1
@@ -543,15 +543,7 @@ for (i in 1:length(speech.list)){
 data.periodo <- tmp.agg
 #data.leg <- tmp.agg
 
-i <- i+1; tmp.agg[[i]]
-
-# check in/out mismathches with speeches one-by-one 
-tmp <- unlist(lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[,"nom"]))) > 0, 1, 0)))
-tmp2 <- rep(0, length(tmp.agg))
-tmp2[sel.dips] <- tmp
-which(tmp2==1) # mismatches have NAs
-data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[[435]]$id, tmp.agg[[435]]$sel.agg)
+tmp.agg[[1]]
 x
 
 
