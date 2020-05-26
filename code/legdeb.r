@@ -44,6 +44,8 @@ ves60 <- c(   "20060829",   "20060901",   "20060905",   "20060907",   "20060912"
 "20090303",   "20090305",   "20090310",   "20090312",   "20090318",   "20090319",   "20090324",   "20090324-I", "20090326",   "20090331",
 "20090401",   "20090402",   "20090414",   "20090415",   "20090416",   "20090421",   "20090423",   "20090423-I", "20090428",   "20090430")
 #
+ves60 <- ves60[-which(ves60=="20061124")] # versión estenografica is from 20051124! drop it
+#
 ves62 <- c(   "20120829",   "20120901",   "20120904",   "20120906",   "20120911",   "20120913",   "20120918",   "20120920",   "20120925",
 "20120927",   "20120928",   "20120928v",   "20121002",   "20121004",   "20121009",   "20121011",   "20121016",   "20121018",   "20121023",
 "20121025",   "20121030",   "20121031",   "20121106",   "20121108",   "20121113",   "20121115",   "20121120",   "20121122",   "20121127",
@@ -145,7 +147,6 @@ ves <- all.ves$ves[sel];
 dips <- all.dips[[grep(leg, names(all.dips))]] # pick one legislatura's dips
 length(ves) # debug
 nrow(dips) # debug
-
 # read one file
 ## tmp <- readLines(con = "Ve18mar2020.html", encoding = "latin1")
 
@@ -286,8 +287,6 @@ table(speeches$who)
 # debug
 sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string
 speeches$who[sel[1]]
-sel <- which(nchar(speeches$fch)==max(nchar(speeches$fch), na.rm = TRUE)) # report longest string
-speeches$fch[sel]
 
 # list hits debug
 unique(speeches$who)[order(unique(speeches$who))]
@@ -307,7 +306,7 @@ sel <- which(speeches$who=="SENADOR" | speeches$who=="EXEC")
 if (length(sel) > 0) speeches <- speeches[-sel,]
 #
 # drop missing names in versión estenográfica
-sel <- grep.e("no.registrado", speeches$who)
+sel <- grep.e("(?:no.registrado|not-a-diputado|ambiguous-name)", speeches$who)
 #speeches$text[sel]
 if (length(sel) > 0) speeches <- speeches[-sel,]
 
@@ -453,7 +452,7 @@ sel.dips  <- which(is.na(dips$int1)==FALSE)             # selection to manipulat
 sel2      <- which(is.na(dips$int2)==FALSE)             # subselection to manipulate
 # turn in/out into all its days, then intersect with all session dates
 #
-# pot[[599]] # debug 60th
+#pot[[599]] # debug 60th
 #
 pot[sel.dips] <- lapply(pot [sel.dips], FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
 pot2[sel2]    <- lapply(pot2[sel2],     FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
@@ -533,6 +532,7 @@ speech.list <- lapply(speech.list, FUN = function(x){
 speech.list <- lapply(speech.list, FUN = function(x) cbind(x, id = NA))
 speech.list <- lapply(speech.list, FUN = function(x) cbind(x, i = NA))
 
+# will receive names in ve not in dips
 d.no.hits <- vector()
 
 # search each speaker's lines in dips, paste in tmp.agg
@@ -561,8 +561,11 @@ data.periodo <- tmp.agg
 ####################################################
 ## debug names in ve not in dips --- fix spelling ##
 ####################################################
-d.no.hits
-rm(d.no.hits) # when empty, drop it
+if (length(d.no.hits)==0){
+    message("Checked: all names in versión estenográfica match one in dips roster")
+    rm(d.no.hits) # when empty, drop it
+} else {print(d.no.hits)}
+
 
 # check in/out mismathches with speeches one-by-one 
 tmp <- unlist(lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[,"nom"]))) > 0, 1, 0)))
@@ -570,29 +573,8 @@ tmp2 <- rep(0, length(tmp.agg))
 tmp2[sel.dips] <- tmp
 which(tmp2==1) # mismatches have NAs
 data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[[899]]$id, tmp.agg[[899]]$sel.agg)
+data.frame(tmp.agg[[69]]$id, tmp.agg[[69]]$sel.agg)
 x
 
 
-## matched names
-uni <- unique(speeches$who); 
-uni <- data.frame(nom = uni, id = NA, stringsAsFactors = FALSE)
-for (i in 1:nrow(uni)){
-    #i <- 10 # debug
-    hits <- grep.e(uni$nom[i], dips$nom)
-    dips$nom[hits]
-    if (length(hits)>1){
-        print("WARNING: multiple hits");
-        break
-    }
-    if (length(hits)==1){
-        #uni$hit[i] <- hits[1] # report first hit
-        uni$id[i] <- dips$id[hits]
-    }
-}
-# debug: WHICH NAMES WON'T MATCH
-uni <- uni[order(uni$nom),]
-uni
-length(uni$id)
-x
 
