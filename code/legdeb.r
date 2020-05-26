@@ -137,8 +137,9 @@ summary(all.dips)
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
-leg <- 60 # pick one
-leg <- 62 # pick one
+#leg <- 60 # pick one
+#leg <- 62 # pick one
+leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 dips <- all.dips[[grep(leg, names(all.dips))]] # pick one legislatura's dips
@@ -273,14 +274,14 @@ if (length(sel) > 0) speeches <- speeches[-sel,]
 ## x
 
 # fix name misspellings
-tmp <- speeches # duplicate
-# speeches <- tmp # restore when debugging
+tmp.speeches <- speeches # duplicate
+# speeches <- tmp.speeches # restore when debugging
 
 # CAPITALIZE speeches$who
 speeches$who <- cap.emm(speeches$who)
 source("../code/fix-names.r")
-# tabulate names to spot mispellings
-#table(speeches$who)
+# tabulate names to debug mispellings
+table(speeches$who)
 
 # debug
 sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string
@@ -294,21 +295,21 @@ unique(speeches$who)[order(unique(speeches$who))]
 # CLEAN
 sel <- which(is.na(speeches$who))
 #speeches$text[sel]
-speeches <- speeches[-sel,]
+if (length(sel) > 0) speeches <- speeches[-sel,]
 #
 sel <- grep.e("varios.protestan", speeches$who)
 #speeches$text[sel]
-speeches <- speeches[-sel,]
+if (length(sel) > 0) speeches <- speeches[-sel,]
 #
 # drop senadores and cabinet members
 sel <- which(speeches$who=="SENADOR" | speeches$who=="EXEC")
 #speeches$text[sel]
-speeches <- speeches[-sel,]
+if (length(sel) > 0) speeches <- speeches[-sel,]
 #
 # drop missing names in versión estenográfica
 sel <- grep.e("no.registrado", speeches$who)
 #speeches$text[sel]
-speeches <- speeches[-sel,]
+if (length(sel) > 0) speeches <- speeches[-sel,]
 
 # add periodo indicator function to data frame
 add.periodo <- function(x){
@@ -349,10 +350,10 @@ add.periodo <- function(x){
 tmp <- speeches$file
 # drop suffixes, if any
 tmp <- gsub.e("[-].+$", "", tmp)
-## # rename ve files
-## sel <- grep.e("ve", tmp)
-## tmp[sel] <- sub.e("^ve", "202003", tmp[sel])
-## tmp[sel] <- sub.e("mar.+$", "", tmp[sel])
+# rename ve files
+sel <- grep.e("ve", tmp)
+if (length(sel) > 0) tmp[sel] <- sub.e("^ve", "202003", tmp[sel])
+if (length(sel) > 0) tmp[sel] <- sub.e("mar.+$", "", tmp[sel])
 # date
 tmp <- ymd(tmp)
 speeches$date <- tmp # return to data
@@ -388,6 +389,7 @@ text <- gsub.e("<a href.+[.]mx", "", text) # drop marks
 text <- gsub.e("(?:^ +| +$)", "", text) # drop heading/trailing spaces
 text <- gsub.e("[.,;]", "", text) # drop periods and commas
 ## # debug
+## head(text)
 ## sel <- grep.e("<", text)
 ## text[sel]
 ## write.csv(text, file = "tmp.csv")
@@ -424,9 +426,13 @@ sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out1)==TRUE)
 sel
 # fill exit dates
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out2)==TRUE)
-if (length(sel)>0) dips$out2[sel] <- ymd("20150827")
+if (leg==60     & length(sel)>0) dips$out2[sel] <- ymd("20090827")
+if (leg==  62   & length(sel)>0) dips$out2[sel] <- ymd(  "20150827")
+if (leg==    64 & length(sel)>0) dips$out2[sel] <- ymd(    "20210827")
 sel <- which(is.na(dips$in1)==FALSE & is.na(dips$in2)==TRUE & is.na(dips$out1)==TRUE)
-if (length(sel)>0) dips$out1[sel] <- ymd("20150827")
+if (leg==60     & length(sel)>0) dips$out1[sel] <- ymd("20090827")
+if (leg==  62   & length(sel)>0) dips$out1[sel] <- ymd(  "20150827")
+if (leg==    64 & length(sel)>0) dips$out1[sel] <- ymd(    "20210827")
 # intervals
 dips$int1 <- interval(dips$in1,dips$out1)
 dips$int2 <- interval(dips$in2,dips$out2)
@@ -446,8 +452,11 @@ pot2 <- lapply(X = dips$int2, FUN = function(X) X) # list of 2nd intervals
 sel.dips  <- which(is.na(dips$int1)==FALSE)             # selection to manipulate
 sel2      <- which(is.na(dips$int2)==FALSE)             # subselection to manipulate
 # turn in/out into all its days, then intersect with all session dates
-pot[sel.dips] <- lapply(pot [sel.dips] , FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
-pot2[sel2]    <- lapply(pot2[sel2], FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
+#
+# pot[[599]] # debug 60th
+#
+pot[sel.dips] <- lapply(pot [sel.dips], FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
+pot2[sel2]    <- lapply(pot2[sel2],     FUN = function(x) as.Date( seq(int_start(x), int_end(x), by = "1 day")))
 # merge cases with two intervals
 pot[sel2] <- Map(na.omit(c), pot[sel2], pot2[sel2])
 # intersect with sessions to get list of sessions where dips was potential speaker
@@ -499,7 +508,7 @@ for (i in sel.dips){
     tmp.agg[[i]] <- cbind(tmp.agg[[i]], tmp2)
 }
 
-tmp.agg[[1]]
+tmp.agg[[i]]
 
 # add diputado's words in unit (DV) here to tmp.agg
 # create a list with subsets of each speaker's lines 
@@ -524,12 +533,18 @@ speech.list <- lapply(speech.list, FUN = function(x){
 speech.list <- lapply(speech.list, FUN = function(x) cbind(x, id = NA))
 speech.list <- lapply(speech.list, FUN = function(x) cbind(x, i = NA))
 
+d.no.hits <- vector()
+
 # search each speaker's lines in dips, paste in tmp.agg
 for (i in 1:length(speech.list)){
-    #i <- 1 # debug
+    #i <- 3 # debug
     tmp <- speech.list[[i]] # select data frame for manipulation
     hit <- which(dips$nom==tmp$who[1])
-    if (length(hit)==0) next
+    if (length(hit)==0){
+        #d.no.hits[i] <- tmp$id[(is.na(tmp$id)==FALSE)[1]];
+        d.no.hits <- c(d.no.hits, tmp$who) # report no hit's id
+        next
+    }
     tmp2 <- tmp.agg[[hit]] # select target data frame for manipulation
     tmp2 <- merge(x = tmp2, y = tmp[,c("sel.agg","nword")], all = TRUE)
     tmp2$nword[is.na(tmp2$nword)] <- 0 # fill silent units with zeroes
@@ -543,7 +558,11 @@ for (i in 1:length(speech.list)){
 data.periodo <- tmp.agg
 #data.leg <- tmp.agg
 
-i <- i+1; tmp.agg[[i]]
+####################################################
+## debug names in ve not in dips --- fix spelling ##
+####################################################
+d.no.hits
+rm(d.no.hits) # when empty, drop it
 
 # check in/out mismathches with speeches one-by-one 
 tmp <- unlist(lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[,"nom"]))) > 0, 1, 0)))
@@ -551,7 +570,7 @@ tmp2 <- rep(0, length(tmp.agg))
 tmp2[sel.dips] <- tmp
 which(tmp2==1) # mismatches have NAs
 data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[[435]]$id, tmp.agg[[435]]$sel.agg)
+data.frame(tmp.agg[[899]]$id, tmp.agg[[899]]$sel.agg)
 x
 
 
