@@ -118,14 +118,19 @@ cap.emm <- function(x=dips$nom){
 ## stri_trans_general(str = terme, id = "Latin-ASCII")
 
 # read diputado csv files
-all.legs <- c(60,62,64)
-all.dips <- vector("list", 3) # will receive all data
+all.legs <- 57:64
+#all.legs <- c(60,62,64)
+all.dips <- vector("list", length(all.legs)) # will receive all data
 #
 for (l in 1:length(all.legs)){
+    #l <- 8 # debug
     tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
     dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
+    #head(dips) # debug
     # add leg
     dips$leg <- all.legs[l];
+    ## # drop columns
+    ## dips$nota <- dips$notas <- dips$fuente <- NULL
     # consolidate name last name
     dips$nom <- paste(dips$pila, dips$patmat)
     # CAPITALIZE
@@ -135,6 +140,22 @@ for (l in 1:length(all.legs)){
 }
 names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
+
+# all dip names
+tmp <- data.frame()
+for (l in 1:length(all.legs)){
+    #l <- 2
+    tmp <- rbind(tmp, all.dips[[l]])
+}
+tmp$cabecera <- cap.emm(tmp$cabecera)
+tmp$pila <- gsub.e("  +", " ", tmp$pila) # remove double spaces
+tmp$pila <- gsub.e("^ +", "", tmp$pila) # remove heading spaces
+tmp$pila <- gsub.e(" +$", "", tmp$pila) # remove trailing spaces
+tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
+tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
+tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
+write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
+
 
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
@@ -266,13 +287,13 @@ sel <- grep("^</I>$", speeches$text)
 if (length(sel) > 0) speeches <- speeches[-sel,]
 
 # Search new diputados, one by one...
-## sel <- grep.e("sí,? protesto", speeches$text)
-## i <- i+1; print(i)
-## sel <- sel[i]; speeches$fch[sel] # check one by one
-## #speeches[i,]
-## #sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-## sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-## x
+i <- i+1; print(i)
+sel <- grep.e("sí,? protesto", speeches$text)
+sel <- sel[i]; speeches$fch[sel] # check one by one
+#speeches[sel,]
+#sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+x
 
 # fix name misspellings
 tmp.speeches <- speeches # duplicate
@@ -553,10 +574,6 @@ for (i in 1:length(speech.list)){
     tmp$id <- rep(dips$id[hit], nrow(tmp))
     tmp$i  <- rep(hit,          nrow(tmp))
 }
-#
-# rename aggregated data object
-data.periodo <- tmp.agg
-#data.leg <- tmp.agg
 
 ####################################################
 ## debug names in ve not in dips --- fix spelling ##
@@ -572,9 +589,28 @@ tmp <- unlist(lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[
 tmp2 <- rep(0, length(tmp.agg))
 tmp2[sel.dips] <- tmp
 which(tmp2==1) # mismatches have NAs
-data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[[69]]$id, tmp.agg[[69]]$sel.agg)
+if (leg==62) data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
+data.frame(tmp.agg[["df14s"]]$id, tmp.agg[["df14s"]]$sel.agg)
 x
 
+#
+# rename aggregated data object
+if (leg==60) data.agg.60 <- tmp.agg
+if (leg==62) data.agg.62 <- tmp.agg
+if (leg==64) data.agg.64 <- tmp.agg
+#data.leg <- tmp.agg
+ls()
 
+# unlist
 
+nrow(data.agg.64[[1000]])
+length(which(is.na(tmp.agg[,"nom"]))) > 0
+
+if (leg==64)
+tmp <- lapply(tmp.agg[sel.dips], FUN = function(x) ncol(x))
+tmp <- unlist(tmp)
+which(tmp==22)
+
+tmp[22]
+colnames(tmp.agg[["df14s"]])
+colnames(tmp.agg[["df14p"]])
