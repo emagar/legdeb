@@ -141,7 +141,12 @@ for (l in 1:length(all.legs)){
 names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
 
-# all dip names
+
+################################################
+## merge all dip names into single data frame ##
+## export it, edit in excel, then re-import   ##
+## to re-do/export dip.csv clean files        ##
+################################################
 tmp <- data.frame()
 for (l in 1:length(all.legs)){
     #l <- 2
@@ -155,6 +160,15 @@ tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
 tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
 tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
 write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
+
+# re-import after manipulation
+tmp <- read.csv(file = "../data/tmp.csv", stringsAsFactors = FALSE)
+head(tmp)
+for (l in 1:length(all.legs)){
+    sel <- which(tmp$leg==all.legs[l])
+    write.csv(tmp[sel,], file = paste("../data/dip", all.legs[l], ".csv", sep = ""), row.names = FALSE)
+}
+
 
 
 ########################################
