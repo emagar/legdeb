@@ -1041,7 +1041,7 @@ if (length(sel.leg) > 0){
     # return manipulation to original data
     tmp.fix[sel.leg,] <- speeches
     speeches <- tmp.fix # restore name
-    rm(tmp.fix,sel.leg,sel2)
+    rm(tmp.fix,sel.leg)
 }
 
 

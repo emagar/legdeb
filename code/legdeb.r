@@ -1,11 +1,13 @@
 library(zoo) # has na.locf function used below
-library(lubridate)
+library(lubridate) # date handling
+library(plyr) # used for recodes
 
 rm(list = ls())
 
-dd <- "/home/eric/Downloads/Desktop/data/rollcall/DipMex/diariosActas/diarioDebates/"
+# paths
+dd <- "/home/eric/Downloads/Desktop/data/rollcall/DipMex/diariosActas/diarioDebates/" # alternative not used
 ve <- "/home/eric/Downloads/Desktop/data/leg-debate/estenograficas/"
-wd <- "~/Dropbox/data/leg-debate/"
+wd <- "/home/eric/Downloads/Desktop/data/leg-debate/"
 setwd(ve)
 
 # custom greps
@@ -23,7 +25,7 @@ gsub.e <- function(pattern, replacement, x, perl = TRUE, ignore.case = TRUE){
 }
 
 
-# full list of vesrion estenografica files in disk (from sesiones.txt)
+# full list of version estenografica files in disk (from sesiones.txt)
 ves60 <- c(   "20060829",   "20060901",   "20060905",   "20060907",   "20060912",   "20060914",   "20060919",   "20060921",   "20060926",
 "20060929",   "20061003",   "20061004",   "20061005",   "20061010",   "20061011",   "20061012",   "20061017",   "20061019",   "20061024",
 "20061026",   "20061030",   "20061031",   "20061107",   "20061109",   "20061114",   "20061116",   "20061121",   "20061124",   "20061128",
@@ -44,7 +46,7 @@ ves60 <- c(   "20060829",   "20060901",   "20060905",   "20060907",   "20060912"
 "20090303",   "20090305",   "20090310",   "20090312",   "20090318",   "20090319",   "20090324",   "20090324-I", "20090326",   "20090331",
 "20090401",   "20090402",   "20090414",   "20090415",   "20090416",   "20090421",   "20090423",   "20090423-I", "20090428",   "20090430")
 #
-ves60 <- ves60[-which(ves60=="20061124")] # versión estenografica is from 20051124! drop it
+ves60 <- ves60[-which(ves60=="20061124")] # versión estenografica in web is from 20051124! drop it --- possible to locate real one?
 #
 ves62 <- c(   "20120829",   "20120901",   "20120904",   "20120906",   "20120911",   "20120913",   "20120918",   "20120920",   "20120925",
 "20120927",   "20120928",   "20120928v",   "20121002",   "20121004",   "20121009",   "20121011",   "20121016",   "20121018",   "20121023",
@@ -55,7 +57,8 @@ ves62 <- c(   "20120829",   "20120901",   "20120904",   "20120906",   "20120911"
 "20130403",   "20130404",   "20130409",   "20130411",   "20130416-I", "20130416-II","20130417",   "20130418",   "20130423",   "20130424",
 "20130425",   "20130429",   "20130430-I", "20130430-II","20130716-1", "20130716-2", "20130717",   "20130821",   "20130822",   "20130831",
 "20130901-1", "20130901-2", "20130903",   "20130905",   "20130910",   "20130911",   "20130912",   "20130918",   "20130919",   "20130924",
-"20130926",   "20131001",   "20131002",   "20131003",   "20131008",   "20131009-1", "20131009-2", "20131010",   "20131015",   "20131016",   "20131017-1", "20131017-2",
+"20130926",   "20131001",   "20131002",   "20131003",   "20131008",   "20131009-1", "20131009-2", "20131010",   "20131015",   "20131016",
+"20131017-1", "20131017-2",
 "20131018",   "20131022",   "20131024",   "20131029",   "20131031",   "20131105",   "20131107",   "20131112",   "20131113",   "20131120",
 "20131121",   "20131126",   "20131127",   "20131128",   "20131203",   "20131204",   "20131205",   "20131210",   "20131211",   "20140201-2",
 "20140204",   "20140205",   "20140206",   "20140211",   "20140212",   "20140213",   "20140218",   "20140220",   "20140225",   "20140227",
@@ -96,7 +99,7 @@ all.ves$leg <- c(rep(60, length(ves60)),
                  rep(62, length(ves62)),
                  rep(64, length(ves64)))
 
-# function to drops accents CAPITALIZE
+# function to drops accents and CAPITALIZE text
 cap.emm <- function(x=dips$nom){
     x <- gsub.e("á", "a", x)
     x <- gsub.e("é", "e", x)
@@ -107,7 +110,7 @@ cap.emm <- function(x=dips$nom){
     x <- toupper(x)
     return(x)
 }
-#cap.emm(x = "áÁéíóú")
+#cap.emm(x = "áÁéíóú") # test
 #
 ## # Figure this out, looks useful for encoding issues
 ## # https://stackoverflow.com/questions/39148759/remove-accents-from-a-dataframe-column-in-r
@@ -123,14 +126,23 @@ all.legs <- 57:64
 all.dips <- vector("list", length(all.legs)) # will receive all data
 #
 for (l in 1:length(all.legs)){
-    #l <- 8 # debug
+    #l <- 1 # debug
     tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
     dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
     #head(dips) # debug
     # add leg
     dips$leg <- all.legs[l];
     ## # drop columns
-    ## dips$nota <- dips$notas <- dips$fuente <- NULL
+    dips$nota <- dips$notas <- dips$fuente <- NULL
+    # if part empty but postulo not, use latter
+    sel <- which( (is.na(dips$part) | dips$part=="") & !is.na(dips$postulo))
+    dips$part[sel] <- dips$postulo[sel]
+    # party size
+    dips$ptysh[dips$dsup==0] <- as.numeric(ave(dips$part[dips$dsup==0], as.factor(dips$part[dips$dsup==0]), FUN=length, na.rm=TRUE)) / 500 # shares of propietarios only
+    tmp <- dips[dips$dsup==0,c("part","ptysh")] # recode vectors for suplentes (dift n possible)
+    tmp <- tmp[duplicated(tmp$part)==FALSE,] 
+    dips$ptysh[dips$dsup==1] <- mapvalues(dips$part[dips$dsup==1], from = tmp[,1], to = tmp[,2], warn_missing = FALSE)
+    dips$ptysh <- as.numeric(dips$ptysh)
     # consolidate name last name
     dips$nom <- paste(dips$pila, dips$patmat)
     # CAPITALIZE
@@ -142,32 +154,32 @@ names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
 
 
-################################################
-## merge all dip names into single data frame ##
-## export it, edit in excel, then re-import   ##
-## to re-do/export dip.csv clean files        ##
-################################################
-tmp <- data.frame()
-for (l in 1:length(all.legs)){
-    #l <- 2
-    tmp <- rbind(tmp, all.dips[[l]])
-}
-tmp$cabecera <- cap.emm(tmp$cabecera)
-tmp$pila <- gsub.e("  +", " ", tmp$pila) # remove double spaces
-tmp$pila <- gsub.e("^ +", "", tmp$pila) # remove heading spaces
-tmp$pila <- gsub.e(" +$", "", tmp$pila) # remove trailing spaces
-tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
-tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
-tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
-write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
-
-# re-import after manipulation
-tmp <- read.csv(file = "../data/tmp.csv", stringsAsFactors = FALSE)
-head(tmp)
-for (l in 1:length(all.legs)){
-    sel <- which(tmp$leg==all.legs[l])
-    write.csv(tmp[sel,], file = paste("../data/dip", all.legs[l], ".csv", sep = ""), row.names = FALSE)
-}
+## ################################################
+## ## merge all dip names into single data frame ##
+## ## export it, edit in excel, then re-import   ##
+## ## to re-do/export dip.csv clean files        ##
+## ################################################
+## tmp <- data.frame()
+## for (l in 1:length(all.legs)){
+##     #l <- 2
+##     tmp <- rbind(tmp, all.dips[[l]])
+## }
+## tmp$cabecera <- cap.emm(tmp$cabecera)
+## tmp$pila <- gsub.e("  +", " ", tmp$pila) # remove double spaces
+## tmp$pila <- gsub.e("^ +", "", tmp$pila) # remove heading spaces
+## tmp$pila <- gsub.e(" +$", "", tmp$pila) # remove trailing spaces
+## tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
+## tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
+## tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
+## write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
+## 
+## # re-import after manipulation
+## tmp <- read.csv(file = "../data/tmp.csv", stringsAsFactors = FALSE)
+## head(tmp)
+## for (l in 1:length(all.legs)){
+##     sel <- which(tmp$leg==all.legs[l])
+##     write.csv(tmp[sel,], file = paste("../data/dip", all.legs[l], ".csv", sep = ""), row.names = FALSE)
+## }
 
 
 
@@ -185,7 +197,10 @@ nrow(dips) # debug
 # read one file
 ## tmp <- readLines(con = "Ve18mar2020.html", encoding = "latin1")
 
-# will receive joined speech for export
+######################################################
+## READ ALL VERSION ESTENOGRAFICAS TO JOIN SPEECHES ##
+######################################################
+# will receive joined speech for manipulation
 speeches <- data.frame()
 for (f in 1:length(ves)){
 #for (f in 1:50){
@@ -277,7 +292,7 @@ for (f in 1:length(ves)){
     speech$role[sel] <- "exec"
     speech$who[sel] <- sub.e(pattern = "^.*<[pb]>(?:<a.+/a>)?<[bp]>(?:El|La) Secretari[oa] de ([-;,a-záéíóúüñ. ]+)[ QM:;]*</b>.*$", replacement = "\\1", text[sel])
     #
-    # assume that all rows in between belong to last speaker
+    # assume that all rows in between belong to speaker above
     # ignore starting rows up to first non-NA, if any
     sel <- which(!is.na(speech$who))[1]
     if (sel > 1){ # if non-NA is not first row
@@ -296,37 +311,43 @@ for (f in 1:length(ves)){
 # export to visualize
 #write.csv(speeches, file = "tmp.csv", row.names = FALSE)
 
-# drop some empty lines in leg60
+# drop some empty lines
 sel <- grep("^</I>$", speeches$text)
 if (length(sel) > 0) speeches <- speeches[-sel,]
 
-# Search new diputados, one by one...
-i <- i+1; print(i)
-sel <- grep.e("sí,? protesto", speeches$text)
-sel <- sel[i]; speeches$fch[sel] # check one by one
-#speeches[sel,]
-#sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
-x
+######################################################################
+## NEXT LINES IDENTIFY OATHS TO CHECK AGAINST IN/OUT DATES IN dips  ##
+######################################################################
+## # Search new diputados, one by one...
+## i <- i+1; print(i)
+## sel <- grep.e("sí,? protesto", speeches$text)
+## sel <- sel[i]; speeches$fch[sel] # check one by one
+## #speeches[sel,]
+## #sel <- c((sel-5),(sel-4),(sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+## sel <- c((sel-3),(sel-2),(sel-1),sel,(sel+1),(sel+2)); speeches$text[sel]
+## x
 
-# fix name misspellings
-tmp.speeches <- speeches # duplicate
-# speeches <- tmp.speeches # restore when debugging
-
+###########################
+## FIX NAME MISSPELLINGS ##
+###########################
+## tmp.speeches <- speeches # duplicate when debugging fix-names
+## # speeches <- tmp.speeches # restore when debugging
+#
 # CAPITALIZE speeches$who
 speeches$who <- cap.emm(speeches$who)
 source("../code/fix-names.r")
 # tabulate names to debug mispellings
-table(speeches$who)
+## table(speeches$who)
 
 # debug
-sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string
+sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string -- should be a name
 speeches$who[sel[1]]
-
+#
 # list hits debug
-unique(speeches$who)[order(unique(speeches$who))]
+## unique(speeches$who)[order(unique(speeches$who))]
 
 # CLEAN
+# drop un-identified speakers
 sel <- which(is.na(speeches$who))
 #speeches$text[sel]
 if (length(sel) > 0) speeches <- speeches[-sel,]
@@ -344,7 +365,7 @@ if (length(sel) > 0) speeches <- speeches[-sel,]
 sel <- grep.e("(?:no.registrado|not-a-diputado|ambiguous-name)", speeches$who)
 #speeches$text[sel]
 if (length(sel) > 0) speeches <- speeches[-sel,]
-
+#
 # add periodo indicator function to data frame
 add.periodo <- function(x){
     x$periodo <- NA # open slot in data.frame
@@ -369,6 +390,7 @@ add.periodo <- function(x){
     sel <- which(x$date >= ymd("20150501") & x$date < ymd("20150825")) ; x$periodo[sel] <- "62y3-extra"
                                         #
     sel <- which(x$date >= ymd("20180825") & x$date < ymd("20190101")) ; x$periodo[sel] <- "64y1-1"
+    sel <- which(x$date >= ymd("20190101") & x$date < ymd("20190131")) ; x$periodo[sel] <- "64y1-1-extra"
     sel <- which(x$date >= ymd("20190201") & x$date < ymd("20190501")) ; x$periodo[sel] <- "64y1-2"
     sel <- which(x$date >= ymd("20190501") & x$date < ymd("20190825")) ; x$periodo[sel] <- "64y1-extra"
     sel <- which(x$date >= ymd("20190825") & x$date < ymd("20200101")) ; x$periodo[sel] <- "64y2-1"
@@ -379,7 +401,7 @@ add.periodo <- function(x){
     sel <- which(x$date >= ymd("20210501") & x$date < ymd("20210825")) ; x$periodo[sel] <- "64y3-extra"
     return(x)
 }
-
+#
 # posix date
 tmp <- speeches$file
 # drop suffixes, if any
@@ -432,19 +454,24 @@ speeches$text.only <- text # return manipulation to data
 #rm(text)
 ## Should be able to count words with this text...
 
-## # drop roll calls
-## sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
-## sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
-## #sel <- grep.e("A favor.", speeches$text) # debug
-## #speeches$text[sel]
-## speeches <- speeches[-sel,]
-## # search for more "non-speeches" of less than xx words?
+# drop roll calls
+sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
+speeches <- speeches[-sel,]
+sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
+speeches <- speeches[-sel,]
+#sel <- grep.e("A favor.", speeches$text) # debug
+#speeches$text[sel]
 
-# count words and characters
+# count words --- raw count that will be filtered below 
 speeches$nword <- lengths(gregexpr(pattern = "\\W+", speeches$text.only)) + 1
-speeches$nchar <- nchar(speeches$text.only)
-#speeches[3,]
+#speeches$nchar <- nchar(speeches$text.only) # another metric ignored
+speeches[3,]
 
+## # debug: never spoke
+## sel <- grep.e("noriega galaz", speeches$who)
+## speeches$text.only[sel]
+## speeches[sel[1],]
+## x
 
 ###################################################
 ## figure out intervals when diputado was active ##
@@ -472,14 +499,14 @@ dips$int1 <- interval(dips$in1,dips$out1)
 dips$int2 <- interval(dips$in2,dips$out2)
 #dips[19,] # debug
 all.dips[[grep(leg, names(all.dips))]]  <- dips # return manip dips to data
-
+#
 # all dates when assembly convened
 all.ses <- speeches[,c("date","leg")]
 all.ses <- all.ses[duplicated(all.ses$date)==FALSE,]
 all.ses <- all.ses[order(all.ses$date),] # sort
 # add periodo
 all.ses <- add.periodo(all.ses)
-
+#
 # list will receive vector with session dates when diputado was potential speaker --- EXPOSURE
 pot  <- lapply(X = dips$int1, FUN = function(X) X) # list of intervals
 pot2 <- lapply(X = dips$int2, FUN = function(X) X) # list of 2nd intervals
@@ -505,23 +532,97 @@ pot[sel.dips] <- lapply(pot[sel.dips], FUN = function(x){
 
 # function to aggregate and count potential dates given aggregation criterion for negbin reg
 agg.emm <- function(x, agg = "periodo"){
-    # x = pot[[1001]] # debug
-    if (agg=="leg"){          x$sel.agg <- sub.e("^([0-9]+)y.^", "\\1", x$periodo)      # select full legislatura
-    } else if (agg=="years"){ x$sel.agg <- sub.e("^[0-9]+(y[1-3]).^", "\\1", x$periodo) # select by years
-    } else if (agg=="month"){ x$sel.agg <- year(x$date)*100 + month(x$date)             # select by month
-    } else {                  x$sel.agg <- x$periodo                                    # default: select by periodo    
+    #x = pot[[999]] # debug
+    if          (agg=="leg"){ x$sel.agg <- sub.e("^([0-9]+)y.+$", "\\1", x$periodo)        # select full legislatura
+    } else if (agg=="year") { x$sel.agg <- sub.e("^[0-9]+(y[1-3]).+$", "\\1", x$periodo)   # select by years
+    } else if (agg=="month"){ x$sel.agg <- year(x$date)*100 + month(x$date)                # select by month
+    } else if (agg=="day")  { x$sel.agg <- year(x$date)*10000+month(x$date)*100+day(x$date)# select by days
+    } else {                  x$sel.agg <- x$periodo                                       # default: by periodo    
     }
-    x$pot.dys <- as.numeric(ave(x$sel.agg, as.factor(x$sel.agg), FUN=length, na.rm=TRUE))
+    x$pot.dys <- as.numeric( ave(x$sel.agg, as.factor(x$sel.agg), FUN=length, na.rm=TRUE) )
     x <- x[duplicated(x$sel.agg)==FALSE, ] # drop redundant rows
     x$agg <- rep(agg, nrow(x))             # indicate aggregation unit
     x <- x[, c("sel.agg","pot.dys","agg")] # keep columns on interest
     return(x)
 }
 
-# days potential speaker given tenure
+
+#####################################################################
+##              AGGREDATE BY DAYS FIRST IN ORDER TO                ##
+##                DROP NON-SPEECHES OF nword < 50                  ##
+## Note: I only consider days' aggregates, so anyone uttering less ##
+## than 50 word throughout a single day gets zero words that day   ##
+#####################################################################
+# create a list with subsets of each speaker's lines 
+speeches$ord <- 1:nrow(speeches)
+tmp.list <- split(speeches, speeches$who)
+# produce word counts for each speaker, agg all leg, by month, by session...
+#
+# aggregate unit's words
+tmp.list <- lapply(tmp.list, FUN = function(x){
+    #x <- tmp.list[[1]] # debug
+    nword2 = ave(x$nword,                                   
+                 as.factor(year(x$date)*10000+month(x$date)*100+day(x$date)),# agg by day
+#                 as.factor(year(x$date)*100+month(x$date)),                 # agg by month
+                 FUN=sum, na.rm=TRUE);
+###    x <- x[duplicated(x$date)==FALSE,]           # drop redundant lines
+    x <- cbind(x, nword2 = nword2)                                   
+    x <- x[,c("ord","who","date","nword2")]             # keep cols of interest
+#    x <- x[,c("who","leg","nword")]                 # keep cols of interest
+    colnames(x) <- c("ord","who","sel.agg","nword2")       # rename cols for merging
+    return(x)
+})
+# add empty column to receive id and dip index
+tmp.list <- lapply(tmp.list, FUN = function(x) cbind(x, id = NA))
+tmp.list <- lapply(tmp.list, FUN = function(x) cbind(x, i = NA))
+#
+# Indicator of days to make zero for each diputado
+tmp.list <- lapply(tmp.list, function(x){
+    dnonspeech <- ifelse(x$nword < 50, 1, 0)
+    x <- cbind(x, dnonspeech=dnonspeech)
+    return(x)
+    })
+#
+#tmp.list[[1]][1:3,] # debug
+#
+# unlist agg data into dataframe, merge with other legs
+tmp <- do.call(rbind, tmp.list)
+tmp <- tmp[order(tmp$ord),]
+rownames(tmp) <- NULL
+#
+# return to data
+speeches$nword.day  <- tmp$nword2
+speeches$dnonspeech <- tmp$dnonspeech
+rm(tmp,tmp.list) # clean
+#
+############################
+## DROP NON-SPEECHES HERE ##
+############################
+sel <- which(speeches$dnonspeech==1)
+#
+message(paste("  **********************************************************\n  ** Non-speeches of less than 50 words to be dropped:", length(sel), "\n  **********************************************************"))
+#
+speeches <- speeches[-sel,]
+rm(sel)
+speeches$dnonspeech <- NULL # clean
+
+speeches[15:18,]
+
+#########################################################
+##          AGGREGATE WORDS BY PERIODO                 ##
+## * *  SELECT AGGREGATION UNIT JUST BELOW  * *        ##
+#########################################################
+#
+################################################################
+## DAYS DIP WAS POTENTIAL SPEAKER GIVEN TENURE (FOR EXPOSURE) ##
+################################################################
 tmp.agg <- vector("list", nrow(dips)) # will receive all data
 tmp.agg[] <- 0 # fill with zero days
-# apply aggregation function to potential speakers
+#
+######################################################
+## apply aggregation function to potential speakers ##
+##     * *  SELECT AGGREGATION UNIT HERE  * *       ##
+######################################################
 tmp2 <- lapply(pot[sel.dips], FUN = function(x) agg.emm(x, agg = "periodo")) # n potential dates
 # add agg unit length to x (denom for rel exposure)
 tmp3 <- agg.emm(all.ses, agg = "periodo") # unit lengths
@@ -533,67 +634,84 @@ tmp2 <- lapply(tmp2, FUN = function(x) cbind(x, pot.sh = (x$pot.dys / x$all.dys)
 tmp.agg[sel.dips] <- tmp2
 names(tmp.agg) <- dips$id
 #
-# add controls to tmp.agg
+#############################
+## add controls to tmp.agg ##
+#############################
 for (i in sel.dips){
     #which(dips$id %in% names(tmp.agg)[1])
     #i <- 1 # debug
-    sel.col <- which(colnames(dips) %in% c("patmat","pila","in1","out1","in2","out2","int1","int2","nota"))
+    sel.col <- which(colnames(dips) %in% c("pila","patmat","in1","out1","in2","out2","int1","int2")) # drop these
     tmp2 <- do.call("rbind", replicate(nrow(tmp.agg[[i]]), dips[i,-sel.col], simplify = FALSE)) # multiply dip info n units
     tmp.agg[[i]] <- cbind(tmp.agg[[i]], tmp2)
 }
 
 tmp.agg[[i]]
 
+################################################
+##          Aggregate unit's words            ##
+##  * *  SELECT AGGREGATION UNIT BELOW  * *   ##
+################################################
 # add diputado's words in unit (DV) here to tmp.agg
 # create a list with subsets of each speaker's lines 
 speech.list <- split(speeches, speeches$who)
 # produce word counts for each speaker, agg all leg, by month, by session...
 #
-# aggregate unit's words
 speech.list <- lapply(speech.list, FUN = function(x){
-    cbind(x, nword = ave(x$nword,                                   
-#                         as.factor(x$date),                          # agg by day
-#                         as.factor(year(x$date)*100+month(x$date)),  # agg by month
-                         as.factor(x$periodo),                       # agg by periodo 1,2,extras
-#                         as.factor(x$leg),                           # agg by legislatura
-                         FUN=sum, na.rm=TRUE));
+    #x <- speech.list[[1]] # debug
+    nword2 <- ave(x$nword,                                   
+#                  as.factor(x$date),                          # agg by day
+#                  as.factor(year(x$date)*100+month(x$date)),  # agg by month
+                  as.factor(x$periodo),                       # agg by periodo 1,2,extras
+#                  as.factor(x$leg),                           # agg by legislatura
+                  FUN=sum, na.rm=TRUE);
+    x <- cbind(x, nword2)
     x <- x[duplicated(x$periodo)==FALSE,]           # drop redundant lines
-    x <- x[,c("who","periodo","nword")]             # keep cols of interest
+    x <- x[,c("who","periodo","nword2")]             # keep cols of interest
 #    x <- x[,c("who","leg","nword")]                 # keep cols of interest
     colnames(x) <- c("who","sel.agg","nword")       # rename cols for merging
     return(x)
 })
 # add empty column to receive id and dip index
-speech.list <- lapply(speech.list, FUN = function(x) cbind(x, id = NA))
-speech.list <- lapply(speech.list, FUN = function(x) cbind(x, i = NA))
+## speech.list <- lapply(speech.list, FUN = function(x) cbind(x, id = NA))
+## speech.list <- lapply(speech.list, FUN = function(x) cbind(x, i = NA))
 
-# will receive names in ve not in dips
+speech.list[[2]]
+
+# will receive names in ve not in dips for debug
 d.no.hits <- vector()
+
+## # debug to locate speech dates
+## sel <- grep.e("martinez zaleta", speeches$who)
+## speeches$fch[sel]
+## x
 
 # search each speaker's lines in dips, paste in tmp.agg
 for (i in 1:length(speech.list)){
-    #i <- 3 # debug
-    tmp <- speech.list[[i]] # select data frame for manipulation
-    hit <- which(dips$nom==tmp$who[1])
-    if (length(hit)==0){
+    #i <- 2 # debug
+    tmp <- speech.list[[i]] # select one data frame for manipulation
+    hit <- which(dips$nom==tmp$who[1]) # matches a name in dips
+    if (length(hit)==0){ # no match
         #d.no.hits[i] <- tmp$id[(is.na(tmp$id)==FALSE)[1]];
         d.no.hits <- c(d.no.hits, tmp$who) # report no hit's id
         next
     }
     tmp2 <- tmp.agg[[hit]] # select target data frame for manipulation
-    tmp2 <- merge(x = tmp2, y = tmp[,c("sel.agg","nword")], all = TRUE)
+    #colnames(tmp2) # debug
+    tmp2 <- merge(x = tmp2, y = tmp[,c("sel.agg","nword")], by = "sel.agg", all = TRUE)
     tmp2$nword[is.na(tmp2$nword)] <- 0 # fill silent units with zeroes
     tmp.agg[[hit]] <- tmp2 # return manipulation to data
-    # fill info for debugging (empty ids and i means name not found in dips)
-    tmp$id <- rep(dips$id[hit], nrow(tmp))
-    tmp$i  <- rep(hit,          nrow(tmp))
+    ## # fill info for debugging (empty ids and i means name not found in dips)
+    ## tmp$id <- rep(dips$id[hit], nrow(tmp))
+    ## tmp$i  <- rep(hit,          nrow(tmp))
 }
+
+tmp.agg[["df04p"]]
 
 ####################################################
 ## debug names in ve not in dips --- fix spelling ##
 ####################################################
 if (length(d.no.hits)==0){
-    message("Checked: all names in versión estenográfica match one in dips roster")
+message(" ********************************************\n ** Checked: all speaker names in versión  **\n **  estenográfica have a match in dips    **\n ******************************************** ")
     rm(d.no.hits) # when empty, drop it
 } else {print(d.no.hits)}
 
@@ -604,27 +722,133 @@ tmp2 <- rep(0, length(tmp.agg))
 tmp2[sel.dips] <- tmp
 which(tmp2==1) # mismatches have NAs
 if (leg==62) data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[["df14s"]]$id, tmp.agg[["df14s"]]$sel.agg)
+data.frame(tmp.agg[["bc02s"]]$id, tmp.agg[["bc02s"]]$sel.agg)
+data.frame(tmp.agg[[811]]$id, tmp.agg[[811]]$sel.agg)
+data.frame(tmp.agg[[721]]$id, tmp.agg[[721]]$sel.agg)
 x
 
-#
+
+# Add nword column that is missing from diputados who did not utter a word
+tmp.agg <- lapply(tmp.agg[sel.dips], function(x){
+    tmp <- grep("nword", colnames(x))
+    if (length(tmp)==0) x$nword <- rep(0, nrow(x))
+    return(x)
+})
+
 # rename aggregated data object
 if (leg==60) data.agg.60 <- tmp.agg
 if (leg==62) data.agg.62 <- tmp.agg
 if (leg==64) data.agg.64 <- tmp.agg
-#data.leg <- tmp.agg
+
+# unlist agg data into dataframe, merge with other legs
+tmp.df <- do.call(rbind, tmp.agg[sel.dips])
+
+# covariates
+# gender
+tmp.df$dfem = as.numeric(tmp.df$gen=="F")
+tmp.df$gen <- NULL # clean
+head(tmp.df)
+# committee chair
+table(tmp.df$prescom)
+tmp.df$dchair <- 
+
+x
+
+
 ls()
 
-# unlist
-
+# debug
 nrow(data.agg.64[[1000]])
 length(which(is.na(tmp.agg[,"nom"]))) > 0
-
+#
 if (leg==64)
 tmp <- lapply(tmp.agg[sel.dips], FUN = function(x) ncol(x))
 tmp <- unlist(tmp)
 which(tmp==22)
-
+#
 tmp[22]
 colnames(tmp.agg[["df14s"]])
 colnames(tmp.agg[["df14p"]])
+
+
+
+####################################
+## PREPARE VARIABLES FOR ANALYSIS ##
+####################################
+
+DONE 1. drop speeches of less than 50 words
+
+2. include speeches regardless of their nature in the analysis. In some countries, there are reasons to include only a certain type of speech (e.g., bill debates). We are happy to accommodate chapters where the authors do not use all debates, provided that there is a good justification in the text.
+
+3. In terms of window of observation/time period under study: we don’t have a particular guideline for this. Please use the window of observation that you believe is more representative of the politics of legislative debate in your country. Ideally we would like each chapter to include several legislative periods, but we are pragmatic here, considering data availability.
+
+4. What counts as a debate? Please concatenate all interventions that MPs make in a debate, even if the MP speaks multiple times in the said debate.
+
+
+
+###########################
+## MULTIVARIATE ANALYSIS ##
+###########################
+
+1. Number of speeches that a legislator delivered in the time unit you defined (presumably, for most of you, the legislative term). In doing so, use a negative binomial regression.
+2. Number of words divided by exposure (see below how to operationalize) that a legislator delivered in the time unit you defined (presumably, for the most of you, the legislative term). In doing so, use an OLS.
+3. For both cases, please included fixed-effects for the time period of interest (e.g., for the legislative term or the legislative session, depending on your choice). 
+4. Please include standard errors clustered at the legislator level.
+
+How to build the DV for the OLS models: 
+
+Where the outcome is the number of Words, you should use Exposure as the denominator to create a ratio. The said ratio should consist of the total number of words legislator i delivered during legislative term t/percentage of time legislator i sat in legislative term t.
+
+The rationale behind this measure is that we want to capture the time that each legislator sits in parliament during a given session. Obviously, a legislator who sits for the duration of the terms has higher chances of taking the floor than a legislator that takes her sit in the middle of the term.
+
+Don’t forget to include Term FE, plus clustered standard errors at the MP level.
+
+
+################
+## COVARIATES ##
+################
+
+DONE 1. Gender – dummy variable that takes a value of 1 for Women and 0 for Men
+2. Party Size – continuous variable that measures the absolute number of members of the legislative party
+3. Seniority – continuous variable that measures the number of years the legislator has been in the parliament
+4. Age
+5. Age Squared
+6. Party Family (Dummy variables, using one of party families as reference category)
+7. Committee Chair – dummy variable that takes a value of 1 if the MP holds a committee chair and 0 for all others
+8. Minister – dummy variable that takes a value of 1 if the MP is a minister and 0 otherwise
+9. Government party member – dummy variable that takes a value of 1 if the MP belongs to a legislative party that belongs the government and 0 otherwise. Note that we only consider parties that are formally in a coalition (i.e., have members in the executive). Supporting parties, e.g. contract parliamentarism, do not count towards government parties.
+10. Legislative Party Leadership – dummy variable that takes a value of 1 if the MP belongs to the leadership of the parliamentary party group
+11. Party Leader – dummy variable that takes a value of 1 if the MP is the party leader and 0 otherwise
+12. Exposure (logged) – continuous variable that measures the percentage of time in which the MP held to her seat in parliament during the unit of time defined in your chapter. For example, if you are using a MP-legislative term unit of observation, in this variable you need to include the percentage of time during the legislative term in which the MP was in the parliament. If MP was in parliament for whole session that would be 1. If the MP joined the parliament later, it could be .7 or .8. If you are using month as the time unit, the same rationale applies. The logged version should *only* be included in the count models (negative binomial). 
+
+
+################
+## NEGBIN OLS ##
+################
+
+Please produce a table including both the negative binomial models and the OLS. For negative binomial models, please report the AIC.
+
+Please include up to 5 models in the tables. Consider using a step-wise approach to regression by including covariates into the equation that make most sense in your context. 
+Ultimately, we need 2 final models, where all variables are included – one where the dependent variable is the Number of Speeches and the other where the dependent variable is the Number of Words.
+
+As a default we consider the following variables as explanatory:
+1. Gender
+2. Seniority
+3. Committee Chairs
+4. Minister
+5. Government party member
+6. Legislative Party Leadership
+7. Party Leader
+
+The following variables are considered controls:
+
+1. Age
+2. Age Squared
+3. Party Family
+4. Exposure (logged)
+
+Please feel free to use variables interchangeably between the two categories depending on the context. 
+
+Please plot marginal effects using the full specification of the negative binomial model. In the said plot, please include explanatory variables only. Controls variables can be omitted.
+
+
