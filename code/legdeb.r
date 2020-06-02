@@ -152,6 +152,7 @@ for (l in 1:length(all.legs)){
 }
 names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
+class(all.dips[[8]]$prescom)
 
 
 ## ################################################
@@ -480,10 +481,13 @@ dips$in1  <- ymd(dips$ yrin1*10000 + dips$ moin1*100 + dips$ dyin1)
 dips$out1 <- ymd(dips$yrout1*10000 + dips$moout1*100 + dips$dyout1)
 dips$in2  <- ymd(dips$ yrin2*10000 + dips$ moin2*100 + dips$ dyin2)
 dips$out2 <- ymd(dips$yrout2*10000 + dips$moout2*100 + dips$dyout2)
+dips$in3  <- ymd(dips$ yrin3*10000 + dips$ moin3*100 + dips$ dyin3)
 # clean
-dips$yrin1<- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- NULL
+dips$yrin1<- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- dips$yrin3<- dips$moin3 <- dips$dyin3 <- NULL
 # fix these, if any, in dip.csv file
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out1)==TRUE)
+sel
+sel <- which(is.na(dips$in3)==FALSE & is.na(dips$out2)==TRUE)
 sel
 # fill exit dates
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out2)==TRUE)
@@ -497,7 +501,8 @@ if (leg==    64 & length(sel)>0) dips$out1[sel] <- ymd(    "20210827")
 # intervals
 dips$int1 <- interval(dips$in1,dips$out1)
 dips$int2 <- interval(dips$in2,dips$out2)
-#dips[19,] # debug
+#dips$int3 <- interval(dips$in3,dips$out3)
+#dips[60,] # debug
 all.dips[[grep(leg, names(all.dips))]]  <- dips # return manip dips to data
 #
 # all dates when assembly convened
@@ -639,13 +644,12 @@ names(tmp.agg) <- dips$id
 #############################
 for (i in sel.dips){
     #which(dips$id %in% names(tmp.agg)[1])
-    #i <- 1 # debug
-    sel.col <- which(colnames(dips) %in% c("pila","patmat","in1","out1","in2","out2","int1","int2")) # drop these
+    #i <- 60 # debug
+    sel.col <- which(colnames(dips) %in% c("pila","patmat","in1","out1","in2","out2","in3","int1","int2")) # drop these
     tmp2 <- do.call("rbind", replicate(nrow(tmp.agg[[i]]), dips[i,-sel.col], simplify = FALSE)) # multiply dip info n units
     tmp.agg[[i]] <- cbind(tmp.agg[[i]], tmp2)
 }
-
-tmp.agg[[i]]
+# tmp.agg[[601]]
 
 ################################################
 ##          Aggregate unit's words            ##
@@ -674,8 +678,8 @@ speech.list <- lapply(speech.list, FUN = function(x){
 # add empty column to receive id and dip index
 ## speech.list <- lapply(speech.list, FUN = function(x) cbind(x, id = NA))
 ## speech.list <- lapply(speech.list, FUN = function(x) cbind(x, i = NA))
-
-speech.list[[2]]
+#
+#speech.list[[60]]
 
 # will receive names in ve not in dips for debug
 d.no.hits <- vector()
@@ -704,8 +708,9 @@ for (i in 1:length(speech.list)){
     ## tmp$id <- rep(dips$id[hit], nrow(tmp))
     ## tmp$i  <- rep(hit,          nrow(tmp))
 }
-
-tmp.agg[["df04p"]]
+#
+#tmp.agg[[601]]
+#tmp.agg[["zac03p"]]
 
 ####################################################
 ## debug names in ve not in dips --- fix spelling ##
@@ -727,13 +732,14 @@ data.frame(tmp.agg[[811]]$id, tmp.agg[[811]]$sel.agg)
 data.frame(tmp.agg[[721]]$id, tmp.agg[[721]]$sel.agg)
 x
 
-
 # Add nword column that is missing from diputados who did not utter a word
-tmp.agg <- lapply(tmp.agg[sel.dips], function(x){
-    tmp <- grep("nword", colnames(x))
-    if (length(tmp)==0) x$nword <- rep(0, nrow(x))
-    return(x)
-})
+tmp <- tmp.agg
+for (i in 1:length(tmp)){
+    #i <- 1 # debug
+    tmp2 <- grep("nword", colnames(tmp[[i]]))
+    if (is.data.frame(tmp[[i]])==TRUE & length(tmp2)==0) tmp[[i]]$nword <- rep(0, nrow(tmp[[i]]))
+}
+tmp.agg <- tmp
 
 # rename aggregated data object
 if (leg==60) data.agg.60 <- tmp.agg
@@ -742,16 +748,113 @@ if (leg==64) data.agg.64 <- tmp.agg
 
 # unlist agg data into dataframe, merge with other legs
 tmp.df <- do.call(rbind, tmp.agg[sel.dips])
+## tmp.df[which(tmp.df$id=="zac03p"),]
+## tmp.agg[["zac03p"]]
+## dips[sel.dips,"id"]
+## x
+
+# dv and exposure
+tmp.df$dv.nword <- tmp.df$nword;                    # DV for negbin
+tmp.df$ev.pot.dys <- tmp.df$pot.dys # exposure: number days dip was not on leave in unit 
+tmp.df$ev.all.dys <- tmp.df$all.dys # exposure: number days dips met in unit (period)
+tmp.df$ev.pot.sh <- tmp.df$pot.sh   # exposure: share of all days dip was not on leave in unit 
+tmp.df$dv.nword.sh <- tmp.df$nword / tmp.df$pot.sh*100 # DV for OLS
+tmp.df$nword <- tmp.df$pot.dys <- tmp.df$all.dys <- tmp.df$pot.sh <- NULL # clean
 
 # covariates
-# gender
+################
+## dip gender ##
+################
 tmp.df$dfem = as.numeric(tmp.df$gen=="F")
 tmp.df$gen <- NULL # clean
-head(tmp.df)
-# committee chair
-table(tmp.df$prescom)
-tmp.df$dchair <- 
+###################################
+## party size (move it to right) ##
+###################################
+tmp.df$tmp  <- tmp.df$ptysh; tmp.df$ptysh <- NULL; tmp.df$ptysh <- tmp.df$tmp; tmp.df$tmp <- NULL
+##########################
+## seniority = dpastleg ##
+##########################
+#table(tmp.df$repite)
+tmp.df$dpastleg <- 0
+tmp <- rep(0, length(tmp.df$repite)) # will identify manipulation subset
+tmp[grep.e("5[0-9][-]", tmp.df$repite)] <- 1 # was dip in fifty-something
+tmp.df$dpastleg[tmp==1] <- 1
+tmp[grep.e("6[01][-]", tmp.df$repite)] <- 1 # or was dip in 60 or 61
+tmp.df$dpastleg[tmp.df$leg==62 & tmp==1] <- 1 
+tmp.df$dpastleg[tmp.df$leg==64 & tmp==1] <- 1 
+tmp[grep.e("6[23][-]", tmp.df$repite)] <- 1 # or was dip in 62 or 63
+tmp.df$dpastleg[tmp.df$leg==64 & tmp==1] <- 1
+#xtabs(~ repite+dpastleg+leg, data=tmp.df) #debug
+######################################
+## Age at start of legislative term ##
+######################################
+tmp.df$age <- NA
+tmp.df$age[tmp.df$leg==60] <- 2006 - tmp.df$birth[tmp.df$leg==60]
+tmp.df$age[tmp.df$leg==62] <- 2012 - tmp.df$birth[tmp.df$leg==62]
+tmp.df$age[tmp.df$leg==64] <- 2018 - tmp.df$birth[tmp.df$leg==64]
+#############################################
+## party dummies instead of party families ##
+#############################################
+table(tmp.df$part)
+tmp.df$dpan <- as.numeric(tmp.df$part=="pan")
+tmp.df$dpri <- as.numeric(tmp.df$part=="pri")
+tmp.df$dmorena <- as.numeric(tmp.df$part=="morena")
+tmp.df$dleft <- as.numeric(tmp.df$part=="prd")
+tmp.sd$doport <- as.numeric(tmp.df$part=="pvem" | tmp.df$part=="pt" | tmp.df$part=="panal" | tmp.df$part=="pes" | tmp.df$part=="mc" | tmp.df$part=="sp")
+#######################################################################
+## president's party or coalition instead of government party member ##
+#######################################################################
+tmp.df$dwithpres <- 0
+tmp <- rep(0, length(tmp.df$dwithpres)) # will identify manipulation subset
+tmp <- as.numeric(tmp.df$part=="pan"    & tmp.df$leg==60) # panistas with Calderon
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="pri"    & tmp.df$leg==62) # or priistas with Peña
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="pvem"   & tmp.df$leg==62) # or pvem with Peña
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="panal"  & tmp.df$leg==62) # or panal with Peña
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="morena" & tmp.df$leg==64) # or morena with amlo
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="pt"     & tmp.df$leg==64) # or pt with amlo
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="pes"    & tmp.df$leg==64) # or pes with amlo
+tmp.df$dwithpres[tmp] <- 1
+tmp <- as.numeric(tmp.df$part=="pvem"   & tmp.df$leg==64) # or pvem with amlo
+tmp.df$dwithpres[tmp] <- 1
+#####################
+## committee chair ##
+#####################
+#table(tmp.df$dchair)
+tmp.df$dchair <- 1 - as.numeric(tmp.df$prescom=="")
+##################
+## party leader ##
+##################
+table(tmp.df$lider)
+tmp.df$dleader <- 0
+tmp.df$dleader[grep("coor", tmp.df$lider)] <- 1
+##############
+## controls ##
+##############
+#########
+## smd ##
+#########
+tmp.df$tmp <- tmp.df$dsmd; tmp.df$dsmd <- NULL; tmp.df$dsmd <- tmp.df$tmp; tmp.df$tmp <- NULL
+#######################
+## presiding officer ##
+#######################
+tmp.df$dpresoff <- 
+##########################
+## progressive ambition ##
+##########################
+tmp.df$dlicencia <- 
+    
+tmp.df[1:2,]
 
+
+
+
+table(all.dips[[8]]$prescom)
 x
 
 
@@ -778,26 +881,31 @@ colnames(tmp.agg[["df14p"]])
 
 DONE 1. drop speeches of less than 50 words
 
-2. include speeches regardless of their nature in the analysis. In some countries, there are reasons to include only a certain type of speech (e.g., bill debates). We are happy to accommodate chapters where the authors do not use all debates, provided that there is a good justification in the text.
+DONE 2. include speeches regardless of their nature in the analysis. In some countries, there are reasons to include only a certain type of speech (e.g., bill debates). We are happy to accommodate chapters where the authors do not use all debates, provided that there is a good justification in the text.
 
-3. In terms of window of observation/time period under study: we don’t have a particular guideline for this. Please use the window of observation that you believe is more representative of the politics of legislative debate in your country. Ideally we would like each chapter to include several legislative periods, but we are pragmatic here, considering data availability.
+DONE 3. In terms of window of observation/time period under study: we don’t have a particular guideline for this. Please use the window of observation that you believe is more representative of the politics of legislative debate in your country. Ideally we would like each chapter to include several legislative periods, but we are pragmatic here, considering data availability.
 
-4. What counts as a debate? Please concatenate all interventions that MPs make in a debate, even if the MP speaks multiple times in the said debate.
+EMM: Terminology
+- A Legislature (with Roman numerals for reasons I ignore) is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics.
+- Legislative years break into two "ordinary periods", one covering the months of September through December, inclusive, another February through April, also inclusive. "Extraordinary periods" may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of aggregation in the analysis. 
+- A session is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
 
+DONE 4. What counts as a debate? Please concatenate all interventions that MPs make in a debate, even if the MP speaks multiple times in the said debate.
 
 
 ###########################
 ## MULTIVARIATE ANALYSIS ##
 ###########################
 
-1. Number of speeches that a legislator delivered in the time unit you defined (presumably, for most of you, the legislative term). In doing so, use a negative binomial regression.
-2. Number of words divided by exposure (see below how to operationalize) that a legislator delivered in the time unit you defined (presumably, for the most of you, the legislative term). In doing so, use an OLS.
+VAR DONE, ESTIMATE MODELS 1. Number of speeches that a legislator delivered in the time unit you defined (presumably, for most of you, the legislative term). In doing so, use a negative binomial regression.
+
+VAR DONE, ESTIMATE MODELS 2. Number of words divided by exposure (see below how to operationalize) that a legislator delivered in the time unit you defined (presumably, for the most of you, the legislative term). In doing so, use an OLS.
 3. For both cases, please included fixed-effects for the time period of interest (e.g., for the legislative term or the legislative session, depending on your choice). 
 4. Please include standard errors clustered at the legislator level.
 
 How to build the DV for the OLS models: 
 
-Where the outcome is the number of Words, you should use Exposure as the denominator to create a ratio. The said ratio should consist of the total number of words legislator i delivered during legislative term t/percentage of time legislator i sat in legislative term t.
+DONE Where the outcome is the number of Words, you should use Exposure as the denominator to create a ratio. The said ratio should consist of the total number of words legislator i delivered during legislative term t/percentage of time legislator i sat in legislative term t.
 
 The rationale behind this measure is that we want to capture the time that each legislator sits in parliament during a given session. Obviously, a legislator who sits for the duration of the terms has higher chances of taking the floor than a legislator that takes her sit in the middle of the term.
 
@@ -809,17 +917,17 @@ Don’t forget to include Term FE, plus clustered standard errors at the MP leve
 ################
 
 DONE 1. Gender – dummy variable that takes a value of 1 for Women and 0 for Men
-2. Party Size – continuous variable that measures the absolute number of members of the legislative party
-3. Seniority – continuous variable that measures the number of years the legislator has been in the parliament
-4. Age
-5. Age Squared
-6. Party Family (Dummy variables, using one of party families as reference category)
-7. Committee Chair – dummy variable that takes a value of 1 if the MP holds a committee chair and 0 for all others
-8. Minister – dummy variable that takes a value of 1 if the MP is a minister and 0 otherwise
-9. Government party member – dummy variable that takes a value of 1 if the MP belongs to a legislative party that belongs the government and 0 otherwise. Note that we only consider parties that are formally in a coalition (i.e., have members in the executive). Supporting parties, e.g. contract parliamentarism, do not count towards government parties.
-10. Legislative Party Leadership – dummy variable that takes a value of 1 if the MP belongs to the leadership of the parliamentary party group
-11. Party Leader – dummy variable that takes a value of 1 if the MP is the party leader and 0 otherwise
-12. Exposure (logged) – continuous variable that measures the percentage of time in which the MP held to her seat in parliament during the unit of time defined in your chapter. For example, if you are using a MP-legislative term unit of observation, in this variable you need to include the percentage of time during the legislative term in which the MP was in the parliament. If MP was in parliament for whole session that would be 1. If the MP joined the parliament later, it could be .7 or .8. If you are using month as the time unit, the same rationale applies. The logged version should *only* be included in the count models (negative binomial). 
+DONE 2. Party Size – continuous variable that measures the absolute number of members of the legislative party
+DONE 3. Seniority – continuous variable that measures the number of years the legislator has been in the parliament
+DONE, NEEDS MORE DATA 4. Age
+DONE 5. Age Squared
+DONE 6. Party Family (Dummy variables, using one of party families as reference category)
+DONE 7. Committee Chair – dummy variable that takes a value of 1 if the MP holds a committee chair and 0 for all others
+DROPPED 8. Minister – dummy variable that takes a value of 1 if the MP is a minister and 0 otherwise
+DONE 9. Government party member – dummy variable that takes a value of 1 if the MP belongs to a legislative party that belongs the government and 0 otherwise. Note that we only consider parties that are formally in a coalition (i.e., have members in the executive). Supporting parties, e.g. contract parliamentarism, do not count towards government parties.
+DONE 10. Legislative Party Leadership – dummy variable that takes a value of 1 if the MP belongs to the leadership of the parliamentary party group
+DROPPED 11. Party Leader – dummy variable that takes a value of 1 if the MP is the party leader and 0 otherwise
+DONE 12. Exposure (logged) – continuous variable that measures the percentage of time in which the MP held to her seat in parliament during the unit of time defined in your chapter. For example, if you are using a MP-legislative term unit of observation, in this variable you need to include the percentage of time during the legislative term in which the MP was in the parliament. If MP was in parliament for whole session that would be 1. If the MP joined the parliament later, it could be .7 or .8. If you are using month as the time unit, the same rationale applies. The logged version should *only* be included in the count models (negative binomial). 
 
 
 ################
