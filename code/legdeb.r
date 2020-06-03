@@ -152,7 +152,6 @@ for (l in 1:length(all.legs)){
 }
 names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
-class(all.dips[[8]]$prescom)
 
 
 ## ################################################
@@ -172,6 +171,18 @@ class(all.dips[[8]]$prescom)
 ## tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
 ## tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
 ## tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
+## # fill NAs in birth/gen with non-NAs
+## tmp2 <- as.factor(tmp$nom)
+## tmp <- split(tmp, tmp2)
+## tmp[[sel]]
+## #sel  <- grep.e("lilia luna munguia", names(tmp))
+## for (i in 1:length(tmp)){
+##     x <- tmp[[i]]
+##     if (length(which(is.na(x$birth)))>0) x$birth <- rep(x$birth[which(is.na(x$birth)==FALSE)[1]], length(x$birth))
+##     if (length(which(is.na(x$gen)))>0)   x$gen <-   rep(x$gen[which(is.na(x$gen)==FALSE)[1]], length(x$gen))
+##     tmp[[i]] <- x
+##     }
+## tmp <- unsplit(tmp, tmp2)
 ## write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
 ## 
 ## # re-import after manipulation
@@ -179,7 +190,7 @@ class(all.dips[[8]]$prescom)
 ## head(tmp)
 ## for (l in 1:length(all.legs)){
 ##     sel <- which(tmp$leg==all.legs[l])
-##     write.csv(tmp[sel,], file = paste("../data/dip", all.legs[l], ".csv", sep = ""), row.names = FALSE)
+##     write.csv(tmp[sel,], file = paste("../data/tmp", all.legs[l], ".csv", sep = ""), row.names = FALSE)
 ## }
 
 
@@ -187,9 +198,9 @@ class(all.dips[[8]]$prescom)
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
-#leg <- 60 # pick one
+leg <- 60 # pick one
 #leg <- 62 # pick one
-leg <- 64 # pick one
+#leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 dips <- all.dips[[grep(leg, names(all.dips))]] # pick one legislatura's dips
@@ -453,12 +464,12 @@ text <- gsub.e("[.,;]", "", text) # drop periods and commas
 ## text[221]
 speeches$text.only <- text # return manipulation to data
 #rm(text)
-## Should be able to count words with this text...
 
 # drop roll calls
-sel <- grep.e("[:][ ]*(?:A favor|En contra|abstención)[. ]*</p>$", speeches$text)
+sel <- grep.e("[:](?:</B>)?[ ]*(?:(?:A|En) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[. ]*</p>$", speeches$text)
 speeches <- speeches[-sel,]
-sel <- grep.e("[:] (?:.+), (?:a favor|en contra|abstención)[.]</p>$", speeches$text) # con nombre intercalado
+sel <- grep.e("[:](?:</B>)? (?:.+), (?:(?:a|en) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[.]</p>$", speeches$text) # con nombre intercalado
+#speeches[sel[10],]
 speeches <- speeches[-sel,]
 #sel <- grep.e("A favor.", speeches$text) # debug
 #speeches$text[sel]
@@ -603,15 +614,15 @@ rm(tmp,tmp.list) # clean
 ############################
 ## DROP NON-SPEECHES HERE ##
 ############################
-sel <- which(speeches$dnonspeech==1)
+sel <- which(speeches$dnonspeech==1 & speeches$role=="diputado")
+## speeches[sel[132],]
+## x
 #
 message(paste("  **********************************************************\n  ** Non-speeches of less than 50 words to be dropped:", length(sel), "\n  **********************************************************"))
 #
 speeches <- speeches[-sel,]
 rm(sel)
 speeches$dnonspeech <- NULL # clean
-
-speeches[15:18,]
 
 #########################################################
 ##          AGGREGATE WORDS BY PERIODO                 ##
@@ -685,13 +696,17 @@ speech.list <- lapply(speech.list, FUN = function(x){
 d.no.hits <- vector()
 
 ## # debug to locate speech dates
-## sel <- grep.e("martinez zaleta", speeches$who)
-## speeches$fch[sel]
+## sel <- grep.e("CERRILLO GARNICA", speeches$who)
+## table(speeches$date[sel])
+## x
+## #debug
+## speech.list[[232]]
+## sel <- grep("cps08p", names(speech.list))
 ## x
 
 # search each speaker's lines in dips, paste in tmp.agg
 for (i in 1:length(speech.list)){
-    #i <- 2 # debug
+    #i <- 232 # debug
     tmp <- speech.list[[i]] # select one data frame for manipulation
     hit <- which(dips$nom==tmp$who[1]) # matches a name in dips
     if (length(hit)==0){ # no match
@@ -708,9 +723,26 @@ for (i in 1:length(speech.list)){
     ## tmp$id <- rep(dips$id[hit], nrow(tmp))
     ## tmp$i  <- rep(hit,          nrow(tmp))
 }
-#
-#tmp.agg[[601]]
-#tmp.agg[["zac03p"]]
+
+## ##debug
+## tmp <- vector()
+## for (i in sel.dips){
+##     tmp <- c(tmp, tmp.agg[[i]]$leg)
+## }
+## tmp <- data.frame()
+## for (i in sel.dips){
+##     i <- 28
+##     tmp <- rbind(tmp, tmp.agg[[i]][,c("leg","sel.agg")])
+## }
+## tmp
+## #
+## tmp.agg[[601]]
+## tmp.agg[["zac03p"]]
+## #
+## sel <- grep.e("mendez lanz", speeches$who)
+## table(speeches$date[sel])
+## table(speeches$periodo[sel])
+
 
 ####################################################
 ## debug names in ve not in dips --- fix spelling ##
@@ -741,18 +773,13 @@ for (i in 1:length(tmp)){
 }
 tmp.agg <- tmp
 
-# rename aggregated data object
-if (leg==60) data.agg.60 <- tmp.agg
-if (leg==62) data.agg.62 <- tmp.agg
-if (leg==64) data.agg.64 <- tmp.agg
-
 # unlist agg data into dataframe, merge with other legs
 tmp.df <- do.call(rbind, tmp.agg[sel.dips])
 ## tmp.df[which(tmp.df$id=="zac03p"),]
 ## tmp.agg[["zac03p"]]
 ## dips[sel.dips,"id"]
 ## x
-
+#
 # dv and exposure
 tmp.df$dv.nword <- tmp.df$nword;                    # DV for negbin
 tmp.df$ev.pot.dys <- tmp.df$pot.dys # exposure: number days dip was not on leave in unit 
@@ -800,7 +827,7 @@ tmp.df$dpan <- as.numeric(tmp.df$part=="pan")
 tmp.df$dpri <- as.numeric(tmp.df$part=="pri")
 tmp.df$dmorena <- as.numeric(tmp.df$part=="morena")
 tmp.df$dleft <- as.numeric(tmp.df$part=="prd")
-tmp.sd$doport <- as.numeric(tmp.df$part=="pvem" | tmp.df$part=="pt" | tmp.df$part=="panal" | tmp.df$part=="pes" | tmp.df$part=="mc" | tmp.df$part=="sp")
+tmp.df$doport <- as.numeric(tmp.df$part=="pvem" | tmp.df$part=="pt" | tmp.df$part=="panal" | tmp.df$part=="pes" | tmp.df$part=="mc" | tmp.df$part=="conve" | tmp.df$part=="asd" | tmp.df$part=="sp")
 #######################################################################
 ## president's party or coalition instead of government party member ##
 #######################################################################
@@ -843,22 +870,117 @@ tmp.df$tmp <- tmp.df$dsmd; tmp.df$dsmd <- NULL; tmp.df$dsmd <- tmp.df$tmp; tmp.d
 #######################
 ## presiding officer ##
 #######################
-tmp.df$dpresoff <- 
-##########################
-## progressive ambition ##
-##########################
-tmp.df$dlicencia <- 
-    
-tmp.df[1:2,]
+## tmp <- speeches[-grep.e("diputad", speeches$role),]
+## table(tmp$who, tmp$role)
+## table(tmp$who, tmp$periodo)
+
+tmp.df$dpresoff <- 0
+# presidentes y secretarios de la cámara leg 64 up to end 2nd year ordinaria
+
+if (leg==62){
+    sel <- which(tmp.df$nom %in%
+                 c("ANGEL CEDILLO HERNANDEZ",            
+                   "ALEIDA ALAVEZ RUIZ",                   
+                   "FERNANDO BRIBIESCA SAHAGUN",           
+                   "FRANCISCO AGUSTIN ARROYO VIEYRA",      
+                   "JAVIER OROZCO GOMEZ",                  
+                   "JOSE GONZALEZ MORFIN",                 
+                   "MAGDALENA DEL SOCORRO NUÑEZ MONREAL",  
+                   "MERILYN GOMEZ POZOS",                  
+                   "XAVIER AZUARA ZUÑIGA"))
+    tmp.df$dpresoff[sel] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("AMALIA DOLORES GARCIA MEDINA",       
+                   "ARNOLDO OCHOA GONZALEZ",               
+                   "ELOY CANTU SEGOVIA",                   
+                   "JESUS MURILLO KARAM"))
+    sel2 <- grep("62y1-1", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("PATRICIA ELENA RETAMOZA VEGA",       
+                   "TANYA RELLSTAB CARRETO"))
+    sel2 <- grep("62y1", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("ANGELINA CARREÑO MIJARES",           
+                   "MARCELO DE JESUS TORRES COFIÑO",       
+                   "MARICELA VELAZQUEZ SANCHEZ",           
+                   "RICARDO ANAYA CORTES"))
+    sel2 <- grep("62y2", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("FRANCISCA ELENA CORRALES CORRALES",  
+                   "GRACIELA SALDAÑA FRAIRE",              
+                   "JULIO CESAR MORENO RIVERA",            
+                   "LAURA BARRERA FORTOUL",                
+                   "LIZBETH EUGENIA ROSAS MONTERO",        
+                   "LUIS ANTONIO GONZALEZ ROLDAN",         
+                   "MARIA BEATRIZ ZAVALA PENICHE",         
+                   "MARTHA BEATRIZ CORDOVA BERNAL",        
+                   "MARTIN ALONSO HEREDIA LIZARRAGA",      
+                   "SERGIO AUGUSTO CHAN LUGO",             
+                   "SILVANO AUREOLES CONEJO",              
+                   "TOMAS TORRES MERCADO"))
+    sel2 <- grep("62y3", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+}                                     
+
+if (leg==64){
+    sel <- which(tmp.df$nom %in%
+                 c("CARMEN JULIETA MACIAS RABAGO",
+                   "DULCE MARIA SAURI RIANCHO",
+                   "HECTOR RENE CRUZ APARICIO",
+                   "JESUS CARLOS VIDAL PENICHE",
+                   "KARLA YURITZI ALMAZAN BURGOS",
+                   "LIZETH SANCHEZ GARCIA",
+                   "MARCO ANTONIO ADAME CASTILLO",
+                   "MARIA DE LOS DOLORES PADIERNA LUNA",
+                   "MARIA LUCERO SALDAÑA PEREZ",
+                   "MARIANA DUNYASKA GARCIA ROJAS",
+                   "MARIA SARA ROCHA MEDINA",
+                   "MARIO MARTIN DELGADO CARRILLO",
+                   "MONICA BAUTISTA RODRIGUEZ",
+                   "PORFIRIO ALEJANDRO MUÑOZ LEDO Y LAZO DE LA VEGA"))
+    tmp.df$dpresoff[sel] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("LAURA ANGELICA ROJAS HERNANDEZ",
+                   "MARIBEL MARTINEZ RUIZ",
+                   "LIZBETH MATA LOZANO",
+                   "MARIBEL MARTINEZ RUIZ"))
+    sel2 <- grep("64y2", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("ANA GABRIELA GUEVARA ESPINOZA",
+                   "PABLO GOMEZ ALVAREZ"))
+    sel2 <- which(tmp.df$sel.agg=="64y1-1")
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+    sel <- which(tmp.df$nom %in%
+                 c("LILIA VILLAFUERTE ZAVALA",
+                   "LYNDIANA ELIZABETH BUGARIN CORTES"))
+    sel2 <- grep("64y1", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+}
+## ##########################
+## ## progressive ambition ##
+## ##########################
+## tmp.df$dlicencia <- --- intersect with election year in state
+
+tmp.df[1,]
+
+# rename aggregated data object
+if (leg==60) data.periodo.60 <- tmp.df
+if (leg==62) data.periodo.62 <- tmp.df
+if (leg==64) data.periodo.64 <- tmp.df
 
 
 
-
-table(all.dips[[8]]$prescom)
-x
-
-
-ls()
 
 # debug
 nrow(data.agg.64[[1000]])
