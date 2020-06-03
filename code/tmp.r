@@ -45,3 +45,17 @@ rownames(tmp) <- NULL
 # return to data
 speeches$nword.day  <- tmp$nword2
 speeches$dnonspeech <- tmp$dnonspeech
+
+x <- tmp.agg[[sel.dips[1]]]
+x[1,]
+as.data.frame(x)
+
+is.na(tmp.agg[1][,"nom"])
+
+tmp <- unlist(
+    lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[,"nom"]))) > 0, 1, 0))
+)
+
+x <- lapply(tmp.agg, subset, sel.dips)
+
+?subset

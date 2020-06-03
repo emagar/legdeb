@@ -120,79 +120,6 @@ cap.emm <- function(x=dips$nom){
 ##             "üéâäàåçêëèïîì")
 ## stri_trans_general(str = terme, id = "Latin-ASCII")
 
-# read diputado csv files
-all.legs <- 57:64
-#all.legs <- c(60,62,64)
-all.dips <- vector("list", length(all.legs)) # will receive all data
-#
-for (l in 1:length(all.legs)){
-    #l <- 1 # debug
-    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
-    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
-    #head(dips) # debug
-    # add leg
-    dips$leg <- all.legs[l];
-    ## # drop columns
-    dips$nota <- dips$notas <- dips$fuente <- NULL
-    # if part empty but postulo not, use latter
-    sel <- which( (is.na(dips$part) | dips$part=="") & !is.na(dips$postulo))
-    dips$part[sel] <- dips$postulo[sel]
-    # party size
-    dips$ptysh[dips$dsup==0] <- as.numeric(ave(dips$part[dips$dsup==0], as.factor(dips$part[dips$dsup==0]), FUN=length, na.rm=TRUE)) / 500 # shares of propietarios only
-    tmp <- dips[dips$dsup==0,c("part","ptysh")] # recode vectors for suplentes (dift n possible)
-    tmp <- tmp[duplicated(tmp$part)==FALSE,] 
-    dips$ptysh[dips$dsup==1] <- mapvalues(dips$part[dips$dsup==1], from = tmp[,1], to = tmp[,2], warn_missing = FALSE)
-    dips$ptysh <- as.numeric(dips$ptysh)
-    # consolidate name last name
-    dips$nom <- paste(dips$pila, dips$patmat)
-    # CAPITALIZE
-    dips$nom <- cap.emm(x = dips$nom)
-    # insert to data list
-    all.dips[[l]] <- dips
-}
-names(all.dips) <- paste("leg", all.legs, sep = "")
-summary(all.dips)
-
-
-## ################################################
-## ## merge all dip names into single data frame ##
-## ## export it, edit in excel, then re-import   ##
-## ## to re-do/export dip.csv clean files        ##
-## ################################################
-## tmp <- data.frame()
-## for (l in 1:length(all.legs)){
-##     #l <- 2
-##     tmp <- rbind(tmp, all.dips[[l]])
-## }
-## tmp$cabecera <- cap.emm(tmp$cabecera)
-## tmp$pila <- gsub.e("  +", " ", tmp$pila) # remove double spaces
-## tmp$pila <- gsub.e("^ +", "", tmp$pila) # remove heading spaces
-## tmp$pila <- gsub.e(" +$", "", tmp$pila) # remove trailing spaces
-## tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
-## tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
-## tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
-## # fill NAs in birth/gen with non-NAs
-## tmp2 <- as.factor(tmp$nom)
-## tmp <- split(tmp, tmp2)
-## tmp[[sel]]
-## #sel  <- grep.e("lilia luna munguia", names(tmp))
-## for (i in 1:length(tmp)){
-##     x <- tmp[[i]]
-##     if (length(which(is.na(x$birth)))>0) x$birth <- rep(x$birth[which(is.na(x$birth)==FALSE)[1]], length(x$birth))
-##     if (length(which(is.na(x$gen)))>0)   x$gen <-   rep(x$gen[which(is.na(x$gen)==FALSE)[1]], length(x$gen))
-##     tmp[[i]] <- x
-##     }
-## tmp <- unsplit(tmp, tmp2)
-## write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
-## 
-## # re-import after manipulation
-## tmp <- read.csv(file = "../data/tmp.csv", stringsAsFactors = FALSE)
-## head(tmp)
-## for (l in 1:length(all.legs)){
-##     sel <- which(tmp$leg==all.legs[l])
-##     write.csv(tmp[sel,], file = paste("../data/tmp", all.legs[l], ".csv", sep = ""), row.names = FALSE)
-## }
-
 
 
 ########################################
@@ -203,9 +130,7 @@ leg <- 60 # pick one
 #leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
-dips <- all.dips[[grep(leg, names(all.dips))]] # pick one legislatura's dips
 length(ves) # debug
-nrow(dips) # debug
 # read one file
 ## tmp <- readLines(con = "Ve18mar2020.html", encoding = "latin1")
 
@@ -466,13 +391,13 @@ speeches$text.only <- text # return manipulation to data
 #rm(text)
 
 # drop roll calls
-sel <- grep.e("[:](?:</B>)?[ ]*(?:(?:A|En) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[. ]*</p>$", speeches$text)
-speeches <- speeches[-sel,]
-sel <- grep.e("[:](?:</B>)? (?:.+), (?:(?:a|en) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[.]</p>$", speeches$text) # con nombre intercalado
-#speeches[sel[10],]
-speeches <- speeches[-sel,]
-#sel <- grep.e("A favor.", speeches$text) # debug
-#speeches$text[sel]
+## sel <- grep.e("[:](?:</B>)?[ ]*(?:(?:A|En) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[. ]*</p>$", speeches$text)
+## speeches <- speeches[-sel,]
+## sel <- grep.e("[:](?:</B>)? (?:.+), (?:(?:a|en) (?:favor|pro|contra)|por la (?:afirmativa|negativa)|abstención|me abstengo)[.]</p>$", speeches$text) # con nombre intercalado
+## #speeches[sel[10],]0
+## speeches <- speeches[-sel,]
+## #sel <- grep.e("A favor.", speeches$text) # debug
+## #speeches$text[sel]
 
 # count words --- raw count that will be filtered below 
 speeches$nword <- lengths(gregexpr(pattern = "\\W+", speeches$text.only)) + 1
@@ -484,6 +409,85 @@ speeches[3,]
 ## speeches$text.only[sel]
 ## speeches[sel[1],]
 ## x
+
+
+
+#############################
+## READ DIPUTADO CSV FILES ##
+#############################
+all.legs <- 57:64
+#all.legs <- c(60,62,64)
+all.dips <- vector("list", length(all.legs)) # will receive all data
+#
+for (l in 1:length(all.legs)){
+    #l <- 1 # debug
+    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
+    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
+    #head(dips) # debug
+    # add leg
+    dips$leg <- all.legs[l];
+    ## # drop columns
+    dips$nota <- dips$notas <- dips$fuente <- NULL
+    # if part empty but postulo not, use latter
+    sel <- which( (is.na(dips$part) | dips$part=="") & !is.na(dips$postulo))
+    dips$part[sel] <- dips$postulo[sel]
+    # party size
+    dips$ptysh[dips$dsup==0] <- as.numeric(ave(dips$part[dips$dsup==0], as.factor(dips$part[dips$dsup==0]), FUN=length, na.rm=TRUE)) / 500 # shares of propietarios only
+    tmp <- dips[dips$dsup==0,c("part","ptysh")] # recode vectors for suplentes (dift n possible)
+    tmp <- tmp[duplicated(tmp$part)==FALSE,] 
+    dips$ptysh[dips$dsup==1] <- mapvalues(dips$part[dips$dsup==1], from = tmp[,1], to = tmp[,2], warn_missing = FALSE)
+    dips$ptysh <- as.numeric(dips$ptysh)
+    # consolidate name last name
+    dips$nom <- paste(dips$pila, dips$patmat)
+    # CAPITALIZE
+    dips$nom <- cap.emm(x = dips$nom)
+    # insert to data list
+    all.dips[[l]] <- dips
+}
+names(all.dips) <- paste("leg", all.legs, sep = "")
+summary(all.dips)
+#
+## ################################################
+## ## merge all dip names into single data frame ##
+## ## export it, edit in excel, then re-import   ##
+## ## to re-do/export dip.csv clean files        ##
+## ################################################
+## tmp <- data.frame()
+## for (l in 1:length(all.legs)){
+##     #l <- 2
+##     tmp <- rbind(tmp, all.dips[[l]])
+## }
+## tmp$cabecera <- cap.emm(tmp$cabecera)
+## tmp$pila <- gsub.e("  +", " ", tmp$pila) # remove double spaces
+## tmp$pila <- gsub.e("^ +", "", tmp$pila) # remove heading spaces
+## tmp$pila <- gsub.e(" +$", "", tmp$pila) # remove trailing spaces
+## tmp$nom <- gsub.e("  +", " ", tmp$nom) # remove double spaces
+## tmp$nom <- gsub.e("^ +", "", tmp$nom) # remove heading spaces
+## tmp$nom <- gsub.e(" +$", "", tmp$nom) # remove trailing spaces
+## # fill NAs in birth/gen with non-NAs
+## tmp2 <- as.factor(tmp$nom)
+## tmp <- split(tmp, tmp2)
+## tmp[[sel]]
+## #sel  <- grep.e("lilia luna munguia", names(tmp))
+## for (i in 1:length(tmp)){
+##     x <- tmp[[i]]
+##     if (length(which(is.na(x$birth)))>0) x$birth <- rep(x$birth[which(is.na(x$birth)==FALSE)[1]], length(x$birth))
+##     if (length(which(is.na(x$gen)))>0)   x$gen <-   rep(x$gen[which(is.na(x$gen)==FALSE)[1]], length(x$gen))
+##     tmp[[i]] <- x
+##     }
+## tmp <- unsplit(tmp, tmp2)
+## write.csv(tmp, file = "../data/tmp.csv", row.names = FALSE)
+## 
+## # re-import after manipulation
+## tmp <- read.csv(file = "../data/tmp.csv", stringsAsFactors = FALSE)
+## head(tmp)
+## for (l in 1:length(all.legs)){
+##     sel <- which(tmp$leg==all.legs[l])
+##     write.csv(tmp[sel,], file = paste("../data/tmp", all.legs[l], ".csv", sep = ""), row.names = FALSE)
+## }
+#
+dips <- all.dips[[grep(leg, names(all.dips))]] # pick one legislatura's dips
+nrow(dips) # debug
 
 ###################################################
 ## figure out intervals when diputado was active ##
@@ -546,7 +550,9 @@ pot[sel.dips] <- lapply(pot[sel.dips], FUN = function(x){
     x$periodo <- all.ses$periodo[sel]
     return(x)})
 
-# function to aggregate and count potential dates given aggregation criterion for negbin reg
+################################################################################################
+## function to aggregate and count potential dates given aggregation criterion for negbin reg ##
+################################################################################################
 agg.emm <- function(x, agg = "periodo"){
     #x = pot[[999]] # debug
     if          (agg=="leg"){ x$sel.agg <- sub.e("^([0-9]+)y.+$", "\\1", x$periodo)        # select full legislatura
@@ -725,6 +731,13 @@ for (i in 1:length(speech.list)){
 }
 
 ## ##debug
+## sel <- grep.e("torres ramirez", speeches$who)
+## table(speeches$date[sel])
+## table(speeches$periodo[sel])
+#
+## tmp.agg[[601]]
+## tmp.agg[["zac03p"]]
+## #
 ## tmp <- vector()
 ## for (i in sel.dips){
 ##     tmp <- c(tmp, tmp.agg[[i]]$leg)
@@ -735,13 +748,7 @@ for (i in 1:length(speech.list)){
 ##     tmp <- rbind(tmp, tmp.agg[[i]][,c("leg","sel.agg")])
 ## }
 ## tmp
-## #
-## tmp.agg[[601]]
-## tmp.agg[["zac03p"]]
-## #
-## sel <- grep.e("mendez lanz", speeches$who)
-## table(speeches$date[sel])
-## table(speeches$periodo[sel])
+
 
 
 ####################################################
