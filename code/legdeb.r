@@ -626,7 +626,7 @@ sel <- which(speeches$dnonspeech==1 & speeches$role=="diputado")
 #
 message(paste("  **********************************************************\n  ** Non-speeches of less than 50 words to be dropped:", length(sel), "\n  **********************************************************"))
 #
-speeches <- speeches[-sel,]
+if (length(sel)>0) speeches <- speeches[-sel,]
 rm(sel)
 speeches$dnonspeech <- NULL # clean
 
@@ -655,6 +655,12 @@ tmp2 <- lapply(tmp2, FUN = function(x) cbind(x, pot.sh = (x$pot.dys / x$all.dys)
 # return to data
 tmp.agg[sel.dips] <- tmp2
 names(tmp.agg) <- dips$id
+## # debug
+## dips[32,]
+## pot[32]
+## tmp.agg[[32]]
+## sel <- grep.e("aguayo perez", speeches$nom)
+## x
 #
 #############################
 ## add controls to tmp.agg ##
@@ -761,14 +767,18 @@ message(" ********************************************\n ** Checked: all speaker
 
 
 # check in/out mismathches with speeches one-by-one 
-tmp <- unlist(lapply(tmp.agg[sel.dips], function(x) ifelse(length(which(is.na(x[,"nom"]))) > 0, 1, 0)))
-tmp2 <- rep(0, length(tmp.agg))
-tmp2[sel.dips] <- tmp
-which(tmp2==1) # mismatches have NAs
+tmp <- data.frame(dip = dips$id)
+tmp$dhasnas <- 0 # set dummy to zero default
+for (i in sel.dips){
+    #j <- j+1; i <- sel.dips[j]; print(j) #debug
+    #i <- 32; dips[i,] # debug
+    tmp1 <- tmp.agg[[i]] # extract dataframe
+    tmp2 <- ifelse(length(which(is.na(tmp1$nom))) > 0, 1, 0)
+    tmp$dhasnas[i] <- tmp2 # return dummy
+}
+which(tmp$dhasnas==1) # mismatches have NAs
 if (leg==62) data.frame(tmp.agg[[367]]$id, tmp.agg[[367]]$sel.agg) # this case must be a mistake in ve: pushing licencia to include 62y2-extra creates NA with suplente
-data.frame(tmp.agg[["bc02s"]]$id, tmp.agg[["bc02s"]]$sel.agg)
-data.frame(tmp.agg[[811]]$id, tmp.agg[[811]]$sel.agg)
-data.frame(tmp.agg[[721]]$id, tmp.agg[[721]]$sel.agg)
+data.frame(tmp.agg[["bc02p"]]$id, tmp.agg[["bc02s"]]$sel.agg)
 x
 
 # Add nword column that is missing from diputados who did not utter a word
@@ -877,13 +887,73 @@ tmp.df$tmp <- tmp.df$dsmd; tmp.df$dsmd <- NULL; tmp.df$dsmd <- tmp.df$tmp; tmp.d
 #######################
 ## presiding officer ##
 #######################
-## tmp <- speeches[-grep.e("diputad", speeches$role),]
-## table(tmp$who, tmp$role)
-## table(tmp$who, tmp$periodo)
+tmp <- speeches[-grep.e("diputad", speeches$role),]
+table(tmp$who, tmp$role)
+table(tmp$who, tmp$periodo)
 
 tmp.df$dpresoff <- 0
 # presidentes y secretarios de la cámara leg 64 up to end 2nd year ordinaria
-
+if (leg==60){
+                                        #                 60y1-1 60y1-2 60y2-1 60y2-2 60y3-1  60y3-2
+                                        #60y1
+    sel <- which(tmp.df$nom %in%
+                 c("CARLOS ARMANDO BIEBRICH TORRES",    #     49      0      0      0      0       0
+                   "HECTOR HUGO OLIVARES VENTURA",      #     45      0      0      0      0       0
+                   "JESUS CUAUHTEMOC VELASCO OLIVA",    #    476    155      1      0      0       0
+                   "JORGE ZERMEÑO INFANTE",             #   5225   2474      0      0      0       0
+                   "JOSE GILDARDO GUERRERO TORRES",     #    385    457      0      0      0       0
+                   "EDUARDO SERGIO DE LA TORRE JARAMILLO"))#    514    384      3      0      0       0
+    sel2 <- grep("60y1", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+                                        #60y1 60y2
+    sel <- which(tmp.df$nom %in%
+                 c("LILIA GUADALUPE MERODIO REZA",      #    231    233     49      0      0       0
+                   "MARIA ELENA ALVAREZ BERNAL",        #    860   1044     38      0      0       0
+                   "ANTONIO XAVIER LOPEZ ADAME",        #    744    294    503    106      0       0
+                   "ARNOLDO OCHOA GONZALEZ",            #    203    242    247     71      0       0
+                   "RUTH ZAVALETA SALGADO",             #    558    598   6498   2639     68       0
+                   "MARIA MERCEDES MACIEL ORTIZ"))      #    290    366    412    296     19       0
+    sel2 <- grep("60y[12]", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+                                        #60y2
+    sel <- which(tmp.df$nom %in%
+                 c("CRISTIAN CASTAÑO CONTRERAS",        #      0      0    882    711      0       0
+                   "OLGA PATRICIA CHOZAS Y CHOZAS",     #      0      0      0    203      0       0
+                   "VENANCIO LUIS SANCHEZ JIMENEZ",     #      0      0   1096    641      0       0
+                   "PATRICIA VILLANUEVA ABRAJAN",       #      0      0    656    405     42       0
+                   "ESMERALDA CARDENAS SANCHEZ",        #      0      0    812    592     28       0
+                   "MARIA DEL CARMEN SALVATORI BRONCA"))#      0      0    829    489      9       0
+    sel2 <- grep("60y2", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+                                        #60y2 60y3
+    sel <- which(tmp.df$nom %in%
+                 c("SANTIAGO GUSTAVO PEDRO CORTES"))    #      0      0    273    178    191     342
+    sel2 <- grep("60y[23]", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+                                        #60y3
+    sel <- which(tmp.df$nom %in%
+                 c("MANUEL PORTILLA DIEGUEZ",           #      0      0      0      0    318     193
+                   "MARGARITA ARENAS GUZMAN",           #      0      0      0      0    784     813
+                   "MARIA DEL CARMEN PINETE VARGAS",    #      0      0      0      0    409     522
+                   "CESAR HORACIO DUARTE JAQUEZ",       #      0      0      0      0   3690    2777
+                   "JOSE LUIS ESPINOSA PIÑA",           #      0      0      0      0    381     631
+                   "JOSE MANUEL DEL RIO VIRGEN",        #      0      0      0      0    322     441
+                   "MARTHA HILDA GONZALEZ CALDERON",    #      0      0      0      0   1404     770
+                   "ROSA ELIA ROMERO GUZMAN"))          #      0      0      0      0    475     893
+    sel2 <- grep("60y3", tmp.df$sel.agg)
+    tmp.df$dpresoff[intersect(sel, sel2)] <- 1
+                                        #
+                                        #all
+    sel <- which(tmp.df$nom %in%
+                 c("MARIA EUGENIA JIMENEZ VALENZUELA",  #    525    305    624    281    401     560
+                   "JACINTO GOMEZ PASILLAS"))           #    346    365    415    310    494     505
+    tmp.df$dpresoff[sel] <- 1
+}
+#
 if (leg==62){
     sel <- which(tmp.df$nom %in%
                  c("ANGEL CEDILLO HERNANDEZ",            
@@ -935,7 +1005,7 @@ if (leg==62){
     sel2 <- grep("62y3", tmp.df$sel.agg)
     tmp.df$dpresoff[intersect(sel, sel2)] <- 1
 }                                     
-
+#
 if (leg==64){
     sel <- which(tmp.df$nom %in%
                  c("CARMEN JULIETA MACIAS RABAGO",
@@ -974,6 +1044,7 @@ if (leg==64){
     sel2 <- grep("64y1", tmp.df$sel.agg)
     tmp.df$dpresoff[intersect(sel, sel2)] <- 1
 }
+table(tmp.df$dpresoff)
 ## ##########################
 ## ## progressive ambition ##
 ## ##########################

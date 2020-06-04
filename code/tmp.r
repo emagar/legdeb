@@ -59,3 +59,14 @@ tmp <- unlist(
 x <- lapply(tmp.agg, subset, sel.dips)
 
 ?subset
+
+# check in/out mismathches with speeches one-by-one 
+tmp <- data.frame(dip = dips$id)
+tmp$dhasnas <- 0 # set dummy to zero default
+for (i in sel.dips){
+    #i <- 1 #debug
+    tmp1 <- tmp.agg[[i]] # extract dataframe
+    tmp2 <- ifelse(length(which(is.na(tmp1$nom))) > 0, 1, 0)
+    tmp$dhasnas[i] <- tmp2 # return dummy
+}
+which(tmp$dhasnas==1) # mismatches have NAs
