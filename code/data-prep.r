@@ -125,9 +125,9 @@ cap.emm <- function(x=dips$nom){
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
-leg <- 60 # pick one
+#leg <- 60 # pick one
 #leg <- 62 # pick one
-#leg <- 64 # pick one
+leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 length(ves) # debug
@@ -629,6 +629,9 @@ message(paste("  **********************************************************\n  *
 if (length(sel)>0) speeches <- speeches[-sel,]
 rm(sel)
 speeches$dnonspeech <- NULL # clean
+#
+#speeches[1:5,c("date","role","who","nword.day")]
+#x
 
 #########################################################
 ##          AGGREGATE WORDS BY PERIODO                 ##
@@ -798,7 +801,8 @@ tmp.df$dv.nword <- tmp.df$nword;                    # DV for negbin
 tmp.df$ev.pot.dys <- tmp.df$pot.dys # exposure: number days dip was not on leave in unit 
 tmp.df$ev.all.dys <- tmp.df$all.dys # exposure: number days dips met in unit (period)
 tmp.df$ev.pot.sh <- tmp.df$pot.sh   # exposure: share of all days dip was not on leave in unit 
-tmp.df$dv.nword.sh <- tmp.df$nword / tmp.df$pot.sh*100 # DV for OLS
+#tmp.df$dv.nword.sh <- tmp.df$nword / (tmp.df$pot.sh*100) # DV for OLS using pct
+tmp.df$dv.nword.sh <- tmp.df$nword / tmp.df$pot.sh # DV for OLS
 tmp.df$nword <- tmp.df$pot.dys <- tmp.df$all.dys <- tmp.df$pot.sh <- NULL # clean
 
 # covariates
@@ -1039,7 +1043,7 @@ if (leg==64){
     sel2 <- grep("64y1", tmp.df$sel.agg)
     tmp.df$dpresoff[intersect(sel, sel2)] <- 1
 }
-table(tmp.df$dpresoff)
+#table(tmp.df$dpresoff)
 ## ##########################
 ## ## progressive ambition ##
 ## ##########################
@@ -1047,21 +1051,47 @@ table(tmp.df$dpresoff)
 
 tmp.df[1,]
 
-###################################
-## rename aggregated data object ##
-###################################
-if (leg==60) data.periodo.60 <- tmp.df
-if (leg==62) data.periodo.62 <- tmp.df
-if (leg==64) data.periodo.64 <- tmp.df
+############################################
+## AGREGATE AND SAVE BY MEMBER-DAY OBJECT ##
+############################################
+tmp <- speeches
+tmp$mem.day <- paste(tmp$who, tmp$date)
+tmp <- tmp[duplicated(tmp$mem.day)==FALSE,] # keep one obs per member-day
+tmp$text <- tmp$text.only <- tmp$nword <- tmp$n <- tmp$f <- tmp$fch <- tmp$file <- tmp$ord <- tmp$mem.day <- NULL
+#
+if (leg==60){
+    data.member.day.60 <- tmp
+    save(data.member.day.60, file = "../data/speech-day-60.RData")
+}
+if (leg==62){
+    data.member.day.62 <- tmp
+    save(data.member.day.62, file = "../data/speech-day-62.RData")
+}
+if (leg==64){
+    data.member.day.64 <- tmp
+    save(data.member.day.64, file = "../data/speech-day-64.RData")
+}
 
-save(data.periodo.60, file = "../data/speech-periodo-60.RData")
-save(data.periodo.62, file = "../data/speech-periodo-62.RData")
-save(data.periodo.64, file = "../data/speech-periodo-64.RData")
+############################################
+## rename and save aggregated data object ##
+############################################
+if (leg==60){
+    data.periodo.60 <- tmp.df
+    save(data.periodo.60, file = "../data/speech-periodo-60.RData")
+}
+if (leg==62){
+    data.periodo.62 <- tmp.df
+    save(data.periodo.62, file = "../data/speech-periodo-62.RData")
+}
+if (leg==64){
+    data.periodo.64 <- tmp.df
+    save(data.periodo.64, file = "../data/speech-periodo-64.RData")
+}
 
 
-####################################
-## PREPARE VARIABLES FOR ANALYSIS ##
-####################################
+#####################################
+## COMMENTS/INSTRUCTIONS BY EDITOR ##
+#####################################
 
 DONE 1. drop speeches of less than 50 words
 
