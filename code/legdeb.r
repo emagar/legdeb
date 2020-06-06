@@ -61,7 +61,9 @@ data$dv.nword.sh <- data$dv.nword / data$ev.pot.sh # fix dv using share, not pct
 ## data[sel,]
 ## x
 
-# member descriptives
+#########################
+## member descriptives ##
+#########################
 sel.col <- grep.e("(?:dv|ev|dpresoff)",colnames(data))  # keep only dv and ev
 colnames(data)[sel.col] # debug
 tmp.mem <- data[,sel.col] # keep only selected numeric columns
@@ -71,7 +73,7 @@ tmp.mem$dv.nword.by.dy <- tmp.mem$dv.nword / tmp.mem$ev.pot.dys # words by day
 tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy
 ctrl <- tmp.mem$dpresoff # will contrast presiding officers against rest
 tmp.mem$dv.nword.sh <- tmp.mem$ev.all.dys <- tmp.mem$ev.pot.sh <- tmp.mem$dpresoff <- NULL # drop useless
-summ <- as.list(rep(NA,5)); names(summ) <- c("mean","median","sd","min","max")
+summ <- as.list(rep(NA,5)); names(summ) <- c("mean","median","sd","min","max") # will receive descriptive stats
 tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "mean"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
 summ$mean <- tmp
 tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "median"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
@@ -82,39 +84,60 @@ tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "min"); tmp[,1] <- factor(
 summ$min <- tmp
 tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "max"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
 summ$max <- tmp
-summ
+#
+print("* * Descriptives for diputados vs presiding officers * *")
+print(summ)
 rm(ctrl, sel,sel.col,tmp.mem,tmp) # clean
-x
 
-# day descriptives wo presiding officers
+
+########################################################################
+## plenary session (day) descriptives --- dropping presiding officers ##
+########################################################################
 data.dy$dpresoff <- 1 - as.numeric(data.dy$role=="diputado")
 sel.col <- grep.e("(?:nword|leg)",colnames(data.dy))  # keep only dv and ev
 #colnames(data.dy)[sel.col] # debug
-tmp.dy <- data.dy[data.dy$dpresoff==0,sel.col] # keep diputados and selected numeric columns
-cbind(tmp.dy[1:20,],ctrl[1:20])
-ctrl <- data.dy$date[data.dy$dpresoff==0] # will contrast presiding officers against rest
-summ <- as.list(rep(NA,5)); names(summ) <- c("mean.words","median.words","max.words","mean.speakers","max.speakers")
-tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "mean")
+tmp.dy <- data.dy[data.dy$dpresoff==0,sel.col] # keep diputados only and selected numeric columns
+#cbind(tmp.dy[1:20,],ctrl[1:20])
+#
+# follow legislaturas
+ctrl <- data.dy$leg[data.dy$dpresoff==0]
+summ <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = c(.5,.9))
+summ <- summ[,-grep.e("leg",colnames(summ))]
+# add more stats
+tmp2 <- aggregate(tmp.dy, by = list(ctrl), FUN = "max")
+summ$nword.day.max <- tmp2$nword.day
+#
+ctrl <- data.dy$date[data.dy$dpresoff==0] # follow days first to produce nspeaker stats
+tmp2 <- aggregate(tmp.dy, by = list(ctrl), FUN = "mean"); tmp3 <- tmp2$leg # preserves leg
+tmp2 <- aggregate(tmp.dy, by = list(ctrl), FUN = "length") # get nspeakers
+tmp2$nspeakers.day <- tmp2$nword.day
+tmp2$leg <- tmp3
+tmp2$Group.1 <- tmp2$nword.day <- NULL # keep nspeakers only
+ctrl <- tmp2$leg # now follow legs
+tmp2 <- aggregate(tmp2, by = list(ctrl), FUN = "quantile", probs = c(.5,.9))
+summ$nspeakers.day <- tmp2$nspeakers.day
+#
+print("* * Descriptives by legislatura * *")
+print(round(summ,0))
 
-tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "length")
-tmp$nspeakers <- tmp$leg
-tmp$leg <- tmp$nword.day <- NULL
 ##############################################
 ## histogram of number speakers in sessions ##
 ##############################################
-pdf(file = paste(gd, "nspeakers.pdf", sep = ""))
-png(filename = paste(gd, "nspeakers.png", sep = ""))
+ctrl <- data.dy$date[data.dy$dpresoff==0] # follow daily stats
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "length")
+tmp$nspeakers <- tmp$leg
+tmp$leg <- tmp$nword.day <- NULL
+#pdf(file = paste(gd, "nspeakers.pdf", sep = ""), height = 5, width = 7)
+#png(filename = paste(gd, "nspeakers.png", sep = ""), height = 345, width = 480)
 hist(tmp$nspeakers, breaks = 24,
-     main = "Members speaking in a plenary session",
+     main = "How many spoke in a plenary session",
      xlab = "Number of speachmakers (excluding presiding officers)",
      xlim = c(0,120),
      ylim = c(0,80))
 abline(v=median(tmp$nspeakers),lty=2)
 text(median(tmp$nspeakers), 77, labels = paste("Median =", median(tmp$nspeakers)) )
-dev.off()
+#dev.off()
 
-tmp[1:4,]
-tmp.dy <- aggregate(tmp.dy, by = list(ctrl), FUN = "median")
 
 data.mem$ev.pot.sh <- data.mem$ev.pot.dys / data.mem$ev.all.dys # fix share for member
 data.mem$dv.nword.by.dy <- data.mem$dv.nword / data.mem$ev.pot.dys # words by day
