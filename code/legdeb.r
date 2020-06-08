@@ -3,6 +3,7 @@
 #################################################################################
 
 library(lubridate) # date handling
+library(MASS) # negbin estimation
 
 rm(list = ls())
 
@@ -26,6 +27,11 @@ gsub.e <- function(pattern, replacement, x, perl = TRUE, ignore.case = TRUE){
     return(tmp)
 }
 
+###################
+## LOAD DIP DATA ##
+###################
+load(file = "all-dips-list")
+
 # LOAD DATA
 # periodo aggregates
 load(file = "speech-periodo-60.RData")
@@ -44,6 +50,8 @@ data <- rbind(data, data.periodo.62)
 data <- rbind(data, data.periodo.64)
 rownames(data) <- NULL
 rm(data.periodo.60,data.periodo.62,data.periodo.64) # clean
+data[1,]
+x
 
 # merge into single data frame
 data.dy <- data.frame()
@@ -73,26 +81,95 @@ tmp.mem$dv.nword.by.dy <- tmp.mem$dv.nword / tmp.mem$ev.pot.dys # words by day
 tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy
 ctrl <- tmp.mem$dpresoff # will contrast presiding officers against rest
 tmp.mem$dv.nword.sh <- tmp.mem$ev.all.dys <- tmp.mem$ev.pot.sh <- tmp.mem$dpresoff <- NULL # drop useless
-summ <- as.list(rep(NA,5)); names(summ) <- c("mean","median","sd","min","max") # will receive descriptive stats
-tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "mean"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
-summ$mean <- tmp
-tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "median"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
-summ$median <- tmp
-tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "sd"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
-summ$sd <- tmp
+summ <- as.list(rep(NA,7)); names(summ) <- c("min","p10","p25","p50","p75","p90","max") # will receive descriptive stats
 tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "min"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
 summ$min <- tmp
+tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "quantile", probs = .1); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
+summ$p10 <- tmp
+tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "quantile", probs = .25); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
+summ$p25 <- tmp
+tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "quantile", probs = .5); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
+summ$p50 <- tmp
+tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "quantile", probs = .75); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
+summ$p75 <- tmp
+tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "quantile", probs = .9); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
+summ$p90 <- tmp
 tmp <- aggregate(tmp.mem[,-1], by = list(ctrl), FUN = "max"); tmp[,1] <- factor(tmp[,1], labels = c("dips","pres.off"))
 summ$max <- tmp
 #
 print("* * Descriptives for diputados vs presiding officers * *")
 print(summ)
+
+# ALL MEMBERS IN DATASET
+nrow(tmp.mem)
+# HOW MANY NEVER SPOKE
+nrow(tmp.mem[tmp.mem$dv.nword==0,])
+# How may presiding officers
+sel.col <- grep.e("(?:dv|ev|dpresoff)",colnames(data))  # keep only dv and ev
+sel.row <- grep.e("extra", data$sel.agg)
+ctrl <- data$nom[-sel.row] # agg criterion
+tmp.mem <- data[-sel.row,sel.col] # keep only selected numeric columns and ordinary sessions
+tmp.mem <- aggregate(tmp.mem, by = list(ctrl), FUN = "sum")
+table(tmp.mem$dpresoff)
+
+
+tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy
+
+tmp.mem[1,]
+
 rm(ctrl, sel,sel.col,tmp.mem,tmp) # clean
+
+
+#######################
+## RETURNING MEMBERS ##
+#######################
+tmp.dips <- data.frame()
+for (i in c(60,62,64)){ # merge into single dataframe
+    sel <- grep(i, names(all.dips))
+    tmp <- all.dips[[sel]]
+    tmp.dips <- rbind(tmp.dips, tmp)
+} 
+sel <- which(tmp.dips$doath==0); tmp.dips <- tmp.dips[-sel,] # drop members no oath
+# recode missings
+sel <- grep.e("[0-9]", tmp.dips$repite)
+tmp.dips$repite[-sel] <- "no" # assume all missing are non-returning
+tmp$repite[is.na(tmp$repite)] <- "no" # assume all missing are non-returning
+tmp.dips <- tmp.dips[duplicated(tmp.dips$nom)==FALSE,] # keep one obs per member
+table(tmp.dips$repite)
+# remove past no oaths from label
+tmp.dips$repite <- gsub.e("([0-9]{2}0-)", "", tmp.dips$repite)
+tmp.dips$repite <- gsub.e("(-[0-9]{2}0)", "", tmp.dips$repite)
+table(tmp.dips$repite[sel])
+###########################
+## simplified categories ##
+###########################
+tmp.dip$repite2 <- NA
+sel <- which(tmp.dips$repite %in% c("no", "60", "62", "64", "60-sen")) # PRESENT IN ONE LEGISLATURA ONLY
+tmp.dips$repite2[sel] <- "in one leg only"
+sel <- which(tmp.dips$repite %in% c("57-60", "57-62", "57-60-62", "58-60-62", "57-60-sen-64", "58-sen-62-64", "59-62-64", "59-sen-62-64", "60-62", "60-62-64", "60-64", "60-sen-64", "62-64", "59-62-64")) # PRESENT IN TWO LEGISLATURAS
+tmp.dips$repite2[sel] <- "in two legs"
+sel <- which(tmp.dips$repite %in% c("47-60", "49-51-54-60-sen", "52-54-64", "52-59-sen-62", "53-57-59", "55-sen-60", "56-58-60", "56-58-61", "57-59-61-64", "57-59-sen-62", "57-59-sen-64", "57-59-64", "57-59-sen-64", "56-59-61-64", "57-60-63", "57-60-sen", "57-61-64", "57-61-sen-64", "57-sen-62", "57-sen-62-sen", "57-64", "58-60", "58-60-63", "58-62", "58-64", "58-sen-62", "59-62", "59-sen-62", "59-64", "59-sen-64", "60-63", "61-64", "sen-52-sen-56-60", "sen-60", "sen-60-sen", "sen-62", "sen-64", "61-sen-64", "61-sen-64", "53-sen-64", "55-59-64", "58-61-sen-64")) # PRESENT IN ANOTHER LEGISLATURA NOT OBSERVED
+tmp.dips$repite2[sel] <- "in another (unobserved) leg"
+#
+# diputados repeating
+table(tmp.dips$repite2, useNA = "always")
+#tmp.dips$repite[is.na(tmp.dips$repite2)]
+
+
+
+data[1,]
+
 
 
 ########################################################################
 ## plenary session (day) descriptives --- dropping presiding officers ##
 ########################################################################
+#######################################
+## 1. days aggregated by legislatura ##
+#######################################
+#############################
+## version with n speakers ##
+#############################
 data.dy$dpresoff <- 1 - as.numeric(data.dy$role=="diputado")
 sel.col <- grep.e("(?:nword|leg)",colnames(data.dy))  # keep only dv and ev
 #colnames(data.dy)[sel.col] # debug
@@ -120,6 +197,89 @@ summ$nspeakers.day <- tmp2$nspeakers.day
 print("* * Descriptives by legislatura * *")
 print(round(summ,0))
 
+#######################################
+# version with nword percentiles only #
+#######################################
+# follow legislaturas
+ctrl <- data.dy$leg[data.dy$dpresoff==0]
+summ <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = c(0,.1,.25,.5,.75,.9,1))
+summ <- summ[,-grep.e("leg",colnames(summ))]
+#
+print("* * Descriptives by legislatura * *")
+print(round(summ,0))
+
+
+####################################
+## 2. days aggregated by periodos ##
+####################################
+ctrl <- data.dy$periodo[data.dy$dpresoff==0]
+summ <- aggregate(tmp.dy, by = list(ctrl), FUN = "min")
+summ <- summ[,-grep.e("leg",colnames(summ))]
+summ$nword.day.min <- summ$nword.day; summ$nword.day <- NULL
+# add more stats
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .1)
+summ$nword.day.10 <- tmp$nword.day
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .25)
+summ$nword.day.25 <- tmp$nword.day
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .5)
+summ$nword.day.50 <- tmp$nword.day
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .75)
+summ$nword.day.75 <- tmp$nword.day
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .9)
+summ$nword.day.90 <- tmp$nword.day
+tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "max")
+summ$nword.day.max <- tmp$nword.day
+#summ <- summ[-16,]
+colnames(summ)[1] <- "periodo"
+#
+print("* * Descriptives by periodo * *")
+print(summ)
+#
+# date-ify periodo for plotting
+summ$date <- c(ymd("20060901"), ymd("20070201"), ymd("20070901"), ymd("20080201"), ymd("20080901"), ymd("20090201"), ymd("20120901"), ymd("20130201"), ymd("20130515"), ymd("20130901"), ymd("20140201"), ymd("20140515"), ymd("20140901"), ymd("20150201"), ymd("20180901"), ymd("20190201"), ymd("20190515"), ymd("20190901"), ymd("20200201"))
+#
+summ$dextra <- c(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0) # extraordinarios
+summ$color <- ifelse(summ$dextra==0, "black", "gray") # color for extraordinarios
+#
+summ[,grep.e("nword",colnames(summ))] <- log(summ[,grep.e("nword",colnames(summ))],10) # log scale
+#
+
+# plot periodo quartiles
+#pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
+#png(filename = paste(gd, "quantiles-periodo.png", sep = ""), height = 480, width = 480)
+plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
+#     main = "Speeches in the legislative periods observed",
+     main = "",
+     xlab = "Speech length in words (log scale)", ylab = "Year",
+     xlim = c(1.69,4.5), 
+     ylim = c(ymd("20060901"), ymd("20210601"))) # set ranges
+#log(15000,10)
+axis(1, at = c(1.69,2,2.69,3,3.69,4,4.69), labels = c("50","100","500","1000","5k","10k","50k"))
+axis(2, at = seq(ymd("20070101"),ymd("20200101"),"year"), labels = FALSE)
+axis(2, at = c(ymd("20080101"), ymd("20100101"), ymd("20120101"), ymd("20140101"), ymd("20160101"), ymd("20180101"), ymd("20200101")), labels = seq(2008,2020,2))
+#
+abline(v = log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), lty = 2)
+points(summ$nword.day.min, summ$date, col = summ$color, cex = .5)
+points(summ$nword.day.max, summ$date, col = summ$color, cex = .5)
+for (i in 1:19){
+    lines(c(summ$nword.day.10[i], summ$nword.day.90[i]), rep(summ$date[i],2), col = summ$color[i])
+    lines(c(summ$nword.day.25[i], summ$nword.day.75[i]), rep(summ$date[i],2), lwd = 3, col = summ$color[i])
+    points(summ$nword.day.50[i], summ$date[i], pch = 20, col = summ$color[i])
+}
+text(4.4, ymd("20080101"), labels = "60th")
+text(4.4, ymd("20140101"), labels = "62nd")
+text(4.4, ymd("20190915"), labels = "64th")
+text(4.4, ymd("20190215"), labels = "(partial)")
+text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210401"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"])) )
+#dev.off()
+
+####################
+## longest speech ##
+####################
+sel <- which(data.dy$nword.day == max(data.dy$nword.day[data.dy$dpresoff==0]))
+data.dy[sel,]
+x
+
 ##############################################
 ## histogram of number speakers in sessions ##
 ##############################################
@@ -127,11 +287,13 @@ ctrl <- data.dy$date[data.dy$dpresoff==0] # follow daily stats
 tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "length")
 tmp$nspeakers <- tmp$leg
 tmp$leg <- tmp$nword.day <- NULL
+
 #pdf(file = paste(gd, "nspeakers.pdf", sep = ""), height = 5, width = 7)
 #png(filename = paste(gd, "nspeakers.png", sep = ""), height = 345, width = 480)
 hist(tmp$nspeakers, breaks = 24,
-     main = "How many spoke in a plenary session",
-     xlab = "Number of speachmakers (excluding presiding officers)",
+#     main = "How many spoke in a plenary session",
+     main = "",
+     xlab = "Number of speechmakers (excluding presiding officers)",
      xlim = c(0,120),
      ylim = c(0,80))
 abline(v=median(tmp$nspeakers),lty=2)
@@ -159,12 +321,47 @@ summ
 rm(ctrl, sel,sel.col,tmp) # clean
 x
 
+###########################################################
+## COMPOSITIONAL-CONSCIOUS PARTY SHARE (RELATIVE TO PRI) ##
+###########################################################
+data$rptysh <- NA # new variable
+sel <- which(data$leg==60 & data$dpri==1); tmp <- data$ptysh[sel][1] # tmp is the pri's share
+sel <- which(data$leg==60); data$rptysh[sel] <- data$ptysh[sel] / tmp
+sel <- which(data$leg==62 & data$dpri==1); tmp <- data$ptysh[sel][1] # tmp is the pri's share
+sel <- which(data$leg==62); data$rptysh[sel] <- data$ptysh[sel] / tmp
+sel <- which(data$leg==64 & data$dpri==1); tmp <- data$ptysh[sel][1] # tmp is the pri's share
+sel <- which(data$leg==64); data$rptysh[sel] <- data$ptysh[sel] / tmp
 
 data[1,]
-ave()
-table(data$doath, useNA = "always")
 
-x
+OLS MODELS
+fit <- lm(    formula = dv.nword.sh ~    ev.pot.dys +
+                  dfem + dsmd + rptysh + dwithpres + dpastleg +
+                  factor(leg)
+                        , data=data, subset = dpresoff==0)
+summary(fit)$coefficients
+names(summary(fit))
+
+NEGBIN MODELS
+fit <- glm.nb(formula = dv.nword ~  log(ev.pot.dys) +
+                  dfem + dsmd + rptysh + dwithpres + dpastleg +
+                  factor(leg)
+                        , data=data, subset = dpresoff==0)
+summary.glm(fit)$coefficients
+summary.glm(fit)
+message(msg); rm(msg)
+data.frame( coef=ifelse(coef(fit) > 0 & summary.glm(fit)$coefficients[,4]>=.10  & summary.glm(fit)$coefficients[,4]<.20, "+ ",
+                 ifelse(coef(fit) > 0 &                                           summary.glm(fit)$coefficients[,4]<.10, "++",
+                 ifelse(coef(fit) < 0 & summary.glm(fit)$coefficients[,4]>=.10  & summary.glm(fit)$coefficients[,4]<.20, "- ",
+                 ifelse(coef(fit) < 0 &                                           summary.glm(fit)$coefficients[,4]<.10, "--",
+            ". ")))) )
+#
+# SPACE HERE TO RERUN NEGBIN
+fit13 <- fit
+
+summary.glm(fit15)
+
+
 
 
 ####################################

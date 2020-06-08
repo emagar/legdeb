@@ -1,6 +1,7 @@
 # specific files
 estenograficas/tmp.csv
 tmp/
+data/manipulated-speeches-*.RData
 
 # History files
 .Rhistory

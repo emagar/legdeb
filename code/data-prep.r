@@ -125,9 +125,9 @@ cap.emm <- function(x=dips$nom){
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
-#leg <- 60 # pick one
+leg <- 60 # pick one
 #leg <- 62 # pick one
-leg <- 64 # pick one
+#leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 length(ves) # debug
@@ -327,7 +327,7 @@ add.periodo <- function(x){
     sel <- which(x$date >= ymd("20150501") & x$date < ymd("20150825")) ; x$periodo[sel] <- "62y3-extra"
                                         #
     sel <- which(x$date >= ymd("20180825") & x$date < ymd("20190101")) ; x$periodo[sel] <- "64y1-1"
-    sel <- which(x$date >= ymd("20190101") & x$date < ymd("20190131")) ; x$periodo[sel] <- "64y1-1-extra"
+    sel <- which(x$date >= ymd("20190101") & x$date < ymd("20190131")) ; x$periodo[sel] <- "64y1-extra"
     sel <- which(x$date >= ymd("20190201") & x$date < ymd("20190501")) ; x$periodo[sel] <- "64y1-2"
     sel <- which(x$date >= ymd("20190501") & x$date < ymd("20190825")) ; x$periodo[sel] <- "64y1-extra"
     sel <- which(x$date >= ymd("20190825") & x$date < ymd("20200101")) ; x$periodo[sel] <- "64y2-1"
@@ -410,6 +410,10 @@ speeches[3,]
 ## speeches[sel[1],]
 ## x
 
+#################################################################
+##           SAVE/LOAD MANIPULATED SPEECH OBJECTS              ##
+## RE-RUN CODE IF SPEECH DATA MODIFIED OR ERRORS SPOTTED/FIXED ##
+#################################################################
 
 
 #############################
@@ -1087,6 +1091,11 @@ if (leg==64){
     data.periodo.64 <- tmp.df
     save(data.periodo.64, file = "../data/speech-periodo-64.RData")
 }
+
+###########################
+## save diputados object ##
+###########################
+save(all.dips, file = "../data/all-dips-list.RData")
 
 
 #####################################
