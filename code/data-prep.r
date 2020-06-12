@@ -125,8 +125,8 @@ cap.emm <- function(x=dips$nom){
 ########################################
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
-leg <- 60 # pick one
-#leg <- 62 # pick one
+#leg <- 60 # pick one
+leg <- 62 # pick one
 #leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
@@ -411,10 +411,17 @@ speeches[3,]
 ## x
 
 #################################################################
+##  * * *  START HERE IF ADDING MORE DIPUTADO DATA  * * *      ##
 ##           SAVE/LOAD MANIPULATED SPEECH OBJECTS              ##
 ## RE-RUN CODE IF SPEECH DATA MODIFIED OR ERRORS SPOTTED/FIXED ##
 #################################################################
+if (leg==60) save.image(file = "../data/manipulated-speeches-60.RData")
+if (leg==62) save.image(file = "../data/manipulated-speeches-62.RData")
+if (leg==64) save.image(file = "../data/manipulated-speeches-64.RData")
 
+if (leg==60) load(file = "../data/manipulated-speeches-60.RData")
+if (leg==62) load(file = "../data/manipulated-speeches-62.RData")
+if (leg==64) load(file = "../data/manipulated-speeches-64.RData")
 
 #############################
 ## READ DIPUTADO CSV FILES ##
@@ -773,7 +780,9 @@ message(" ********************************************\n ** Checked: all speaker
 } else {print(d.no.hits)}
 
 
-# check in/out mismathches with speeches one-by-one 
+########################################################
+## check in/out mismathches with speeches one-by-one  ##
+########################################################
 tmp <- data.frame(dip = dips$id)
 tmp$dhasnas <- 0 # set dummy to zero default
 for (i in sel.dips){
@@ -784,7 +793,9 @@ for (i in sel.dips){
 }
 which(tmp$dhasnas==1) # mismatches have NAs
 
-# Add nword column that is missing from diputados who did not utter a word
+##############################################################################
+## Add nword column that is missing from diputados who did not utter a word ##
+##############################################################################
 tmp <- tmp.agg
 for (i in 1:length(tmp)){
     #i <- 1 # debug
@@ -1097,6 +1108,7 @@ if (leg==64){
 ###########################
 save(all.dips, file = "../data/all-dips-list.RData")
 
+x
 
 #####################################
 ## COMMENTS/INSTRUCTIONS BY EDITOR ##

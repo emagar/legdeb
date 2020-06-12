@@ -1,4 +1,4 @@
-#################################################################################
+################################################################################
 ## USE data-prep.r FIRST TO PREPARE DATA FRAMES WITH DIPUTADO-BY-DIPUTADO DATA ##
 #################################################################################
 
@@ -30,7 +30,7 @@ gsub.e <- function(pattern, replacement, x, perl = TRUE, ignore.case = TRUE){
 ###################
 ## LOAD DIP DATA ##
 ###################
-load(file = "all-dips-list")
+load(file = "all-dips-list.RData")
 
 # LOAD DATA
 # periodo aggregates
@@ -51,8 +51,7 @@ data <- rbind(data, data.periodo.64)
 rownames(data) <- NULL
 rm(data.periodo.60,data.periodo.62,data.periodo.64) # clean
 data[1,]
-x
-
+#
 # merge into single data frame
 data.dy <- data.frame()
 data.dy <- rbind(data.dy, data.member.day.60)
@@ -157,10 +156,6 @@ table(tmp.dips$repite2, useNA = "always")
 
 
 
-data[1,]
-
-
-
 ########################################################################
 ## plenary session (day) descriptives --- dropping presiding officers ##
 ########################################################################
@@ -229,7 +224,6 @@ tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = .9)
 summ$nword.day.90 <- tmp$nword.day
 tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "max")
 summ$nword.day.max <- tmp$nword.day
-#summ <- summ[-16,]
 colnames(summ)[1] <- "periodo"
 #
 print("* * Descriptives by periodo * *")
@@ -252,13 +246,16 @@ plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(
      main = "",
      xlab = "Speech length in words (log scale)", ylab = "Year",
      xlim = c(1.69,4.5), 
-     ylim = c(ymd("20060901"), ymd("20210601"))) # set ranges
+     ylim = c(ymd("20060901"), ymd("20210606"))) # set ranges
 #log(15000,10)
 axis(1, at = c(1.69,2,2.69,3,3.69,4,4.69), labels = c("50","100","500","1000","5k","10k","50k"))
-axis(2, at = seq(ymd("20070101"),ymd("20200101"),"year"), labels = FALSE)
+axis(2, at = seq(ymd("20070101"),ymd("20210101"),"year"), labels = FALSE)
 axis(2, at = c(ymd("20080101"), ymd("20100101"), ymd("20120101"), ymd("20140101"), ymd("20160101"), ymd("20180101"), ymd("20200101")), labels = seq(2008,2020,2))
 #
 abline(v = log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), lty = 2)
+abline(h = c(ymd("20060702"), ymd("20090705"), ymd("20120701"), ymd("20150707"), ymd("20180701")), lty = 3, col = "gray") # ymd("20210606")
+text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Presidential election", pos = 1, offset = .2, col = "gray", cex = .67)
+text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Midterm election", pos = 3, offset = .2, col = "gray", cex = .67)
 points(summ$nword.day.min, summ$date, col = summ$color, cex = .5)
 points(summ$nword.day.max, summ$date, col = summ$color, cex = .5)
 for (i in 1:19){
@@ -266,11 +263,17 @@ for (i in 1:19){
     lines(c(summ$nword.day.25[i], summ$nword.day.75[i]), rep(summ$date[i],2), lwd = 3, col = summ$color[i])
     points(summ$nword.day.50[i], summ$date[i], pch = 20, col = summ$color[i])
 }
-text(4.4, ymd("20080101"), labels = "60th")
-text(4.4, ymd("20140101"), labels = "62nd")
-text(4.4, ymd("20190915"), labels = "64th")
-text(4.4, ymd("20190215"), labels = "(partial)")
-text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210401"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"])) )
+text(4.35, ymd("20080101"), labels = "60th")
+text(4.35, ymd("20140101"), labels = "62nd")
+text(4.35, ymd("20190915"), labels = "64th")
+text(4.35, ymd("20190215"), labels = "(partial)")
+text(4.35, ymd("20110201"), labels = "61st",      col = "gray")
+text(4.35, ymd("20100701"), labels = "(unobserved)", col = "gray")
+text(4.35, ymd("20170201"), labels = "63rd",      col = "gray")
+text(4.35, ymd("20160701"), labels = "(unobserved)", col = "gray")
+text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"])) )
+## text(2.75, ymd("20170101"), labels = "(63rd unobserved)", col = "gray")
+## text(2.75, ymd("20110101"), labels = "(61st unobserved)", col = "gray")
 #dev.off()
 
 ####################
@@ -300,7 +303,6 @@ abline(v=median(tmp$nspeakers),lty=2)
 text(median(tmp$nspeakers), 77, labels = paste("Median =", median(tmp$nspeakers)) )
 #dev.off()
 
-
 data.mem$ev.pot.sh <- data.mem$ev.pot.dys / data.mem$ev.all.dys # fix share for member
 data.mem$dv.nword.by.dy <- data.mem$dv.nword / data.mem$ev.pot.dys # words by day
 data.mem$dpresoff <- as.numeric(data.mem$dpresoff>0) # fix dummy
@@ -321,6 +323,23 @@ summ
 rm(ctrl, sel,sel.col,tmp) # clean
 x
 
+#############
+## PLOT DV ##
+#############
+tmp <- data$dv.nword[data$dpresoff==0]
+quantile(tmp, probs = seq(0,1,.1))
+sel <- which(tmp>7500)
+tmp[sel] <- 7500 # bunch outliers at fake level
+hist(tmp, breaks = 100)
+
+str(data[,c("ev.pot.dys","dmaj","size.maj","dpan","dleft2", "dpastleg","dleader","dchair","dsmd","dsup","leg", "dfem")])
+x
+
+
+####################
+## Dichotomous DV ##
+####################
+data$dword <- as.numeric(data$dv.nword > 0)
 ###########################################################
 ## COMPOSITIONAL-CONSCIOUS PARTY SHARE (RELATIVE TO PRI) ##
 ###########################################################
@@ -331,24 +350,252 @@ sel <- which(data$leg==62 & data$dpri==1); tmp <- data$ptysh[sel][1] # tmp is th
 sel <- which(data$leg==62); data$rptysh[sel] <- data$ptysh[sel] / tmp
 sel <- which(data$leg==64 & data$dpri==1); tmp <- data$ptysh[sel][1] # tmp is the pri's share
 sel <- which(data$leg==64); data$rptysh[sel] <- data$ptysh[sel] / tmp
-
+#######################
+## PRESIDENT'S PARTY ##
+#######################
+data$dprespty <- 0
+data$dprespty[data$leg==60 & data$dpan==1] <- 1
+data$dprespty[data$leg==62 & data$dpri==1] <- 1
+data$dprespty[data$leg==64 & data$dmorena==1] <- 1
+#####################
+## MAJORITY STATUS ##
+#####################
+data$dmaj <- 0
+data$dmaj[data$leg==64 & data$dmorena==1] <- 1
+#################
+## AGE SQUARED ##
+#################
+data$agesq <- data$age^2
+data$lnage <- log(data$age)
+#########################
+## PRD 60 62 AS MORENA ##
+#########################
+data$dleft2 <- data$dmorena
+data$dleft2[data$dleft==1 & data$leg<64] <- 1
 data[1,]
+############
+## MEMBER ##
+############
+data$individual <- as.numeric(factor(data$nom))
+########################
+## CARDINAL SENIORITY ##
+########################
+data$seniority <- 0 # no previous terms is default
+# leg 64
+data$tmp <- data$repite # for manipulation
+sel <- which(data$leg==64)
+tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
+data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
+tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
+data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+# leg 62
+data$tmp <- data$repite # for manipulation
+sel <- which(data$leg==62)
+sel2 <- grep.e("62-", data$tmp[sel])
+data$tmp[sel] <- gsub.e("(62)-.+$", "", data$tmp[sel]) # remove 62 post 
+tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
+data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
+tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
+data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+# leg 60
+data$tmp <- data$repite # for manipulation
+sel <- which(data$leg==60)
+sel2 <- grep.e("62-", data$tmp[sel])
+data$tmp[sel] <- gsub.e("(62)-.+$", "", data$tmp[sel]) # remove 62 post 
+tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
+data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
+tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
+data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+#
+data$tmp <- NULL # clean
+table(data$seniority, data$dpastleg) # dpastleg did not consider senado tenures
+#######################
+## PARTY SIZE TO MAJ ##
+#######################
+data$size.maj <- NA
+sel <- which(data$ptysh > .5)
+data$size.maj[sel] <- 0 # above majority to zero
+data$size.maj[-sel] <- data$ptysh[-sel]*100 - 50 # rest are deficit towards majority in pct
+######################
+## RESCALE CONT VAR ##
+######################
+data$ev.pot.dysS <- NA
+data$size.majS <- NA
+data$seniorityS <- NA
+data$ev.pot.dysS[data$dpresoff==0] <- scale(data$ev.pot.dys[data$dpresoff==0])
+data$size.majS  [data$dpresoff==0] <- scale(data$size.maj  [data$dpresoff==0])
+data$seniorityS [data$dpresoff==0] <- scale(data$seniority [data$dpresoff==0])
+###############################
+## LEGISTATURA FIXED EFFECTS ##
+###############################
+data$d60 <- as.numeric(data$leg==60)
+data$d62 <- as.numeric(data$leg==62)
+data$d64 <- as.numeric(data$leg==64)
+data$dsmd64 <- data$dsmd*data$d64
 
-OLS MODELS
-fit <- lm(    formula = dv.nword.sh ~    ev.pot.dys +
-                  dfem + dsmd + rptysh + dwithpres + dpastleg +
-                  factor(leg)
-                        , data=data, subset = dpresoff==0)
-summary(fit)$coefficients
-names(summary(fit))
 
-NEGBIN MODELS
-fit <- glm.nb(formula = dv.nword ~  log(ev.pot.dys) +
-                  dfem + dsmd + rptysh + dwithpres + dpastleg +
-                  factor(leg)
-                        , data=data, subset = dpresoff==0)
-summary.glm(fit)$coefficients
-summary.glm(fit)
+## GRAFICA MATRIZ DE CORRELACIONES: COOL!
+sel <- c("dv.nword", "ev.pot.dys", "dmaj", "rptysh", "ptysh", "size.maj", "dpan", "dleft2", "seniority", "dleader", "dchair", "dsmd", "dsup", "dfem")
+tmp <- cor(data[data$dpresoff==0,sel])
+library('corrplot')   # plots correlation matrix!
+corrplot(tmp, color = TRUE) #plot matrix
+#corrplot(tmp, method = "circle") #plot matrix
+
+###############
+## ZIP MODEL ##
+###############
+library(pscl) # zero inflated poisson
+f <- formula("dv.nword ~ log(ev.pot.dys) + dmaj + rptysh + dpan + dleft2 + dpastleg + dleader + dchair + dsmd + dfem + dsup | dsup")
+fit <- zeroinfl(formula = f, data=data, subset = dpresoff==0) 
+summary(fit)
+
+#################
+## LOGIT MODEL ##
+#################
+f <- formula("dword ~ dmaj + rptysh + dpan + dleft2 + dpastleg + dleader + dchair + dsmd + dsup + dfem")
+fit <- glm(formula = f, data=data, family = "binomial", subset = dpresoff==0) 
+summary(fit)
+x
+
+#####################
+## IV DESCRIPTIVES ##
+#####################
+summary(data[data$dpresoff==0, c("ev.pot.dys", "size.maj", "ptysh", "seniority")])
+table(data$dmaj   [data$dpresoff==0])
+table(data$dmaj   [data$dpresoff==0])
+table(data$dleader[data$dpresoff==0])
+table(data$dchair [data$dpresoff==0])
+table(data$dsmd   [data$dpresoff==0])
+table(data$dsmd64 [data$dpresoff==0])
+table(data$dsup   [data$dpresoff==0])
+table(data$dfem   [data$dpresoff==0])
+table(data$d62    [data$dpresoff==0])
+table(data$d64    [data$dpresoff==0])
+
+###################
+## NEGBIN MODELS ## 
+###################
+#fx <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age")
+f4 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + (1|individual)")
+f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age")
+f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64")
+f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd          + seniority + dsup + dfem           ")
+
+fit1 <- glm.nb  (formula = f1, data=data, subset = dpresoff==0)
+fit2 <- glm.nb  (formula = f2, data=data, subset = dpresoff==0)
+fit3 <- glm.nb  (formula = f3, data=data, subset = dpresoff==0)
+#fit4 <- glmer.nb(formula = f4, data=data, subset = dpresoff==0)
+#fit4 <- glmer(formula = f4, data=data, family = poisson, subset = dpresoff==0)
+
+summary(fit2)$coefficients
+summary(fit4)
+x
+
+# log likelihood
+logLik(fit1)
+logLik(fit2)
+logLik(fit3)
+
+# n
+nobs(fit1)
+nobs(fit2)
+nobs(fit3)
+
+
+################
+## OLS MODELS ##
+################
+## fx <- formula("dv.nword.sh ~ ev.pot.dys + dmaj + size.maj + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age")
+f8 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + (1|individual)")
+f7 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age") #ev.pot.dys
+f6 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64")
+f5 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd          + seniority + dsup + dfem")
+
+fit5 <- lm(formula = f5, data=data, subset = dpresoff==0)
+fit6 <- lm(formula = f6, data=data, subset = dpresoff==0)
+fit7 <- lm(formula = f7, data=data, subset = dpresoff==0)
+library(lme4)
+library(lmerTest)
+fit8 <- lmer(formula = f8, data=data, subset = dpresoff==0)
+rand(fit8) # test random effects
+class(fit8) <- "lmerMod" # stargazer needs this
+
+summary(fit5)$coefficients
+summary(fit8)$list
+names(summary(fit8))
+
+library(stargazer)
+stargazer(fit5, fit6, fit8, fit1, fit2, align=TRUE, report = ('vc*s'),
+          title = "Regression results",
+          type = "text", out = "tmp-tab.txt",
+          digits = 2,
+          dep.var.labels = c("Words in period", "Words in period (relative to tenure)")
+          , covariate.labels=
+ c("Tenure (logged)",
+   "Majority",
+   "Party size",
+#   "Left",
+   "Party leader",
+   "Comm. chair",
+   "SMD",
+   "SMD x reelect",
+   "Seniority",
+   "Suplente",
+   "Female",
+   "62nd Leg.",
+   "64th Leg.",
+   "Constant")
+          )
+
+## library(apsrtable)
+## apsrtable(fit1, fit2)
+
+############################
+# Average marginal effects #
+############################
+library(margins)
+mar2 <- margins(fit2)
+mar2 <- summary(mar2)
+#tmp <- c(6,4,2,3,1,9,10,11,7,8,5); mar3 <- mar3[order(tmp),] # sort rows so coefs appear in same order as in table  *with dmocion*
+#tmp <-  c(1,2,3,4,5,6,7,8,9,10,11,12); mar2 <- mar2[order(tmp),] # sort rows so coefs appear in same order as in table
+tmp <-  c(11,12,5,9,4,2,6,7,10,1,8,3); #mar2 <-  # sort rows so coefs appear in same order as in table
+mar2 <- mar2[order(tmp),]
+tmp <- c("Tenure",
+         "Majority",
+         "Party size",
+         "Party leader",
+         "Comm. chair",
+         "SMD",
+         "SMD x reelection",
+         "Seniority",
+         "Female",
+         "Suplente",
+         "62nd Leg.",
+         "64th Leg.")
+
+#pdf (file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
+par(mar=c(4,2,2,2)+0.1) # drop title space and left space
+plot(x=c(-1500,1850),#)(-8250,1850),
+     y=-c(1,nrow(mar2)),
+     type="n", axes = FALSE,
+     xlab = "Average marginal effect (words in period)",
+     ylab = "")
+abline(v=seq(-1000, 2000, 250), col = "gray70")
+abline(v=0, lty=2)
+abline(h=seq(-1,-nrow(mar2),-1), col = "gray70")
+axis(1, at = seq(-1000, 2000, 250), labels = FALSE)
+axis(1, at = seq(-1000, 2000, 500), labels = c("-1000","-500","0","+500","+1000","+1500","+2000"))
+for (i in c(-1:-nrow(mar2))){
+    points(y=i, x=mar2$AME[-i], pch=20, cex=1.5, col = "black")
+    lines(y=rep(i, 2), x=c(mar2$lower[-i],mar2$upper[-i]), lwd = 2, col = "black")
+}
+#mar2$factor
+polygon(x= c(-1800,-1100,-1100,-1800), y=c(-12,-12,0,0), col = "white", border = "white")
+text(x=-1700, y=-1:-nrow(mar2), labels=tmp, pos=4)
+#dev.off()
+
+
+
 message(msg); rm(msg)
 data.frame( coef=ifelse(coef(fit) > 0 & summary.glm(fit)$coefficients[,4]>=.10  & summary.glm(fit)$coefficients[,4]<.20, "+ ",
                  ifelse(coef(fit) > 0 &                                           summary.glm(fit)$coefficients[,4]<.10, "++",
