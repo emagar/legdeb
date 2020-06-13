@@ -1,47 +1,55 @@
 
 
+
+
+
+
+
+
+
+
+
+
+
 ##########################
 ## SIMULATE AND PREDICT ##
 ##########################
 # std error version
-f2
-data.frame(dmaj = c( dmaj = rep(0,84), rep(1,16) ),
-                     size.maj = c( seq(from=-50, to=0, length.out = 84),rep(0, 16) ))
 sims2 <- with(data,
               data.frame(ev.pot.dys=median(ev.pot.dys),
-                         dmaj = c( rep(0,84), rep(1,16) ),
-                         size.maj = c( seq(from=-50, to=0, length.out = 84),rep(0, 16) ),
+                         dmaj = NA, 
+                         size.maj = rep(seq(from=-49, to=10, length.out = 60), 2),
                          dleader = 0,
                          dchair = 0,
                          dsmd = 1, 
-                         dsmd64 = c(0,1), 
+                         dsmd64 = c(rep(0,60),rep(1,60)), 
                          seniority = 0,
                          dsup = 0,
                          dfem = 1,
-                         d62 = c(1,0),
-                         d64 = c(0,1)
+                         d62 = c(rep(1,60),rep(0,60)),
+                         d64 = c(rep(0,60),rep(1,60))
                          )
               )
-#head(sims2,10)
+sims2$dmaj <- as.numeric(sims2$size.maj > .5) # fix dmaj
+tail(sims2,10)
 sims2$pr <- predict(fit2, newdata = sims2, type = "response")
-sims2 <- cbind(sims2, predict(fit2e, newdata = sims2, type="link", se=TRUE))
+sims2 <- cbind(sims2, predict(fit2, newdata = sims2, type="link", se=TRUE))
 sims2 <- within(sims2, {
-  PredictedProb <- plogis(fit)
-  LL <- plogis(fit - (1.96 * se.fit))
-  UL <- plogis(fit + (1.96 * se.fit))
+  PredictedWords <- exp(fit)
+  LL <- exp(fit - (1.96 * se.fit))
+  UL <- exp(fit + (1.96 * se.fit))
 })
-sims2$legyr <- seq(from=1, to=0, length.out = 100) # for plot
-head(sims2)
+#sims2$size.maj <- seq(from=-50, to=10, length.out = 120) # for plot
+head(sims2,10)
 library(ggplot2)
-gr <- "../graphs/"
-#pdf (file = paste(gr, "predictedPr.pdf", sep = ""), width = 7, height = 4)
-ggplot(sims2, aes(x = legyr, y = PredictedProb)) +
-    geom_ribbon(aes(ymin = LL, ymax = UL, fill = factor(dsameCoal)), alpha = .2) +
-    geom_line(aes(colour = factor(dsameCoal)), size=1) +
-    labs(fill = "Coalition chair", colour = "Coalition chair",
-         x = "Legislative year remaining (in months)",
-         y = "Predicted probability") +
-    scale_x_continuous(breaks=seq(from=0, to=1, length.out=7), labels=seq(from=12, to=0, by=-2))
+#pdf (file = "../plots/predictedPr.pdf", width = 7, height = 4)
+ggplot(sims2, aes(x = size.maj, y = PredictedWords)) +
+    geom_ribbon(aes(ymin = LL, ymax = UL, fill = factor(dsmd64)), alpha = .2) +
+    geom_line(aes(colour = factor(dsmd64)), size=1) +
+    labs(fill = "Reelection legit", colour = "Reelection legit",
+         x = "Party size",
+         y = "Predicted words in period") +
+    scale_x_continuous(breaks=seq(from=-50, to=10, length.out=7), labels=seq(from=0, to=60, by=10))
 #dev.off()
 
 
