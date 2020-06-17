@@ -1,0 +1,147 @@
+
+
+\section{The institutional setting of legislative debate in the Cámara} [ca 1500 words]
+
+This section offers an overview of the structure of legislative debate. The Cámara's Rules \citep{reglamentoDipMx.2019} set most prescriptions for debate, with general guidelines in Congress' Organic Law \citep{loceum.2019}.
+
+
+
+
+Formally, deputies enjoy equal rights and duties. With respect to deliberation, all are entitled to take the floor when recognized by the presiding officer, for a duration set by rules or by party agreements. However, as in assemblies worldwide, members with status tend to have many more rights, the rest many more duties. What defines status changes from one assembly to the next \citep{cox.2006}.
+
+In the Cámara, party leaders in general, and majority party leaders in particular sit atop the status pyramid.
+
+But when it comes to speech, individual members retain debate rights that set the basis for minority rights. 
+
+
+\subsection{Diffuse agenda power in the Cámara}
+
+1. Mesa and Jucopo, describe them as status actors. 
+
+To see this, consider the two key actors in the Cámara's business, the Junta and the Mesa. The *Mesa Directiva* is the chamber's steering board. The Mesa president is the chamber president ex-officio. The Mesa has consensual traits. It is elected yearly by two-thirds supermajority of Cámara members from candidates proposed by the Junta. While Mesa members can reelect, the presidency must rotate between the top-three seat-holding parties, one year each. The *Junta de Coordinación Política*, the Cámara's top decicion-making organ, is composed of the leaders of all parliamentary groups. The leader of the majority party presides the Junta throughout the term. In the absence of a majority party, however, the leaders of the top-three parties preside the Junta, alternating one year each as they do in the more consensual Mesa. So majority status is crucial to cartelize the legislative process \citep[cf.][]{cox.mccubbins.2005}. 
+
+
+
+eric  x
+
+Who controls the legislative agenda and allocates speaking time?
+1. Who can allocate speaking time to individual MPs? Who controls the legislative agenda – government, parties, MPs, some legislative structure specifically in charge with agenda-setting? In answering this question, you should aim to discuss both formal rules (constitutional rules, rules of procedure), party internal rules (if they exist), and informal rules.
+- party leaders (junta selects), member (self-selects), president (duration), in that order of importance
+
+* Debate actors
+
+%Mesa members can be removed/replaced by two-thirds votes in the floor or in the Junta. 
+
+%Junta members are excluded. Leaders called /coordinadores/.
+
+
+\subsection{Member debate rights}
+Do individual members have debate rights without party leadership permission?
+2. Do individual MPs have a guaranteed right to participate in a debate without party leadership permission? If yes, how much time and in which type of debate? 
+- yes, within limits 
+4. Do particular subsets of MPs (e.g. spokesperson or committee members) have formal rights that entitle them to take the floor?
+- yes, committee members and leader-appointed party speakers
+
+The president recognizes speechmakers and presides over Cámara debates. The Mesa includes deputy presidents and at least one secretary from each parliamentary group. The Mesa follows the session's agenda in the Day's Order (/Orden del Día/) that is mostly set by the Junta. 
+
+
+
+\subsection{The structure of debate}
+3. How is the debate structured? What are the rules of engagement? Do MPs engage in back-and-forth talk? By contrast, do MPs deliver a debate without interruptions?
+- Back-and-forth talk is very rare, rules make for a sequence of short speeches. Once recognized, a member can speak for a limited time (extendable with President's assent). The speechmaker decides if interrupting her is kosher. 
+
+The Day's Order includes (a) committee bill reports, (b) bills from the Senate, (c) business submitted by other branches of government or by state governments, and (d) all items that the Junta wishes to see considered in the session with a list of speakers. With floor approval, the Junta can add items or modify the order of consideration after the start of the session; the Mesa can veto Order amendments that push back consideration of some pre-agreed item. Given sufficient discipline to party leaders, the majority in the Junta can act as dictator in Order setting. 
+
+
+
+\subsection{Types}
+5. What are the existing types of debates? Please select the 5 most important types of debates and produce a table where you cover the name of the debate (in English and the native language of the country), its goals, particular organization rules to that kind of debate, and the total number of minutes that rules assign to each debate.
+# Art 62 loc
+# Art 76 reg
+|----------------------------------------+---------------+---------+------------+------------|
+| Debate type (in Spanish)               | Goal          | Durat.  | Selector   | Veto       |
+|----------------------------------------+---------------+---------+------------+------------|
+| 1. Introduce legislation (iniciativa)  | Author        |         |            |            |
+| - a new law                            | presents      | - 10'   | - member   | - no       |
+| - amend a law                          | the bill      | - 5'    | - member   | - no       |
+|----------------------------------------+---------------+---------+------------+------------|
+| 2. Committee report (dictamen)         | Move          |         |            |            |
+| - Debate en lo general vs SQ, chair    | for floor     | - 10'   | - comm.maj | - pres.^1  |
+| -   "             "      "   others    | consideration | - 5'    | - members  | - pres.^1  |
+| - Amendments (debate en lo particular) |               | - 5'    | - members  | - no       |
+| - negative report                      |               | - 3'    | - comm.maj | - pres.^1  |
+|----------------------------------------+---------------+---------+------------+------------|
+| 3. Resolutions (puntos de acuerdo)     | Position      |         |            |            |
+| - standard, author                     | taking        | - 10'   | - member   | - comm.maj |
+| - urgent, author (obvia resolución)    |               | - 5'    | - Junta    | - floor    |
+| - other speakers                       |               | - 3'    | - party    | - no       |
+|----------------------------------------+---------------+---------+------------+------------|
+| 4. Current events (agenda política)    | Position      | < 2hrs  |            |            |
+| - Junta proponent                      | taking        | - 10'   | - Junta    | - no       |
+| - other speakers                       |               | - 5'    | - member   | - no       |
+|----------------------------------------+---------------+---------+------------+------------|
+| ^1 = Pres. can delay by recommitting   |               |         |            |            |
+|----------------------------------------+---------------+---------+------------+------------|
+
+%| - minority report (voto particular)    |               | - 5'    | - floor    | - no       |
+%|----------------------------------------+---------------+---------+------------+------------|
+%| 5. Hearings (comparecencias)           | Executive     | Junta   |            |            |
+%|                                        | oversight     | decides |            |            |
+
+
+Mociones
+
+Members can interrupt a speechmaker in order to advance motions from their seats. The president can deny or grant up to three minutes to elaborate on the motion, which the president can extend. 
+
+I. Orden; (order)
+II. Apego al tema; (germaneness, all floor debate must be germane and confined to the specific question)
+V. Rectificación de trámite; (approx. motion to recommit)
+III. Cuestionamiento al orador; (question, speaker may or may not accept it)
+
+IV. Ilustración al Pleno; (secretary reads document)
+VI. Alusiones personales; (right to reply, after speaker)
+VII. Rectificación de hechos; (add yourself to list of speakers, at the end)
+VIII. Discusión y votación por conjunto de artículos, en términos del artículo 108, numeral 1 de este Reglamento, (logroll)
+IX. Suspensión de la discusión (presented in writing before discusión en lo general, president may call secretario to read it then grant proposer time to speak before moving motion to a floor vote. If motion is accepted, three pairs of members get to speak---TIME LINIT UNCLEAR). Subsequent suspensive motions are not allowed. 
+
+
+
+
+
+\subsection{Minority rights}
+To conclude this section, please classify the country along Proksch and Slapin’s (2015) contribution. The authors suggest that there are two extreme poles, depending on rules of procedure and electoral system organization. As described by Proksch and Slapin (2015: 96), in some systems, individual MPs are ‘guaranteed access to speaking time’, and ‘backbenchers are granted equal time as party leaders’. In other systems, the rules severely restrict individuals’ access to the floor and parties draft speakers lists, which gives party leaders much more control on this question. A number of countries fall, however, somewhere between these two extreme categories, giving some opportunity for individual MPs to access the floor, but favoring party lists. Please classify your country accordingly. If your country was included in Proksch and Slapin’s study, please refer to this classification when discussing your country’s institutional setting.
+
+
+The constitution sets the quorum at half chamber membership.
+
+Reglamento amendments by 2/3 vote
+
+Suspension of rules by Conferencia always a choice, but only typified for committee of the whole. Art 77 cpeum. Risks toma de tribuna.
+
+
+
+
+
+--- extras
+
+%The president has discretion to refer bills to one or more standing committees (art. 67). The president can change referral upon request by the bill's author and committee chairs+secretaries can request referral to another commitee, her/his group, 
+
+
+
+
+
+
+
+Comparecencias
+
+Pregunta parlamentaria en pleno (a funcionarios que comparecen art 130)
+
+Presidente has limited authority to prevent dilatory maneuvers. 
+
+Presiding officer can summon police to restore order. 
+Can summon public force, but in practice never used. 
+Can kill the mike, but others can raise their voices
+
+4. Para atender una situación no prevista en el Reglamento, el Presidente podrá dictar una resolución de carácter general, siempre que haya la opinión favorable de la Mesa Directiva y de la Junta. En caso contrario, este tipo de resoluciones sólo tendrán efecto con la aprobación de la mayoría simple del Pleno.
+ 
+  

@@ -69,7 +69,7 @@
 
 \begin{document}
 
-\title{Speach in Mexico's Cámara de Diputados}
+\title{Speach in Mexico's Cámara de Diputados\thanks{Financial support ITAM, SNI. For shedding light on some parties' internal rules of debate in the period, I am grateful to Fernando Rodríguez Doval, Lupita Vargas Vargas, and one former deputy who wished anonymity. Vidal Mendoza, Eugenio Solís, Sonia Kuri K, ana lu for research assistance.}}
 \author{Eric Magar \\ Instituto Tecnológico Autónomo de México}
 \date{\today}
 \maketitle
@@ -272,7 +272,21 @@ The table offers contrast between diputados and presiding officers, adopting mem
 \doublespacing
 
 
-\subsection{Justify pre-midterm selction}
+Mexican political system
+
+Mexico has a presidential constitution. For most of the 20th century a hegemonic party, the PRI, controlled the strings of political influence nationwide. While the PRI's electoral fortunes suffered from societal change (ref) and from formidable economic setbacks in the 1980s, it was not until 1997 that competitive politics became the norm. The PRI lost control of the lower house of Congress in that year's midterm election, the first in six decades. Then in 2000 the country's long-standing right-of-center opposition beat the PRI in the presidential race. 
+
+Case selection
+
+Due to time constraints, I afforded cleansing and speech systematization in three legislative terms only: the 60th, 62nd, and 64th Legislatures. Eight have taken place since democratization. I chose pre-midterm election Legislatures, producing temporal discontinuity but likely gaining in case similarity. I also chose the ongoing 64th Legislature (2018-21) instead of the 58th (2000-03) in order to investigate effects of removing single-term member limits in debate. 
+
+This chapter was produced under a hard time constraint, and this determined some methological choices. One was the exclusion of the Senate from analysis. Precedence was given to the Cámara de Diputados because, although the powers of the chambers are symmetric for most legislation, the lower adopts the annual budget without Senate intervention. 
+
+Mexico has a bicameral Congress. The chapter explores the lower chamber only. Although the powers of the chambers are symmetric for most legislation, precedence was given to the Cámara de Diputados because it adopts the annual budget without Senate intervention. 
+
+
+
+\subsection{Justify pre-midterm selection}
 
 Exclusion of 61 and 63 was unintentional, time constraints.
 
@@ -283,6 +297,8 @@ Could not go too far anyway (57 58 59 60 61 62 63 64 since democratization). 60 
 64 incomplete. Included because first instance of single-party unified government. And, importantly, first Congress where incumbents allowed to be on the ballot in midterm. Plus clear mutation of governing groups after 2+ decades of the partidocracia party system \citep{magar.2007ref.2015,magar.estevez.rosas.2010}. 
 
 Pre-midterm with small N offers control, to the extent that pre- and post-midterm election are different.
+
+
 
 
 
@@ -413,12 +429,26 @@ F Statistic &  &  & \multicolumn{1}{c}{105.02$^{***}$ (df = 10; 9483)} & \multic
 \begin{figure}
   \centering
     \includegraphics[width=.8\columnwidth]{../plots/avgMgEffects.pdf}
-    \caption{Average marginal effects from model 5. Dots report how the probability of an urgent bill
-changes in response to a unit change in each independent variable, all else at mean values; bars are
-95-percent confidence intervals.}\label{F:avgmgeff}
+    \caption{Average marginal effects from model 5. Dots report the effect in expected period speech length of a unit change in each independent variable, all else at mean values; bars are 95-percent confidence intervals.}\label{F:avgmgeff}
 \end{figure}
 
-Figure \ref{F:avgmgeff} reports changes in the average predicted number of words in the period associated with unit changes in model 5's explanatory variables (all other regressors at their mean value). This is a convenient way to gauge negative binomial regression coefficients, by translating them into interpretable quantities.
+%% model 5 (fit2 in code) average marginal effects
+%%      factor       AME       SE        z      p     lower     upper
+%%  ev.pot.dys   51.3100   2.6546  19.3285 0.0000   46.1070   56.5129
+%%        dmaj 1464.4438 211.4850   6.9246 0.0000 1049.9408 1878.9469
+%%    size.maj  -72.7583   4.9124 -14.8113 0.0000  -82.3863  -63.1303
+%%     dleader  460.6492 298.1915   1.5448 0.1224 -123.7954 1045.0937
+%%      dchair  451.9050 130.7671   3.4558 0.0005  195.6061  708.2039
+%%        dsmd -135.7903  93.9759  -1.4449 0.1485 -319.9796   48.3991
+%%      dsmd64  359.7821 175.2500   2.0530 0.0401   16.2985  703.2657
+%%   seniority  241.5023  69.7417   3.4628 0.0005  104.8111  378.1935
+%%        dfem   93.4748  79.3548   1.1779 0.2388  -62.0578  249.0074
+%%        dsup -507.2173 160.3330  -3.1635 0.0016 -821.4642 -192.9703
+%%         d62  259.0260  89.6724   2.8886 0.0039   83.2712  434.7807
+%%         d64 -132.3693 165.2884  -0.8008 0.4232 -456.3285  191.5899
+
+Figure \ref{F:avgmgeff} reports changes in the average predicted number of words associated with unit changes in explanatory variables. This exercise uses model 5 estimates. By translating into interpretable quantities, marginal effects are a convenient way to gauge negative binomial regression coefficients. It is clear in the plot that the larges effect is attributable to majority status. Other things constant (at mean values), members in the majority party each spoke between about 1,000 and 1,900 more words per period than the rest of the chamber. Multiplication of that average by Morena's 254 members in the 64th Legislatura produces 372 thousand additional words---47 percent of all words in the median ordinary period.
+
 The report from a committee with a coalition chair experiences a 0.17
 hike (0.06 standard error) in the likelihood of receiving a closed rule compared to a report by an
 opposition-chaired committee. The effect is as big as the average marginal effects of Hacienda
@@ -459,8 +489,19 @@ percent confidence bands overlap, they barely do so at the middle of the legisla
 confidence that we are picking up a signal and not just random noise.
 
 
+\section{Predicted words}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.8\columnwidth]{../plots/predictedWords.pdf}
+    \caption{Predicted speech length. Lines report point predictions using model 5.}\label{F:predict}
+\end{figure}
+
+
+
+
 \section*{Acknowledgements}
-Eric Magar received financial support from the Asociaci\'on Mexicana de Cultura \textsc{a.c.}\ and \textsc{conacyt}'s Sistema Nacional de Investigadores. The author is grateful to xxx for research assistance.  The author are responsible for mistakes and shortcomings in the study.
+Eric Magar received financial support from the Asociaci\'on Mexicana de Cultura \textsc{a.c.}\ and \textsc{conacyt}'s Sistema Nacional de Investigadores. The author is grateful to Ana Lucía Enríquez, Eugenio Solís Flores, Vidal, Sonia for research assistance.  The author are responsible for mistakes and shortcomings in the study.
 
 \listofendnotes
 

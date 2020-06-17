@@ -281,6 +281,20 @@ text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606
 ####################
 sel <- which(data.dy$nword.day == max(data.dy$nword.day[data.dy$dpresoff==0]))
 data.dy[sel,]
+
+############################
+## sum of words in period ##
+############################
+data[1,]
+tmp <- data[,c("sel.agg","leg","dpresoff","dv.nword")]
+tmp <- tmp[tmp$dpresoff==0,]
+tmp$wordsum <- ave(tmp$dv.nword, as.factor(tmp$sel.agg), FUN=sum, na.rm=TRUE)
+tmp <- tmp[duplicated(tmp$sel.agg)==FALSE,]
+tmp[1:10,]
+# periodos ordiarios only, no presiding officers
+tmp[-grep.e("extra", tmp$sel.agg),c("sel.agg","wordsum")]
+summary(tmp$wordsum[-grep.e("extra", tmp$sel.agg)])
+(1465*500*.508)/789300
 x
 
 ##############################################
@@ -575,6 +589,7 @@ tmp <- c("Tenure",
          "64th Leg.")
 
 #pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
+#png(filename = "../plots/avgMgEffects.png", height = 480, width = 480)
 par(mar=c(4,2,2,2)+0.1) # drop title space and left space
 plot(x=c(-1500,1850),#)(-8250,1850),
      y=-c(1,nrow(mar2)),
@@ -630,6 +645,7 @@ sims2 <- within(sims2, {
 ## PLOT SIMULATIONS ##
 ######################
 #pdf (file = "../plots/predictedWords.pdf", width = 7, height = 7)
+#png(filename = "../plots/predictedWords.png", height = 480, width = 480)
 par(mar=c(4,4,2,2)+0.1) # drop title space and left space
 plot(sims2$size.maj, sims2$UL, ylim = c(0,max(sims2$UL)), axes = FALSE, type = "n",
      main = "", xlab = "Speechmaker's party size (%)", ylab = "Predicted words by speechmaker in session")
