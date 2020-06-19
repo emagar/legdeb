@@ -421,13 +421,26 @@ data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
 tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
 data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
 #
-data$tmp <- NULL # clean
+# turn into the number of years the MP has spent in the legislature
+data$tmp1 <- 0 # default: add nothing
+sel <- grep.e("y2", data$sel.agg)
+data$tmp1[sel] <- 1 # add 1 to y2
+sel <- grep.e("y3", data$sel.agg)
+data$tmp1[sel] <- 2 # add 2 to y3
+#
+data$seniority <- (3*data$seniority) + data$tmp1 # past terms into years + current yrs
+#
+sel <- grep.e("sen", data$repite)
+data$seniority[sel] <- data$seniority[sel] + 3 # past senadores need 3 more years for that term
+#
+data$tmp <- data$tmp1 <- NULL # clean
 table(data$seniority, data$dpastleg) # dpastleg did not consider senado tenures
 #######################
 ## PARTY SIZE TO MAJ ##
 #######################
+data$ptysh <- data$ptysh*100 # to percent
 data$size.maj <- NA
-data$size.maj <- data$ptysh*100 - 50 # deficit towards majority in pct
+data$size.maj <- data$ptysh - 50 # deficit towards majority in pct
 ## #version with zeroes above .5
 ## sel <- which(data$ptysh > .5)
 ## data$size.maj[sel] <- 0 # above majority to zero
@@ -473,20 +486,24 @@ fit <- glm(formula = f, data=data, family = "binomial", subset = dpresoff==0)
 summary(fit)
 x
 
-#####################
-## IV DESCRIPTIVES ##
-#####################
-summary(data[data$dpresoff==0, c("ev.pot.dys", "size.maj", "ptysh", "seniority")])
-table(data$dmaj   [data$dpresoff==0])
+######################
+## VAR DESCRIPTIVES ##
+######################
+summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")])
+round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")], sd), digits = 2) # std devs
+#
 table(data$dmaj   [data$dpresoff==0])
 table(data$dleader[data$dpresoff==0])
 table(data$dchair [data$dpresoff==0])
 table(data$dsmd   [data$dpresoff==0])
-table(data$dsmd64 [data$dpresoff==0])
 table(data$dsup   [data$dpresoff==0])
 table(data$dfem   [data$dpresoff==0])
+table(data$d60    [data$dpresoff==0])
 table(data$d62    [data$dpresoff==0])
 table(data$d64    [data$dpresoff==0])
+table(data$dpan   [data$dpresoff==0])
+table(data$dleft2 [data$dpresoff==0])
+table(data$dpri   [data$dpresoff==0])
 
 ###################
 ## NEGBIN MODELS ## 

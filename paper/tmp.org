@@ -1,0 +1,78 @@
+
+
+  dv.nword      dv.nword.sh      ev.pot.dys       size.maj     
+ Min.   :    0   Min.   :    0   Min.   : 1.00   Min.   :-49.60  
+ 1st Qu.:    0   1st Qu.:    0   1st Qu.:25.00   1st Qu.:-29.60  
+ Median :  593   Median :  607   Median :30.00   Median :-25.00  
+ Mean   : 1366   Mean   : 1391   Mean   :26.68   Mean   :-20.79  
+ 3rd Qu.: 1653   3rd Qu.: 1690   3rd Qu.:37.00   3rd Qu.: -6.60  
+ Max.   :50291   Max.   :50291   Max.   :40.00   Max.   :  1.00  
+     ptysh          seniority     
+ Min.   :0.0040   Min.   :0.0000  
+ 1st Qu.:0.2040   1st Qu.:0.0000  
+ Median :0.2500   Median :0.0000  
+ Mean   :0.2921   Mean   :0.2572  
+ 3rd Qu.:0.4340   3rd Qu.:0.0000  
+ Max.   :0.5100   Max.   :4.0000  
+> round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")], sd), digits = 2) # std devs
+   dv.nword dv.nword.sh  ev.pot.dys    size.maj       ptysh   seniority 
+    2682.34     2716.25       11.20       15.89        0.16        0.57 
+
+
+  dv.nword    :  dv.nword.sh   :   ev.pot.dys   :    size.maj     :       ptysh     :     seniority    
+ Min.   :    0:   Min.   :    0:   Min.   : 1.00:   Min.   :-49.60:   Min.   :0.0040:   Min.   :0.0000 
+ 1st Qu.:    0:   1st Qu.:    0:   1st Qu.:25.00:   1st Qu.:-29.60:   1st Qu.:0.2040:   1st Qu.:0.0000 
+ Median :  593:   Median :  607:   Median :30.00:   Median :-25.00:   Median :0.2500:   Median :0.0000 
+ Mean   : 1366:   Mean   : 1391:   Mean   :26.68:   Mean   :-20.79:   Mean   :0.2921:   Mean   :0.2572 
+ 3rd Qu.: 1653:   3rd Qu.: 1690:   3rd Qu.:37.00:   3rd Qu.: -6.60:   3rd Qu.:0.4340:   3rd Qu.:0.0000 
+ Max.   :50291:   Max.   :50291:   Max.   :40.00:   Max.   :  1.00:   Max.   :0.5100:   Max.   :4.0000 
+ 
+ 
+Continuous variables
+|                              |   min | median |  mean |     sd |   max |
+|------------------------------+-------+--------+-------+--------+-------|
+| Total words (DV1)            |     0 |    593 |  1366 | 2682.3 | 50291 |
+| Days in office (exposure)    |     1 |     30 |  26.7 |   11.2 |    40 |
+| Total words / exposure (DV2) |     0 |    607 |  1391 | 2716.3 | 50291 |
+| size.maj                     | -49.6 |    -25 | -20.8 |   15.9 |     1 |
+| ptysh                        |   0.4 |     25 |  29.2 |     16 |    51 |
+| seniority                    |     0 |      0 |   0.3 |    0.6 |     4 |
+
+Dichotomous variables
+|          |    0 |    1 | tot |    N |
+|----------+------+------+-----+------|
+| Majority | 86.6 | 13.4 | 100 | 9494 |
+| Leader   | 98.3 |  1.7 | 100 | 9494 |
+| Chair    | 90.6 |  9.4 | 100 | 9494 |
+| SMD      | 39.3 | 60.7 | 100 | 9494 |
+| Suplente | 94.2 |  5.8 | 100 | 9494 |
+| Female   | 64.2 | 35.8 | 100 | 9494 |
+| 60th     | 68.2 | 31.8 | 100 | 9494 |
+| 62nd     | 57.6 | 42.4 | 100 | 9494 |
+| 64th     | 74.2 | 25.8 | 100 | 9494 |
+| PAN      | 72.8 | 27.2 | 100 | 9494 |
+| Left     | 70.0 | 30.0 | 100 | 9494 |
+| PRI      | 72.8 | 27.2 | 100 | 9494 |
+
+
+
+,0,1
+dmaj,8223,1271
+dleader,9333,161
+dchair,8601,893
+dsmd,3733,5761
+dsup,8940,554
+dfem,6099,3395
+d60,6479,3015
+d62,5469,4025
+d64,7040,2454
+dpan,6913,2581
+dleft2,6645,2849
+dpri,6913,2581
+
+ 
+ 
+ 
+> round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")], sd), digits = 2) # std devs
+   dv.nword dv.nword.sh  ev.pot.dys    size.maj       ptysh   seniority 
+2682.34,2716.25,11.20,15.89,0.16,0.57
