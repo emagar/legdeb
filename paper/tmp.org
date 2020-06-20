@@ -54,25 +54,64 @@ Dichotomous variables
 | Left     | 70.0 | 30.0 | 100 | 9494 |
 | PRI      | 72.8 | 27.2 | 100 | 9494 |
 
+|                   | % women |    of |
+|-------------------+---------+-------|
+| Members           |      38 |  1774 |
+| Cámara presidents |      35 |    31 |
+| Party leaders     |         |       |
+| - major           |       0 |    12 |
+| - opportunistic   |      42 |    12 |
+| Committee chairs  |      25 |   143 |
+| Words spoken      |      41 | 17.5M |
+|-------------------+---------+-------|
 
+   0  1 tot    N
+F 95  5 100  661
+M 90 10 100 1049
 
-,0,1
-dmaj,8223,1271
-dleader,9333,161
-dchair,8601,893
-dsmd,3733,5761
-dsup,8940,554
-dfem,6099,3395
-d60,6479,3015
-d62,5469,4025
-d64,7040,2454
-dpan,6913,2581
-dleft2,6645,2849
-dpri,6913,2581
+      0   1
+  F 626  35
+  M 941 108
+--------------
+        143
 
- 
- 
- 
-> round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")], sd), digits = 2) # std devs
-   dv.nword dv.nword.sh  ev.pot.dys    size.maj       ptysh   seniority 
-2682.34,2716.25,11.20,15.89,0.16,0.57
+| who                                | gen | ndys |
+|------------------------------------+-----+------|
+| ALEIDA ALAVEZ RUIZ                 | F   |   39 |
+| DULCE MARIA SAURI RIANCHO          | F   |   52 |
+| LAURA ANGELICA ROJAS HERNANDEZ     | F   |   40 |
+| LIZBETH EUGENIA ROSAS MONTERO      | F   |    2 |
+| MARIA BEATRIZ ZAVALA PENICHE       | F   |   19 |
+| MARIA DE LOS DOLORES PADIERNA LUNA | F   |  100 |
+| MARIA ELENA ALVAREZ BERNAL         | F   |   44 |
+| MARICELA VELAZQUEZ SANCHEZ         | F   |    7 |
+| MARTHA HILDA GONZALEZ CALDERON     | F   |   37 |
+| PATRICIA ELENA RETAMOZA VEGA       | F   |   29 |
+| RUTH ZAVALETA SALGADO              | F   |  102 |
+|------------------------------------+-----+------|
+| 11 women                           |     |  472 |
+|------------------------------------+-----+------|
+| ARNOLDO OCHOA GONZALEZ             | M   |   43 |
+| CARLOS ARMANDO BIEBRICH TORRES     | M   |    1 |
+| CESAR HORACIO DUARTE JAQUEZ        | M   |   50 |
+| CRISTIAN CASTAÑO CONTRERAS         | M   |   40 |
+| FRANCISCO AGUSTIN ARROYO VIEYRA    | M   |  104 |
+| JESUS MURILLO KARAM                | M   |   21 |
+| JORGE ZERMEÑO INFANTE              | M   |   61 |
+| JOSE GONZALEZ MORFIN               | M   |  138 |
+| JOSE LUIS ESPINOSA PIÑA            | M   |   31 |
+| JULIO CESAR MORENO RIVERA          | M   |   14 |
+| MARCELO DE JESUS TORRES COFIÑO     | M   |   25 |
+| MARCO ANTONIO ADAME CASTILLO       | M   |   75 |
+| MARIO MARTIN DELGADO CARRILLO      | M   |    4 |
+| MARTIN ALONSO HEREDIA LIZARRAGA    | M   |    9 |
+| PABLO GOMEZ ALVAREZ                | M   |    1 |
+| PORFIRIO ALEJANDRO MUÑOZ LEDO      | M   |   66 |
+| RICARDO ANAYA CORTES               | M   |   49 |
+| SILVANO AUREOLES CONEJO            | M   |   43 |
+| TOMAS TORRES MERCADO               | M   |   57 |
+| VENANCIO LUIS SANCHEZ JIMENEZ      | M   |   32 |
+|------------------------------------+-----+------|
+| 20 men                             |     |  864 |
+|------------------------------------+-----+------|
+                                              

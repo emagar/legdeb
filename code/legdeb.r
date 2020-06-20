@@ -26,11 +26,54 @@ gsub.e <- function(pattern, replacement, x, perl = TRUE, ignore.case = TRUE){
     tmp <- gsub(pattern = pattern, replacement = replacement, x = x, perl = perl, ignore.case = ignore.case);
     return(tmp)
 }
+# function to drops accents and CAPITALIZE text
+cap.emm <- function(x=dips$nom){
+    x <- gsub.e("á", "a", x)
+    x <- gsub.e("é", "e", x)
+    x <- gsub.e("í", "i", x)
+    x <- gsub.e("ó", "o", x)
+    x <- gsub.e("ú", "u", x)
+    x <- gsub.e("ü", "u", x)
+    x <- toupper(x)
+    return(x)
+}
+#cap.emm(x = "áÁéíóú") # test
 
-###################
-## LOAD DIP DATA ##
-###################
-load(file = "all-dips-list.RData")
+#############################
+## READ DIPUTADO CSV FILES ##
+#############################
+all.legs <- 57:64
+#all.legs <- c(60,62,64)
+all.dips <- vector("list", length(all.legs)) # will receive all data
+#
+for (l in 1:length(all.legs)){
+    #l <- 1 # debug
+    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
+    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
+    #head(dips) # debug
+    # add leg
+    dips$leg <- all.legs[l];
+    ## # drop columns
+    dips$nota <- dips$notas <- dips$fuente <- NULL
+    # if part empty but postulo not, use latter
+    sel <- which( (is.na(dips$part) | dips$part=="") & !is.na(dips$postulo))
+    dips$part[sel] <- dips$postulo[sel]
+    # party size
+    dips$ptysh[dips$dsup==0] <- as.numeric(ave(dips$part[dips$dsup==0], as.factor(dips$part[dips$dsup==0]), FUN=length, na.rm=TRUE)) / 500 # shares of propietarios only
+    tmp <- dips[dips$dsup==0,c("part","ptysh")] # recode vectors for suplentes (dift n possible)
+    tmp <- tmp[duplicated(tmp$part)==FALSE,] 
+    dips$ptysh[dips$dsup==1] <- mapvalues(dips$part[dips$dsup==1], from = tmp[,1], to = tmp[,2], warn_missing = FALSE)
+    dips$ptysh <- as.numeric(dips$ptysh)
+    # consolidate name last name
+    dips$nom <- paste(dips$pila, dips$patmat)
+    # CAPITALIZE
+    dips$nom <- cap.emm(x = dips$nom)
+    # insert to data list
+    all.dips[[l]] <- dips
+}
+names(all.dips) <- paste("leg", all.legs, sep = "")
+summary(all.dips)
+
 
 # LOAD DATA
 # periodo aggregates
@@ -42,6 +85,7 @@ load(file = "speech-day-60.RData")
 load(file = "speech-day-62.RData")
 load(file = "speech-day-64.RData")
 ls()
+
 
 # merge into single data frame
 data <- data.frame()
@@ -241,6 +285,7 @@ summ[,grep.e("nword",colnames(summ))] <- log(summ[,grep.e("nword",colnames(summ)
 # plot periodo quartiles
 #pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
 #png(filename = paste(gd, "quantiles-periodo.png", sep = ""), height = 480, width = 480)
+par(mar=c(4,2,2,2)+0.1) # drop title space and left space
 plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
 #     main = "Speeches in the legislative periods observed",
      main = "",
@@ -267,10 +312,10 @@ text(4.35, ymd("20080101"), labels = "60th")
 text(4.35, ymd("20140101"), labels = "62nd")
 text(4.35, ymd("20190915"), labels = "64th")
 text(4.35, ymd("20190215"), labels = "(partial)")
-text(4.35, ymd("20110201"), labels = "61st",      col = "gray")
-text(4.35, ymd("20100701"), labels = "(unobserved)", col = "gray")
-text(4.35, ymd("20170201"), labels = "63rd",      col = "gray")
-text(4.35, ymd("20160701"), labels = "(unobserved)", col = "gray")
+text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
+text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
+text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
+text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
 text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"])) )
 ## text(2.75, ymd("20170101"), labels = "(63rd unobserved)", col = "gray")
 ## text(2.75, ymd("20110101"), labels = "(61st unobserved)", col = "gray")
@@ -295,7 +340,7 @@ tmp[1:10,]
 tmp[-grep.e("extra", tmp$sel.agg),c("sel.agg","wordsum")]
 summary(tmp$wordsum[-grep.e("extra", tmp$sel.agg)])
 (1465*500*.508)/789300
-x
+
 
 ##############################################
 ## histogram of number speakers in sessions ##
@@ -307,6 +352,7 @@ tmp$leg <- tmp$nword.day <- NULL
 
 #pdf(file = paste(gd, "nspeakers.pdf", sep = ""), height = 5, width = 7)
 #png(filename = paste(gd, "nspeakers.png", sep = ""), height = 345, width = 480)
+par(mar=c(4,4,1,1)+0.1) # drop title space and left space
 hist(tmp$nspeakers, breaks = 24,
 #     main = "How many spoke in a plenary session",
      main = "",
@@ -335,7 +381,52 @@ tmp <- aggregate(data.mem[,-1], by = list(ctrl), FUN = "max"); tmp[,1] <- factor
 summ$max <- tmp
 summ
 rm(ctrl, sel,sel.col,tmp) # clean
-x
+
+
+################
+## WOMEN PLOT ##
+################
+# diputadas by legislatura (doath==1) 
+sel <- which(all.dips$leg60$doath==1)
+round( table(all.dips$leg60$gen[sel])*100 / length(all.dips$leg60$gen[sel]), 0); length(all.dips$leg60$gen[sel])
+sel <- which(all.dips$leg62$doath==1)
+round( table(all.dips$leg62$gen[sel])*100 / length(all.dips$leg62$gen[sel]), 0); length(all.dips$leg62$gen[sel])
+sel <- which(all.dips$leg64$doath==1)
+round( table(all.dips$leg64$gen[sel])*100 / length(all.dips$leg64$gen[sel]), 0); length(all.dips$leg64$gen[sel])
+# num women
+tmp <- 0
+sel <- which(all.dips$leg60$doath==1 & all.dips$leg60$gen=="F"); tmp <- tmp + length(sel)
+sel <- which(all.dips$leg62$doath==1 & all.dips$leg62$gen=="F"); tmp <- tmp + length(sel)
+sel <- which(all.dips$leg64$doath==1 & all.dips$leg64$gen=="F"); tmp <- tmp + length(sel)
+tmp # women in 3 legs
+tmp <- 0
+sel <- which(all.dips$leg60$doath==1 & all.dips$leg60$gen=="M"); tmp <- tmp + length(sel)
+sel <- which(all.dips$leg62$doath==1 & all.dips$leg62$gen=="M"); tmp <- tmp + length(sel)
+sel <- which(all.dips$leg64$doath==1 & all.dips$leg64$gen=="M"); tmp <- tmp + length(sel)
+tmp # men in 3 legs
+# diputadas presiding officer
+sel <- which(data.dy$role=="pres")
+table(data.dy$who[sel])
+# diputadas committee chair
+tmp.dips$dchair <- 1 - as.numeric(tmp.dips$prescom=="")
+table(tmp.dips$gen, tmp.dips$dchair)
+35/(35+108) # pct chairs women
+tmp <- round(table(tmp.dips$gen, tmp.dips$dchair) * 100 / rowSums(table(tmp.dips$gen, tmp.dips$dchair)), 0)
+cbind(tmp, tot=100, N= rowSums(table(tmp.dips$gen, tmp.dips$dchair)))
+# diputadas party keder
+sel <- grep.e("coor", tmp.dips$lider)
+tmp.dips$dleader <- 0; tmp.dips$dleader[sel] <- 1
+table(tmp.dips$gen, tmp.dips$dleader)
+5/(5+19) # pct leaders women
+sel <- which(tmp.dips$part=="pan" | tmp.dips$part=="pri" | tmp.dips$part=="morena" | tmp.dips$part=="prd")
+table(tmp.dips$gen[sel], tmp.dips$dleader[sel])
+table(tmp.dips$gen[-sel], tmp.dips$dleader[-sel])
+5/(5+7)
+0 # pct leaders maj party women
+# words women speakers
+round(sum(data$dv.nword[data$dfem==1])*100 / (sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0]))) # %
+                                              sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0])   # N
+
 
 #############
 ## PLOT DV ##
@@ -346,8 +437,6 @@ sel <- which(tmp>7500)
 tmp[sel] <- 7500 # bunch outliers at fake level
 hist(tmp, breaks = 100)
 
-str(data[,c("ev.pot.dys","dmaj","size.maj","dpan","dleft2", "dpastleg","dleader","dchair","dsmd","dsup","leg", "dfem")])
-x
 
 
 ####################
@@ -394,14 +483,14 @@ data$individual <- as.numeric(factor(data$nom))
 ########################
 ## CARDINAL SENIORITY ##
 ########################
-data$seniority <- 0 # no previous terms is default
+data$nterms <- 0 # no previous terms is default
 # leg 64
 data$tmp <- data$repite # for manipulation
 sel <- which(data$leg==64)
 tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
 data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
 tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
-data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+data$nterms[sel] <- tmp1 - tmp2 # dif is number terms previously served
 # leg 62
 data$tmp <- data$repite # for manipulation
 sel <- which(data$leg==62)
@@ -410,7 +499,7 @@ data$tmp[sel] <- gsub.e("(62)-.+$", "", data$tmp[sel]) # remove 62 post
 tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
 data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
 tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
-data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+data$nterms[sel] <- tmp1 - tmp2 # dif is number terms previously served
 # leg 60
 data$tmp <- data$repite # for manipulation
 sel <- which(data$leg==60)
@@ -419,7 +508,7 @@ data$tmp[sel] <- gsub.e("(62)-.+$", "", data$tmp[sel]) # remove 62 post
 tmp1 <- nchar(data$tmp[sel]) # ncharacters before dropping hyphens
 data$tmp[sel] <- gsub.e("-", "", data$tmp[sel]) # remove hyphens
 tmp2 <- nchar(data$tmp[sel]) # ncharacters after dropping hyphens
-data$seniority[sel] <- tmp1 - tmp2 # dif is number terms previously served
+data$nterms[sel] <- tmp1 - tmp2 # dif is number terms previously served
 #
 # turn into the number of years the MP has spent in the legislature
 data$tmp1 <- 0 # default: add nothing
@@ -428,13 +517,13 @@ data$tmp1[sel] <- 1 # add 1 to y2
 sel <- grep.e("y3", data$sel.agg)
 data$tmp1[sel] <- 2 # add 2 to y3
 #
-data$seniority <- (3*data$seniority) + data$tmp1 # past terms into years + current yrs
+data$seniority <- (3*data$nterms) + data$tmp1 # past terms into years + current yrs
 #
 sel <- grep.e("sen", data$repite)
 data$seniority[sel] <- data$seniority[sel] + 3 # past senadores need 3 more years for that term
 #
 data$tmp <- data$tmp1 <- NULL # clean
-table(data$seniority, data$dpastleg) # dpastleg did not consider senado tenures
+table(data$seniority, data$nterms) # dpastleg did not consider senado tenures
 #######################
 ## PARTY SIZE TO MAJ ##
 #######################
@@ -463,6 +552,19 @@ data$d64 <- as.numeric(data$leg==64)
 data$dsmd64 <- data$dsmd*data$d64
 
 
+##########################
+## SENIORITY ANS SPEECH ##
+##########################
+# freshmen
+round(table(tmp.dips$repite=="no")*100 / sum(table(tmp.dips$repite=="no")))
+sum(table(tmp.dips$repite=="no")) # all dips
+
+sel <- which(data$dpresoff==0)
+table(data$nterms[sel])
+summary(tmp <- lm(dv.nword ~ nterms   , data = data[sel,]))
+summary(tmp <- lm(dv.nword ~ seniority, data = data[sel,]))
+
+
 ## GRAFICA MATRIZ DE CORRELACIONES: COOL!
 sel <- c("dv.nword", "ev.pot.dys", "dmaj", "rptysh", "ptysh", "size.maj", "dpan", "dleft2", "seniority", "dleader", "dchair", "dsmd", "dsup", "dfem")
 tmp <- cor(data[data$dpresoff==0,sel])
@@ -474,14 +576,14 @@ corrplot(tmp, color = TRUE) #plot matrix
 ## ZIP MODEL ##
 ###############
 library(pscl) # zero inflated poisson
-f <- formula("dv.nword ~ log(ev.pot.dys) + dmaj + rptysh + dpan + dleft2 + dpastleg + dleader + dchair + dsmd + dfem + dsup | dsup")
+f <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | dsup")
 fit <- zeroinfl(formula = f, data=data, subset = dpresoff==0) 
 summary(fit)
 
 #################
 ## LOGIT MODEL ##
 #################
-f <- formula("dword ~ dmaj + rptysh + dpan + dleft2 + dpastleg + dleader + dchair + dsmd + dsup + dfem")
+f <- formula("dword ~ dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
 fit <- glm(formula = f, data=data, family = "binomial", subset = dpresoff==0) 
 summary(fit)
 x
@@ -509,14 +611,15 @@ table(data$dpri   [data$dpresoff==0])
 ## NEGBIN MODELS ## 
 ###################
 f5 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age")
+f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age")
 #f3 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
 f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
-f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd          + seniority + dfem + dsup           ")
+f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
+f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + seniority + dfem + dsup           ")
 
 fit1 <- glm.nb  (formula = f1, data = data, subset = dpresoff==0)
 fit2 <- glm.nb  (formula = f2, data = data, subset = dpresoff==0)
+library(lme4)
 #fit3 <- glmer.nb(formula = f3, data = data, subset = dpresoff==0)
 fit3 <- glmer(formula = f3, data = data, family = poisson, subset = dpresoff==0)
 
@@ -539,10 +642,10 @@ nobs(fit3)
 ## OLS MODELS ##
 ################
 ## fx <- formula("dv.nword.sh ~ ev.pot.dys + dmaj + size.maj + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age")
-f <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age") #ev.pot.dys
-f13 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
-f12 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-f11 <- formula("dv.nword.sh ~ dmaj + size.maj + dleader + dchair + dsmd          + seniority + dfem + dsup")
+f <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age") #ev.pot.dys
+f13 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
+f12 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
+f11 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd          + seniority + dfem + dsup")
 
 fit11 <- lm(formula = f11, data=data, subset = dpresoff==0)
 fit12 <- lm(formula = f12, data=data, subset = dpresoff==0)

@@ -87,23 +87,14 @@
 
 \doublespacing
 
-\section{for data}
-
-Speeches less than 50 words dropped from data. Caveat---post agg.
-
-All steering speech (eg. the president recognizing a deputy or the secretary calling a voice vote to dispense reading of the bill) was also removed---officers do not participate in legislative debate. So was speech by non-deputies, as in cabinet member hearings. All speech remaining is considered debate in the analysis.  
+\section{Introduction} [max 500 words]
+%% -describe what the chapter is about, key findings, and distinctive features of the country
 
 \section{Case selection}
 
-Due to time constraints, I afforded cleansing and speech systematization in three legislative terms only: the 60th, 62nd, and 64th Legislatures. Eight have taken place since democratization. I chose pre-midterm election Legislatures, producing temporal discontinuity but likely gaining in case similarity. I also chose the ongoing 64th Legislature (2018-21) instead of the 58th (2000-03) in order to investigate effects of removing single-term member limits in debate. 
+A hard time constraint left no choice but to limit data span. I excluded the Senate of Mexico's bicameral Congress from analysis. Although the chambers have symmetric powers over most legislation, the Cámara de Diputados adopts the annual budget without Senate intervention. And I included only three legislative terms out of eight since democratization. I examine the 60th, 62nd, and 64th Legislatures. Selecting pre-midterm election terms produces temporal discontinuity but likely gains in term similarity. I also chose the ongoing 64th Legislature (2018-21) instead of the 58th (2000-03) in order to investigate effects of removing single-term member limits in debate. 
 
-This chapter was produced under a hard time constraint, and this determined some methological choices. One was the exclusion of the Senate from analysis. Precedence was given to the Cámara de Diputados because, although the powers of the chambers are symmetric for most legislation, the lower adopts the annual budget without Senate intervention. 
-
-Mexico has a bicameral Congress. The chapter explores the lower chamber only. Although the powers of the chambers are symmetric for most legislation, precedence was given to the Cámara de Diputados because it adopts the annual budget without Senate intervention. 
-
-
-\section{Introduction} [max 500 words]
-%% -describe what the chapter is about, key findings, and distinctive features of the country
+Digitalized speeches come from the stenographic version of plenary sessions (available from http://cronica.diputados.gob.mx/). I used regular expressions to de-htmlize the files and identify speakers, turning text into data for analysis.\footnote{Data analysis was performed in R \citep{r.cite} with code available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.}
 
 \section{Institutional and party system background} [ca 500-1000 words]
 %% In this section, you need to address the basic institutional design of your country.
@@ -125,6 +116,44 @@ Competitive politics blended a
 - two dims of competition
 
 Partidocracia came crashing down in 2018.
+
+\subsection{parties in camara}
+
+\singlespacing
+\begin{footnotesize}
+\begin{verbatim}
+|----------------------------+------+------+--------|
+|                            | 60th | 62nd |   64th |
+| party                      |    % |    % |      % |
+|----------------------------+------+------+--------|
+| pan                        |   41 |   23 |     16 |
+| pri                        |   21 |   43 |      9 |
+| prd                        |   25 |   20 |      4 |
+| morena                     |      |      |     51 |
+| opportunistic w/ president |      |    8 |     14 |
+| other opportunistic        |   13 |    7 |      6 |
+|----------------------------+------+------+--------|
+| Total                    % |  100 |  100 |    100 |
+|                          N |  500 |  500 |    500 |
+|----------------------------+------+------+--------|
+| president's party          |  pan |  pri | morena |
+|----------------------------+------+------+--------|
+\end{verbatim}
+\end{footnotesize}
+\doublespacing
+
+%% |              |  60 |  62 |     64 |
+%% |              |   N |   N |      N |
+%% |--------------+-----+-----+--------+
+%% | pan          | 207 | 114 |     79 |
+%% | pri          | 104 | 213 |     47 |
+%% | prd          | 125 | 102 |     20 |
+%% | morena       |     |     |    255 |
+%% | opport w pdt |     |  38 |     69 |
+%% | opport/oth   |  64 |  33 |     30 |
+%% |--------------+-----+-----+--------+
+%% | Total        | 500 | 500 |    500 |
+
 
 %% 3. Discuss the organization of parliamentary party groups/legislative parties. The balance of power between frontbenchers (leadership) and backbenchers.
 
@@ -250,9 +279,80 @@ Can kill the mike, but others can raise their voices
 
 4. Para atender una situación no prevista en el Reglamento, el Presidente podrá dictar una resolución de carácter general, siempre que haya la opinión favorable de la Mesa Directiva y de la Junta. En caso contrario, este tipo de resoluciones sólo tendrán efecto con la aprobación de la mayoría simple del Pleno.
 
+\section{The dependent variable}
+
+As in other chapters, the dependent variable is the number of words that members spoke in the chamber. A given diputado's words throughout a plenary session were summed into a daily total. Daily totals less than 50 words were arbitrarily interpreted as not constituting speech and removed from the data (ie., the member received a value of zero words that day). Thus filtered, members' daily totals were added across sessions in the same period, producing word aggregates for analysis. Figure XXX portrays speech distributions across periods. Solid points report periods' median speech length in words. It is quite clear in the plot that, with few exceptions, period medians are much the same as the overall median speech length of 599 words. Mild legislatura effects show up too, the 60th medians slightly above and the 64th slightly below the overall median. Horizontal lines report the spread of the central portion of the density---the thicker line is the inter-quartile range, the thinner connects the first and ninth deciles. Period distributions are, in general, similar. The clearest exceptions are extraordinary periods, drawn in gray. 
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.8\columnwidth]{../plots/quantiles-periodo.pdf}
+    \caption{Speeches in the legislative period observed (presiding officers excluded). Solid points indicate the median speech length in the period. Thick and thin lines connect the 25--75 and 10--90 percentiles, respectively. Hollow points are minima and maxima. Ordinary periods in black, extraordinary periods in gray.}\label{F:quantiles}
+\end{figure}
+
+%% \singlespacing
+%% \begin{footnotesize}
+%% \begin{verbatim}
+%% Members' daily number of words (percentiles)
+%% | periodo      | min | 10% | 25% | 50% |  75% |  90% |   max |
+%% |--------------+-----+-----+-----+-----+------+------+-------|
+%% | 60y1-1       |  50 | 153 | 436 | 666 |  853 | 1169 |  3057 |
+%% | 60y1-2       |  51 | 141 | 380 | 655 |  955 | 1221 |  3434 |
+%% | 60y2-1       |  51 | 162 | 407 | 665 |  937 | 1250 |  3650 |
+%% | 60y2-2       |  50 |  96 | 256 | 571 |  824 | 1059 | 15932 |
+%% | 60y3-1       |  50 | 143 | 407 | 647 |  911 | 1291 |  6193 |
+%% | 60y3-2       |  53 | 116 | 423 | 682 |  938 | 1278 |  3248 |
+%% | 62y1-1       |  50 | 234 | 447 | 620 |  817 | 1137 |  4700 |
+%% | 62y1-2       |  50 | 170 | 451 | 608 |  836 | 1190 |  6353 |
+%% | 62y1-extra   | 186 | 433 | 553 | 758 | 1103 | 1512 |  3310 |
+%% | 62y2-1       |  50 | 149 | 438 | 620 |  876 | 1293 |  7367 |
+%% | 62y2-2       |  56 | 186 | 396 | 599 |  795 | 1159 |  5704 |
+%% | 62y2-extra   |  50 | 410 | 543 | 751 | 1147 | 1831 |  9765 |
+%% | 62y3-1       |  56 | 189 | 428 | 610 |  851 | 1366 |  4356 |
+%% | 62y3-2       |  55 | 202 | 379 | 537 |  733 | 1032 |  4517 |
+%% | 64y1-1       |  50 | 136 | 278 | 506 |  703 |  892 |  4201 |
+%% | 64y1-2       |  51 | 158 | 402 | 556 |  706 |  989 |  3085 |
+%% | 64y1-extra   |  57 | 370 | 545 | 670 |  955 | 1317 |  2957 |
+%% | 64y2-1       |  50 | 143 | 351 | 585 |  772 | 1060 |  6358 |
+%% | 64y2-2       |  51 | 129 | 186 | 498 |  702 |  881 |  3112 |
+%% \end{verbatim}
+%% \end{footnotesize}
+%% \doublespacing
+
+Hollow points are the periods' minima and maxima. Diputada Valentina Batres holds the record for delivering the longest speech in the three Legislaturas scrutinized. At 15,932 words, the speech delivered March 11th, 2008 is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout the session, filibustering consideration of the new Sistema Nacional de Información Estadística y Geográfica. 
+  
+%Deputies close to AMLO were adoting dilatory tactics. Batres requested the addition of a point to JuCoPo's order of the day. Mesa Directiva denied, so a PRD faction threatened to take over the Tribuna (?). Batres introduced motion to suspend and other dilatory tactics (ley sis nal informacion inegi), then filibustered (called art. 103 ley reglamentaria, granting her 30 minutes to present minority vote despite JuCoPo's day aggrrement to limit to 10 minutes.)
+
+% Chapters 1 through 6 of El Quijote 13,049, 40 pages in my edition.
+% Chapters 1 through 7 of El Quijote 14,916, 45 pages in my edition.
+% Sonnets and Chapters 1 through 7 of El Quijote 16,191, 45+ pages in my edition.
+% Chapters 1 through 7 of El Quijote 17,912, 45+ pages in my edition.
+
+The log scale magnifies the low side of the distribution. But it also blurs subtle but revealing differences in the high side. From 60th to 62nd, max went up while percentiles 75 and 90 remain at similar levels. Like Batres, an unusually high top decile consists of attempts to disrupt debate through filibustering. Dilatory tactics went down in 62nd compared with 60th, and sunstantially so in the 64th with a single party majority.
+
+\singlespacing
+\begin{footnotesize}
+\begin{verbatim}
+Words per day
+| Legislatura    | min | 10% | 25% | 50% | 75% |  90% |   max |
+| 60th           |  50 | 137 | 392 | 652 | 901 | 1215 | 15932 |
+| 62nd           |  50 | 193 | 438 | 611 | 850 | 1254 |  9765 |
+| 64th (partial) |  50 | 142 | 327 | 547 | 730 |  975 |  6358 |
+\end{verbatim}
+\end{footnotesize}
+\doublespacing
+
+
 \section{What is the role of intra- and interparty politics in legislative debates?} [ca 2500]
 
-%% In this empirical section, we want you to explore how intra and interparty, as well as individual features, play a role in determining the likelihood that MPs take the floor (and how often they will take the floor). 
+  \subsection{Data}
+
+Speeches less than 50 words dropped from data. Caveat---post agg.
+
+All steering speech (eg. the president recognizing a deputy or the secretary calling a voice vote to dispense reading of the bill) was also removed---officers do not participate in legislative debate. So was speech by non-deputies, as in cabinet member hearings. All speech remaining is considered debate in the analysis.  
+
+
+  
+  %% In this empirical section, we want you to explore how intra and interparty, as well as individual features, play a role in determining the likelihood that MPs take the floor (and how often they will take the floor). 
 %% The section is divided into subsections. The first uses descriptive statistics and bivariate analysis. The second turns to multivariate analysis. 
 %% Please note that the contents of this section are rigid. Please save important aspects that are relevant to your case to a subsequent section on ‘Country Specific Matters’. 
 
@@ -294,11 +394,58 @@ Dichotomous variables
 
 %% 1. Gender: what is the impact of gender in floor access? Do women have access to the floor that is commensurate to their numerical presence in the legislative party? Operationalize gender as a dummy variable: Women takes the value of 1, and Men 0. Please use this coding also in the multivariate analysis (several drafts coded male MPs with 1 and female MPs with zero).
 
+  \begin{footnotesize}
+    \begin{verbatim}
+|                   | % women |    of |
+|-------------------+---------+-------|
+| Members           |      38 |  1774 |
+| Cámara presidents |      35 |    31 |
+| Party leaders     |      21 |    24 |
+| - major party     |       0 |    12 |
+| - opportunistic   |      42 |    12 |
+| Committee chairs  |      25 |   143 |
+| Words spoken      |      41 | 17.5M |
+|-------------------+---------+-------|
+    \end{verbatim}
+  \end{footnotesize}
 
   
 %% 2. Seniority: what is the impact of career stage in the likelihood of accessing the floor? Do more senior legislators get more access to the floor because they have offered party leaders signals of their work as party agents? Operationalize Seniority as a continuous variable that measures the number of years the MP has spent in the legislature.
 
-My Seniority is 0 for freshmen deputies; it is the number of previous terms served 1 for the rest. 
+Used nterms instead of seniority. Similar results, cleaner reading
+  
+  \begin{footnotesize}
+    \begin{verbatim}
+FALSE  TRUE 
+   18    82 
+> sum(table(tmp.dips$repite=="no")) # all dips
+[1] 1710
+> sel <- which(data$dpresoff==0)
+> table(data$nterms[sel])
+
+   0    1    2    3    4 
+7558 1523  330   73   10 
+> summary(tmp <- lm(dv.nword ~ nterms   , data = data[sel,]))
+
+Call:
+lm(formula = dv.nword ~ nterms, data = data[sel, ])
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+ -3428  -1224   -718    311  49067 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1223.80      30.04   40.73   <2e-16 ***
+nterms        550.99      48.39   11.39   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2664 on 9492 degrees of freedom
+Multiple R-squared:  0.01348,	Adjusted R-squared:  0.01337 
+F-statistic: 129.7 on 1 and 9492 DF,  p-value: < 2.2e-16
+    \end{verbatim}
+  \end{footnotesize}
 
   
   \subsection{Multivariate Analysis}
@@ -554,6 +701,15 @@ EMM: Terminology
 - A Legislature (with Roman numerals for reasons I ignore) is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics.
 - Legislative years break into two "ordinary periods", one covering the months of September through December, inclusive, another February through April, also inclusive. "Extraordinary periods" may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of aggregation in the analysis. 
 - A plenary session is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
+
+\section{Appendix: Terminology}
+
+- A *Legislature* is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics. Analysis includes the 60th, 62nd, and 64th Legislatures (the Mexican Congress relies on Roman numerals to distinguish Legislatures since the second half of the Nineteenth century).
+
+- Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, inclusive, another February through April, also inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of observation in the analysis. 
+
+- A *plenary session* (or simply a session) is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
+
 
 
 \section*{Acknowledgements}
