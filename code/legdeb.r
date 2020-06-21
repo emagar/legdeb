@@ -285,11 +285,11 @@ summ[,grep.e("nword",colnames(summ))] <- log(summ[,grep.e("nword",colnames(summ)
 # plot periodo quartiles
 #pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
 #png(filename = paste(gd, "quantiles-periodo.png", sep = ""), height = 480, width = 480)
-par(mar=c(4,2,2,2)+0.1) # drop title space and left space
+par(mar=c(4,4,0,1)+0.1) # drop title space and left space
 plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
 #     main = "Speeches in the legislative periods observed",
      main = "",
-     xlab = "Speech length in words (log scale)", ylab = "Year",
+     xlab = "Speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
      xlim = c(1.69,4.5), 
      ylim = c(ymd("20060901"), ymd("20210606"))) # set ranges
 #log(15000,10)
@@ -316,7 +316,7 @@ text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
 text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
 text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
 text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
-text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"])) )
+text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"]), "words") )
 ## text(2.75, ymd("20170101"), labels = "(63rd unobserved)", col = "gray")
 ## text(2.75, ymd("20110101"), labels = "(61st unobserved)", col = "gray")
 #dev.off()
@@ -356,7 +356,7 @@ par(mar=c(4,4,1,1)+0.1) # drop title space and left space
 hist(tmp$nspeakers, breaks = 24,
 #     main = "How many spoke in a plenary session",
      main = "",
-     xlab = "Number of speechmakers (excluding presiding officers)",
+     xlab = "Number of speechmakers in daily session",
      xlim = c(0,120),
      ylim = c(0,80))
 abline(v=median(tmp$nspeakers),lty=2)
@@ -591,9 +591,10 @@ x
 ######################
 ## VAR DESCRIPTIVES ##
 ######################
-summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")])
-round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority")], sd), digits = 2) # std devs
+summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms")])
+round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms")], sd), digits = 2) # std devs
 #
+table(data$dword  [data$dpresoff==0])
 table(data$dmaj   [data$dpresoff==0])
 table(data$dleader[data$dpresoff==0])
 table(data$dchair [data$dpresoff==0])
