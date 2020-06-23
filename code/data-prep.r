@@ -419,7 +419,7 @@ if (leg==60) save.image(file = "../data/manipulated-speeches-60.RData")
 if (leg==62) save.image(file = "../data/manipulated-speeches-62.RData")
 if (leg==64) save.image(file = "../data/manipulated-speeches-64.RData")
 
-leg <- 62
+leg <- 64
 if (leg==60) load(file = "../data/manipulated-speeches-60.RData")
 if (leg==62) load(file = "../data/manipulated-speeches-62.RData")
 if (leg==64) load(file = "../data/manipulated-speeches-64.RData")

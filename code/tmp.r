@@ -1,15 +1,10 @@
 
+ls()
+summary(speeches)
 
 
-
-6y-2
-6y-extra
-
-6y-1
-6y-2
-6y-extra
-
-
+sel <- grep.e("ieps", speeches$text.only)
+speeches[sel, c("date","role","who","n")]
 
 
 

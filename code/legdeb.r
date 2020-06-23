@@ -289,7 +289,7 @@ par(mar=c(4,4,0,1)+0.1) # drop title space and left space
 plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
 #     main = "Speeches in the legislative periods observed",
      main = "",
-     xlab = "Speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
+     xlab = "Daily speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
      xlim = c(1.69,4.5), 
      ylim = c(ymd("20060901"), ymd("20210606"))) # set ranges
 #log(15000,10)
@@ -349,6 +349,8 @@ ctrl <- data.dy$date[data.dy$dpresoff==0] # follow daily stats
 tmp <- aggregate(tmp.dy, by = list(ctrl), FUN = "length")
 tmp$nspeakers <- tmp$leg
 tmp$leg <- tmp$nword.day <- NULL
+
+tmp[which(tmp$nspeakers>100),]
 
 #pdf(file = paste(gd, "nspeakers.pdf", sep = ""), height = 5, width = 7)
 #png(filename = paste(gd, "nspeakers.png", sep = ""), height = 345, width = 480)
@@ -432,10 +434,32 @@ round(sum(data$dv.nword[data$dfem==1])*100 / (sum(data$dv.nword[data$dfem==1]) +
 ## PLOT DV ##
 #############
 tmp <- data$dv.nword[data$dpresoff==0]
-quantile(tmp, probs = seq(0,1,.1))
-sel <- which(tmp>7500)
-tmp[sel] <- 7500 # bunch outliers at fake level
-hist(tmp, breaks = 100)
+quantile(tmp, probs = seq(0,1,.05))
+sel <- which(tmp>8000)
+length(tmp)
+length(sel)/length(tmp)
+summary(tmp[sel])
+tmp[sel][order(tmp[sel])]
+tmp[sel] <- 7999 # bunch outliers at fake level
+# zeroes
+sel <- which(tmp==0)
+length(sel)
+length(sel)/length(tmp)
+# filibusters
+sel <- which(data$dv.nword[data$dpresoff==0]>20000)
+data$nom[data$dpresoff==0][sel]
+data$part[data$dpresoff==0][sel]
+data$leg[data$dpresoff==0][sel]
+data$dv.nword[data$dpresoff==0][sel]
+
+#pdf(file = "../plots/dv-histogram.pdf", width = 7, height = 5)
+#png(filename = "../plots/dv-histogram.png", height = 400, width = 480)
+par(mar=c(4,4,1,1)+0.1) # drop title space and left space
+hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Members' speech per period in words")
+text(7950, 350, "*")
+abline(v=median(tmp), lty = 2)
+text(median(tmp), 3500, paste("Median =", median(tmp)), pos = 4)
+#dev.off()
 
 
 
@@ -550,7 +574,21 @@ data$d60 <- as.numeric(data$leg==60)
 data$d62 <- as.numeric(data$leg==62)
 data$d64 <- as.numeric(data$leg==64)
 data$dsmd64 <- data$dsmd*data$d64
+#####################
+## EXTRAORDINARIAS ##
+#####################
+sel <- grep.e("extra", data$sel.agg)
+data$dextra <- 0
+data$dextra[sel] <- 1
 
+
+#######################################
+## Session days ordinarias vs extras ##
+#######################################
+tmp <- data[duplicated(data$sel.agg)==FALSE,]
+mean(tmp$ev.all.dys[tmp$dextra==1])
+mean(tmp$ev.all.dys[tmp$dextra==0])
+$ev.all.
 
 ##########################
 ## SENIORITY ANS SPEECH ##
@@ -572,12 +610,13 @@ library('corrplot')   # plots correlation matrix!
 corrplot(tmp, color = TRUE) #plot matrix
 #corrplot(tmp, method = "circle") #plot matrix
 
-###############
-## ZIP MODEL ##
-###############
+
+################################
+## ZERO INFLATED NEGBIN MODEL ##
+################################
 library(pscl) # zero inflated poisson
-f <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | dsup")
-fit <- zeroinfl(formula = f, data=data, subset = dpresoff==0) 
+f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64")
+fit <- zeroinfl(formula = f2, data=data, dist = "negbin", subset = dpresoff==0) 
 summary(fit)
 
 #################
@@ -611,7 +650,7 @@ table(data$dpri   [data$dpresoff==0])
 ###################
 ## NEGBIN MODELS ## 
 ###################
-f5 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
+f5 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra")
 f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age")
 #f3 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
 f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
