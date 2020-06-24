@@ -42,6 +42,7 @@ cap.emm <- function(x=dips$nom){
 #############################
 ## READ DIPUTADO CSV FILES ##
 #############################
+library(plyr) # used for recodes
 all.legs <- 57:64
 #all.legs <- c(60,62,64)
 all.dips <- vector("list", length(all.legs)) # will receive all data
@@ -73,7 +74,7 @@ for (l in 1:length(all.legs)){
 }
 names(all.dips) <- paste("leg", all.legs, sep = "")
 summary(all.dips)
-
+head(all.dips$leg60)
 
 # LOAD DATA
 # periodo aggregates
@@ -143,7 +144,7 @@ summ$max <- tmp
 print("* * Descriptives for diputados vs presiding officers * *")
 print(summ)
 
-# ALL MEMBERS IN DATASET
+# ALL MEMBERS IN SPEECH DATASET (NOT IN DIPS)
 nrow(tmp.mem)
 # HOW MANY NEVER SPOKE
 nrow(tmp.mem[tmp.mem$dv.nword==0,])
@@ -163,9 +164,10 @@ tmp.mem[1,]
 rm(ctrl, sel,sel.col,tmp.mem,tmp) # clean
 
 
-#######################
-## RETURNING MEMBERS ##
-#######################
+#############################################################################
+##                        RETURNING MEMBERS                                ##
+## OJO: THIS OBJECT DROPS DUPLICATES FOR RETURNING MEMBERS, HENCE N = 1710 ##
+#############################################################################
 tmp.dips <- data.frame()
 for (i in c(60,62,64)){ # merge into single dataframe
     sel <- grep(i, names(all.dips))
@@ -178,26 +180,37 @@ sel <- grep.e("[0-9]", tmp.dips$repite)
 tmp.dips$repite[-sel] <- "no" # assume all missing are non-returning
 tmp$repite[is.na(tmp$repite)] <- "no" # assume all missing are non-returning
 tmp.dips <- tmp.dips[duplicated(tmp.dips$nom)==FALSE,] # keep one obs per member
-table(tmp.dips$repite)
+table(tmp.dips$repite, useNA = "always")
 # remove past no oaths from label
-tmp.dips$repite <- gsub.e("([0-9]{2}0-)", "", tmp.dips$repite)
-tmp.dips$repite <- gsub.e("(-[0-9]{2}0)", "", tmp.dips$repite)
-table(tmp.dips$repite[sel])
+tmp.dips$repite <- gsub.e("([0-9]{2}0-)", "", tmp.dips$repite) # no oath
+tmp.dips$repite <- gsub.e("(-[0-9]{2}0)", "", tmp.dips$repite) # no oath
+table(tmp.dips$repite, useNA = "always")
 ###########################
 ## simplified categories ##
 ###########################
-tmp.dip$repite2 <- NA
+tmp.dips$repite2 <- NA
 sel <- which(tmp.dips$repite %in% c("no", "60", "62", "64", "60-sen")) # PRESENT IN ONE LEGISLATURA ONLY
 tmp.dips$repite2[sel] <- "in one leg only"
 sel <- which(tmp.dips$repite %in% c("57-60", "57-62", "57-60-62", "58-60-62", "57-60-sen-64", "58-sen-62-64", "59-62-64", "59-sen-62-64", "60-62", "60-62-64", "60-64", "60-sen-64", "62-64", "59-62-64")) # PRESENT IN TWO LEGISLATURAS
 tmp.dips$repite2[sel] <- "in two legs"
-sel <- which(tmp.dips$repite %in% c("47-60", "49-51-54-60-sen", "52-54-64", "52-59-sen-62", "53-57-59", "55-sen-60", "56-58-60", "56-58-61", "57-59-61-64", "57-59-sen-62", "57-59-sen-64", "57-59-64", "57-59-sen-64", "56-59-61-64", "57-60-63", "57-60-sen", "57-61-64", "57-61-sen-64", "57-sen-62", "57-sen-62-sen", "57-64", "58-60", "58-60-63", "58-62", "58-64", "58-sen-62", "59-62", "59-sen-62", "59-64", "59-sen-64", "60-63", "61-64", "sen-52-sen-56-60", "sen-60", "sen-60-sen", "sen-62", "sen-64", "61-sen-64", "61-sen-64", "53-sen-64", "55-59-64", "58-61-sen-64")) # PRESENT IN ANOTHER LEGISLATURA NOT OBSERVED
+sel <- which(tmp.dips$repite %in% c("47-60", "49-51-54-60-sen", "52-54-64", "52-59-sen-62", "53-57-59", "53-57-59-62", "55-62", "55-sen-60", "56-60", "56-58-60", "56-58-61", "57-59-61-64", "57-59-sen-62", "57-59-sen-64", "57-59-64", "57-59-sen-64", "56-59-61-64", "57-60-63", "57-60-sen", "57-61-64", "57-61-sen-64", "57-sen-62", "57-sen-62-sen", "57-64", "58-60", "58-60-63", "58-62", "58-64", "58-sen-62", "59-62", "59-sen-62", "59-64", "59-sen-64", "60-63", "61-64", "sen-52-sen-56-60", "sen-60", "sen-60-sen", "sen-62", "sen-64", "61-sen-64", "61-sen-64", "53-sen-64", "55-59-64", "58-61-sen-64")) # PRESENT IN ANOTHER LEGISLATURA NOT OBSERVED
 tmp.dips$repite2[sel] <- "in another (unobserved) leg"
+# rename object
+all.dips.norep <- tmp.dips
 #
 # diputados repeating
-table(tmp.dips$repite2, useNA = "always")
-#tmp.dips$repite[is.na(tmp.dips$repite2)]
-
+table(all.dips.norep$repite2, useNA = "always")
+#all.dips.norep$leg[is.na(all.dips.norep$repite2)] # debug
+#all.dips.norep$repite[is.na(all.dips.norep$repite2)] # debug
+all.dips.norep$drepite <- as.numeric(all.dips.norep$repite2!="in one leg only")
+tmp <- table(all.dips.norep$drepite)
+sum(tmp)
+tmp; tmp/sum(tmp)
+###########
+## WOMEN ##
+###########
+table(all.dips.norep$gen)/sum(tmp)
+table(all.dips.norep$gen[all.dips.norep$leg==62])/sum(tmp)
 
 
 ########################################################################
@@ -386,9 +399,9 @@ rm(ctrl, sel,sel.col,tmp) # clean
 
 
 ################
-## WOMEN PLOT ##
+## WOMEN TABLE ##
 ################
-# diputadas by legislatura (doath==1) 
+# diputadas by legislatura (doath==1) --- keeps repeaters in
 sel <- which(all.dips$leg60$doath==1)
 round( table(all.dips$leg60$gen[sel])*100 / length(all.dips$leg60$gen[sel]), 0); length(all.dips$leg60$gen[sel])
 sel <- which(all.dips$leg62$doath==1)
@@ -415,7 +428,7 @@ table(tmp.dips$gen, tmp.dips$dchair)
 35/(35+108) # pct chairs women
 tmp <- round(table(tmp.dips$gen, tmp.dips$dchair) * 100 / rowSums(table(tmp.dips$gen, tmp.dips$dchair)), 0)
 cbind(tmp, tot=100, N= rowSums(table(tmp.dips$gen, tmp.dips$dchair)))
-# diputadas party keder
+# diputadas party leader
 sel <- grep.e("coor", tmp.dips$lider)
 tmp.dips$dleader <- 0; tmp.dips$dleader[sel] <- 1
 table(tmp.dips$gen, tmp.dips$dleader)
@@ -582,25 +595,35 @@ data$dextra <- 0
 data$dextra[sel] <- 1
 
 
+###################################
+## nwords and nterms (from data) ##
+###################################
+table(data$nterms)
+sel <- which(data$nterms==0 & data$dpresoff==0)
+mean(data$dv.nword[sel])
+length(sel)
+sel <- which(data$nterms >0 & data$dpresoff==0)
+mean(data$dv.nword[sel])
+length(sel)
+sel <- which(data$nterms==1 & data$dpresoff==0)
+mean(data$dv.nword[sel])
+length(sel)
+sel <- which(data$nterms==2 & data$dpresoff==0)
+mean(data$dv.nword[sel])
+length(sel)
+sel <- which(data$nterms >2 & data$dpresoff==0)
+mean(data$dv.nword[sel])
+length(sel)
+data$nom[sel]
+
+
 #######################################
 ## Session days ordinarias vs extras ##
 #######################################
 tmp <- data[duplicated(data$sel.agg)==FALSE,]
 mean(tmp$ev.all.dys[tmp$dextra==1])
 mean(tmp$ev.all.dys[tmp$dextra==0])
-$ev.all.
 
-##########################
-## SENIORITY ANS SPEECH ##
-##########################
-# freshmen
-round(table(tmp.dips$repite=="no")*100 / sum(table(tmp.dips$repite=="no")))
-sum(table(tmp.dips$repite=="no")) # all dips
-
-sel <- which(data$dpresoff==0)
-table(data$nterms[sel])
-summary(tmp <- lm(dv.nword ~ nterms   , data = data[sel,]))
-summary(tmp <- lm(dv.nword ~ seniority, data = data[sel,]))
 
 
 ## GRAFICA MATRIZ DE CORRELACIONES: COOL!
@@ -611,27 +634,12 @@ corrplot(tmp, color = TRUE) #plot matrix
 #corrplot(tmp, method = "circle") #plot matrix
 
 
-################################
-## ZERO INFLATED NEGBIN MODEL ##
-################################
-library(pscl) # zero inflated poisson
-f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64")
-fit <- zeroinfl(formula = f2, data=data, dist = "negbin", subset = dpresoff==0) 
-summary(fit)
-
-#################
-## LOGIT MODEL ##
-#################
-f <- formula("dword ~ dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-fit <- glm(formula = f, data=data, family = "binomial", subset = dpresoff==0) 
-summary(fit)
-x
-
 ######################
 ## VAR DESCRIPTIVES ##
 ######################
-summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms")])
-round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms")], sd), digits = 2) # std devs
+summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")])
+round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")], sd), digits = 2) # std devs
+round(sd(data$age[data$dpresoff==0], na.rm = TRUE), digits = 2) # std devs
 #
 table(data$dword  [data$dpresoff==0])
 table(data$dmaj   [data$dpresoff==0])
@@ -639,6 +647,7 @@ table(data$dleader[data$dpresoff==0])
 table(data$dchair [data$dpresoff==0])
 table(data$dsmd   [data$dpresoff==0])
 table(data$dsup   [data$dpresoff==0])
+table(data$dextra [data$dpresoff==0])
 table(data$dfem   [data$dpresoff==0])
 table(data$d60    [data$dpresoff==0])
 table(data$d62    [data$dpresoff==0])
@@ -651,20 +660,20 @@ table(data$dpri   [data$dpresoff==0])
 ## NEGBIN MODELS ## 
 ###################
 f5 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra")
-f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age")
-#f3 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
-f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
-f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + seniority + dfem + dsup           ")
+f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + age")
+#f3 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64")
+f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + nterms + dfem + dsup           ")
 
 fit1 <- glm.nb  (formula = f1, data = data, subset = dpresoff==0)
 fit2 <- glm.nb  (formula = f2, data = data, subset = dpresoff==0)
 library(lme4)
 #fit3 <- glmer.nb(formula = f3, data = data, subset = dpresoff==0)
-fit3 <- glmer(formula = f3, data = data, family = poisson, subset = dpresoff==0)
+#fit3 <- glmer(formula = f3, data = data, family = poisson, subset = dpresoff==0)
 
-summary(fit3)$coefficients
-summary(fit3)
+summary(fit2)$coefficients
+summary(fit1)
 x
 
 # log likelihood
@@ -683,9 +692,9 @@ nobs(fit3)
 ################
 ## fx <- formula("dv.nword.sh ~ ev.pot.dys + dmaj + size.maj + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dsup + dfem + d62 + d64 + age")
 f <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + age") #ev.pot.dys
-f13 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + (1|individual)")
-f12 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
-f11 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd          + seniority + dfem + dsup")
+f13 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + dextra + (1|individual)")
+f12 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + dextra")
+f11 <- formula("dv.nword.sh ~ dmaj + ptysh + dleader + dchair + dsmd          + nterms + dfem + dsup")
 
 fit11 <- lm(formula = f11, data=data, subset = dpresoff==0)
 fit12 <- lm(formula = f12, data=data, subset = dpresoff==0)
@@ -699,14 +708,57 @@ summary(fit13)$coefficients
 summary(fit13)$list
 names(summary(fit13))
 
+
+################################
+## ZERO INFLATED NEGBIN MODEL ##
+################################
+library(pscl) # zero inflated poisson
+f2z <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64")
+fit2z <- zeroinfl(formula = f2, data=data, dist = "negbin", subset = dpresoff==0) 
+summary(fit2z)$coefficients
+summary(fit2)$coefficients
+
+#################
+## LOGIT MODEL ##
+#################
+tmp <- table(data$dword[data$dpresoff==0], factor(data$dfem[data$dpresoff==0], labels = c("M","F")))
+tmp; tmp / rowSums(tmp)
+data$dword[data$dpresoff==0])
+table(data$dword[data$dpresoff==0], data$dfem[data$dpresoff==0])
+f <- formula("dword ~ dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64")
+fit <- glm(formula = f, data=data, family = "binomial", subset = dpresoff==0) 
+summary(fit)
+x
+
+###########################
+## FIT VS INTERCEPT-ONLY ##
+###########################
+f <- formula("dv.nword ~ log(ev.pot.dys)  + 1")
+f <- formula("dv.nword ~ 1")
+fit0 <- glm.nb  (formula = f, data = data, subset = dpresoff==0)
+anova(fit1, fit0)
+anova(fit2, fit0)
+# not applicable to zero-inflated: anova(fit2z, fit0)
+f <- formula("dv.nword.sh ~ 1")
+fit0 <- lm(formula = f, data=data, subset = dpresoff==0)
+anova(fit11, fit0)
+anova(fit12, fit0)
+anova(fit13, fit0)
+
+
+x
+
+##################
+## EXPORT TABLE ##
+##################
 library(stargazer)
-stargazer(fit11, fit12, fit13, fit1, fit2, align=TRUE, report = ('vc*s'),
+stargazer(fit11, fit12, fit13, fit1, fit2, fit2z, align=TRUE, report = ('vc*s'),
           title = "Regression results",
           type = "text", out = "tmp-tab.txt",
           digits = 2,
-          dep.var.labels = c("Words in period", "Words/tenure in period")
+          dep.var.labels = c("Words/exposure in period", "Words in period")
           , covariate.labels=
- c("Tenure (logged)",
+ c("Exposure (logged)",
    "Majority",
    "Party size",
 #   "Left",
@@ -715,10 +767,11 @@ stargazer(fit11, fit12, fit13, fit1, fit2, align=TRUE, report = ('vc*s'),
    "SMD",
    "SMD x reelect",
    "Seniority",
-   "Suplente",
    "Female",
+   "Suplente",
    "62nd Leg.",
    "64th Leg.",
+   "Extraordinary",
    "Constant")
           )
 
@@ -748,7 +801,12 @@ tmp <- c("Tenure",
          "62nd Leg.",
          "64th Leg.")
 
-#pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
+#drop some regressors to not report them
+mar2.dup <- mar2
+mar2 <- mar2[1:9,]
+tmp <- tmp[1:9]
+
+pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
 #png(filename = "../plots/avgMgEffects.png", height = 480, width = 480)
 par(mar=c(4,2,2,2)+0.1) # drop title space and left space
 plot(x=c(-1500,1850),#)(-8250,1850),
@@ -768,7 +826,7 @@ for (i in c(-1:-nrow(mar2))){
 #mar2$factor
 polygon(x= c(-1800,-1100,-1100,-1800), y=c(-12,-12,0,0), col = "white", border = "white")
 text(x=-1700, y=-1:-nrow(mar2), labels=tmp, pos=4)
-#dev.off()
+dev.off()
 
 
 ##########################
@@ -778,12 +836,12 @@ text(x=-1700, y=-1:-nrow(mar2), labels=tmp, pos=4)
 sims2 <- with(data,
               data.frame(ev.pot.dys=median(ev.pot.dys),
                          dmaj = c( rep(0,51), rep(1,11), rep(0,51), rep(1,11) ),
-                         size.maj = rep(c(seq(-50,0,by=1), seq(0,10,by=1)), 2),
+                         ptysh = rep(c(seq(0,50,by=1), seq(50,60,by=1)), 2),
                          dleader = 0,
                          dchair = 0,
                          dsmd = 1, 
                          dsmd64 = c(rep(0,62),rep(1,62)), 
-                         seniority = 0,
+                         nterms = 0,
                          dsup = 0,
                          dfem = 1,
                          d62 = 1, #c(rep(1,60),rep(0,60)),
@@ -801,66 +859,67 @@ sims2 <- within(sims2, {
 })
 #sims2$size.maj <- seq(from=-50, to=10, length.out = 120) # for plot
 
+
 ######################
 ## PLOT SIMULATIONS ##
 ######################
-#pdf (file = "../plots/predictedWords.pdf", width = 7, height = 7)
+#pdf (file = "../plots/predictedWords.pdf", width = 7, height = 5)
 #png(filename = "../plots/predictedWords.png", height = 480, width = 480)
 par(mar=c(4,4,2,2)+0.1) # drop title space and left space
-plot(sims2$size.maj, sims2$UL, ylim = c(0,max(sims2$UL)), axes = FALSE, type = "n",
+plot(sims2$ptysh, sims2$UL, ylim = c(0,max(sims2$UL)), axes = FALSE, type = "n",
      main = "", xlab = "Speechmaker's party size (%)", ylab = "Predicted words by speechmaker in session")
-axis(1, at = seq(-50,10,5), labels = FALSE)
-axis(1, at = seq(-50,10,10), labels = seq(0,60,10))
+axis(1, at = seq(0,60,5), labels = FALSE)
+axis(1, at = seq(0,60,10), labels = seq(0,60,10))
 axis(2, at = seq(0,8000,1000), labels = FALSE)
 axis(2, at = seq(0,8000,2000), labels = TRUE)
 abline(h = seq(0,8000,1000), col = "gray")
-abline(v = seq(-50,10,5), col = "gray")
-abline(v=0, lty = 2)
+abline(v = seq(0,60,5), col = "gray")
+abline(v=50, lty = 2)
 #
 #couleur <- rgb(175/255, 175/255, 175/255, alpha = .5) # gray
 couleur <- rgb(255/255, 0/255, 0/255, alpha = .33) # red
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==0)
-polygon(c(sims2$size.maj[sel], rev(sims2$size.maj[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
+polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==0)
-polygon(c(sims2$size.maj[sel], rev(sims2$size.maj[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
+polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
 #couleur <- rgb(150/255, 150/255, 150/255, alpha = .5) # gray
 couleur <- rgb(0/255, 0/255, 255/255, alpha = .33) # blue
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==1)
-polygon(c(sims2$size.maj[sel], rev(sims2$size.maj[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
+polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==1)
-polygon(c(sims2$size.maj[sel], rev(sims2$size.maj[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
+polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
 #
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==0)
-lines(sims2$size.maj[sel], sims2$PredictedWords[sel], col = "red")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "red")
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==0)
-lines(sims2$size.maj[sel], sims2$PredictedWords[sel], col = "red")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "red")
 #
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==1)
-lines(sims2$size.maj[sel], sims2$PredictedWords[sel], col = "blue")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==1)
-lines(sims2$size.maj[sel], sims2$PredictedWords[sel], col = "blue")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
 #
-text(0,7000, labels = "Majority", srt = 90, cex = .75, pos = 4)
-text(-27,4300, labels = "member", col = "blue")
-text(-27,4000, labels = "can reelect", col = "blue")
-text(-40,1250, labels = "member is", col = "red")
-text(-40,950, labels = "term-limited", col = "red")
+text(50,7000, labels = "Majority", srt = 90, cex = .75, pos = 4)
+text(23,4300, labels = "member", col = "blue")
+text(23,3850, labels = "can reelect", col = "blue")
+text(10,1400, labels = "member is", col = "red")
+text(10,950, labels = "term-limited", col = "red")
 #
 # add individuals
-tmp <- data[, c("size.maj", "individual")]
+tmp <- data[, c("ptysh", "individual")]
 head(tmp)
 tmp <- tmp[duplicated(tmp$individual)==FALSE,]
-table(tmp$size.maj)
+table(tmp$ptysh)
 tmp$xjitter <- runif(nrow(tmp),-1,1)/2
 tmp$yjitter <- runif(nrow(tmp),-1,1)*50
 couleur <- rgb(175/255, 175/255, 175/255, alpha = .5) # gray
-points(tmp$size.maj+tmp$xjitter, -150+tmp$yjitter, cex = .005, col = couleur)
+points(tmp$ptysh+tmp$xjitter, -150+tmp$yjitter, cex = .005, col = couleur)
 #dev.off()
 
 

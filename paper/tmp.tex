@@ -38,3 +38,29 @@ But the removal of single-term limits might change this, at least for members wi
 
 
 
+
+---------------
+
+To analyze participation in floor debates, I fit multivariate event count models to words spoken. Both specifications of the dependent variable, the absolute and the relative, appear in the left side. In the right side are status variables, member charactersitics, and other controls. Units are member-periods. 
+
+/Status variables/. A dummy for *majority* status indicates members from Morena in the 64th Legislature---the only party controlling over 50 percent of seats. If debate is an (imperfect) substitute for legislative outcomes, then minority members demand more frequent floor participation \citep{proksch-slapin2015book}. On the contrary, if members put value on debate per se, the majority may demand it as much as others, possibly with better access to the floor. Next, a dummy for committee *chair* status. When producing a report, the chair has privileged access to the floor, and this should translate into more speech. A dummy for party *leader* status completes this set. Leaders allocate party speakers. Whether or not they take advantage of this privilege remains an open question, a good leader ought to distribute the goodies, or risk removal. 
+
+/Member variables/. Aside from *woman* and *seniority*, the right side includes *smd*, a dummy equal one for members elected in single-member districts.
+The method of election is behind systematic differences in members' pork requests \citep{kerevelPork2015}, which may also translate into higher demand for access to the floor. I also interact this regressor with a dummy indicating the 64th Legislature, which dropped single-term limits (*smd x reelection*). The more personal vote should generate higher demand for floor access. *Party size* is the percentage of seats the member's party holds. Larger parties must divide the slot that all parties get to take the floor among more members, and this should show up as a negative regression coefficient. And a dummy *suplente* controls for substitute members. Regressors not in the right side include members' ages due to incomplete data, and party ideology, which made no difference in the estimates. Replication material is available. 
+
+/Other controls/. Also in the right side are dummies for the *62nd* and *64th* terms (the 60th is the baseline) and another for *extraordinary* periods. Finally, with the option to take leaves of absence, calling in suplentes, some members served incomplete periods. The exposure is the number of days served in the period, logged. Higher exposure offers more opportunities for floor access. 
+
+Negbin vs OLS, zinb and random effects. 
+
+
+Next is *party size*, the seats that the member's party controlled in the chamber in the term as a proportion of all seats. Since rules allocate speaking time to the parties in proportion to their size, members of smaller parties have more opportunities to speak than  members of larger parties, and the variable should have a negative effect.
+
+
+The absolute with negbin, the relative *words/exposure* with ols. Variants.
+
+To assess the determinants of participation in legislative debate in a multivariate framework, we estimate a negative binomial regression model in which our outcome variable is the number of speeches made by a given MP in a given Parliament (the period of time between two general elections). We also show results from a linear regression model where our dependent variable captures the number of words spoken by a given MP in a given Parliament.
+We describe variation in speaking rates using two sets of variables. First, building on the insights outlined above in our analysis of parliamentary procedures, we include five dummy variables that correspond to important institutional positions that MPs might hold in the House of Commons. As procedural privileges allow frontbenchers to speak more than other members, we include indicators for whether, at any point in the relevant Parliament, an MP was a government junior minister, a cabinet minister, a shadow junior minister, or a shadow cabinet minister. We additionally include a variable which distinguishes those MPs who chair parliamentary committees. The baseline comparison for these variables is any MP who does not hold one of these positions – a “backbench” MP. We also include a binary variable to capture differences between MPs from the governing party (or parties) and MPs from non-governing parties.
+Aside from these institutional variables, we include a series of MP-specific characteristics. In particular, we include an indicator for whether the MP is female, the age of the MP (in years), age squared, and the seniority of the MP (in years). To evaluate whether MPs speech-making behaviour is sensitive to electoral security – a hypothesis advanced elsewhere (Kellermann 2016) – we also include the margin of victory of the MP in the most recent general election (in percentage points). We also include a set of dummy variables to capture the effects of party affiliation as well as fixed-effects for each parliamentary term. Finally, we also control for a continuous variable (“Exposure”) that measures the percentage of time in which the MP held her seat during a given Parliament (we include the logged version of this variable in the negative binomial model).
+We include the same sets of covariates for both of our outcome variables, and the results of our regressions are presented in table 3, and we illustrate the coefficients associated with the key explanatory variables in figures 3 and 4.
+
+
