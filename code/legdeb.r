@@ -87,6 +87,9 @@ load(file = "speech-day-62.RData")
 load(file = "speech-day-64.RData")
 ls()
 
+data.member.day.60[1,]
+data.periodo.60[1,]
+x
 
 # merge into single data frame
 data <- data.frame()

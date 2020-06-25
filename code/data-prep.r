@@ -813,7 +813,7 @@ tmp.df <- do.call(rbind, tmp.agg[sel.dips])
 ## x
 #
 # dv and exposure
-tmp.df$dv.nword <- tmp.df$nword;                    # DV for negbin
+tmp.df$dv.nword <- tmp.df$nword;                    # DV raw
 tmp.df$ev.pot.dys <- tmp.df$pot.dys # exposure: number days dip was not on leave in unit 
 tmp.df$ev.all.dys <- tmp.df$all.dys # exposure: number days dips met in unit (period)
 tmp.df$ev.pot.sh <- tmp.df$pot.sh   # exposure: share of all days dip was not on leave in unit 
