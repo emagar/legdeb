@@ -87,9 +87,8 @@ load(file = "speech-day-62.RData")
 load(file = "speech-day-64.RData")
 ls()
 
-data.member.day.60[1,]
+data.member.day.60[1:5,]
 data.periodo.60[1,]
-x
 
 # merge into single data frame
 data <- data.frame()
@@ -288,6 +287,7 @@ colnames(summ)[1] <- "periodo"
 #
 print("* * Descriptives by periodo * *")
 print(summ)
+head(summ)
 #
 # date-ify periodo for plotting
 summ$date <- c(ymd("20060901"), ymd("20070201"), ymd("20070901"), ymd("20080201"), ymd("20080901"), ymd("20090201"), ymd("20120901"), ymd("20130201"), ymd("20130515"), ymd("20130901"), ymd("20140201"), ymd("20140515"), ymd("20140901"), ymd("20150201"), ymd("20180901"), ymd("20190201"), ymd("20190515"), ymd("20190901"), ymd("20200201"))
@@ -347,14 +347,16 @@ data.dy[sel,]
 ## sum of words in period ##
 ############################
 data[1,]
-tmp <- data[,c("sel.agg","leg","dpresoff","dv.nword")]
+tmp <- data[,c("sel.agg","leg","dpresoff","dv.nword","dv.nspeech")]
 tmp <- tmp[tmp$dpresoff==0,]
 tmp$wordsum <- ave(tmp$dv.nword, as.factor(tmp$sel.agg), FUN=sum, na.rm=TRUE)
+tmp$speechsum <- ave(tmp$dv.nspeech, as.factor(tmp$sel.agg), FUN=sum, na.rm=TRUE)
 tmp <- tmp[duplicated(tmp$sel.agg)==FALSE,]
 tmp[1:10,]
 # periodos ordiarios only, no presiding officers
-tmp[-grep.e("extra", tmp$sel.agg),c("sel.agg","wordsum")]
+tmp[-grep.e("extra", tmp$sel.agg),c("sel.agg","wordsum","speechsum")]
 summary(tmp$wordsum[-grep.e("extra", tmp$sel.agg)])
+summary(tmp$speechsum[-grep.e("extra", tmp$sel.agg)])
 (1465*500*.508)/789300
 
 
@@ -401,9 +403,9 @@ summ
 rm(ctrl, sel,sel.col,tmp) # clean
 
 
-################
+#################
 ## WOMEN TABLE ##
-################
+#################
 # diputadas by legislatura (doath==1) --- keeps repeaters in
 sel <- which(all.dips$leg60$doath==1)
 round( table(all.dips$leg60$gen[sel])*100 / length(all.dips$leg60$gen[sel]), 0); length(all.dips$leg60$gen[sel])
@@ -444,11 +446,21 @@ table(tmp.dips$gen[-sel], tmp.dips$dleader[-sel])
 # words women speakers
 round(sum(data$dv.nword[data$dfem==1])*100 / (sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0]))) # %
                                               sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0])   # N
+# nspeech women speakers
+round(sum(data$dv.nspeech[data$dfem==1])*100 / (sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0]))) # %
+                                                sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])   # N
+
+round(sum(data$dv.nspeech[data$dfem==1])*100 / (sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0]))) # %
+                                                sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])   # N
+
 
 
 #############
 ## PLOT DV ##
 #############
+#####################
+## NUMBER OF WORDS ##
+#####################
 tmp <- data$dv.nword[data$dpresoff==0]
 quantile(tmp, probs = seq(0,1,.05))
 sel <- which(tmp>8000)
@@ -471,10 +483,39 @@ data$dv.nword[data$dpresoff==0][sel]
 #pdf(file = "../plots/dv-histogram.pdf", width = 7, height = 5)
 #png(filename = "../plots/dv-histogram.png", height = 400, width = 480)
 par(mar=c(4,4,1,1)+0.1) # drop title space and left space
-hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Members' speech per period in words")
+hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Words member spoke per period")
 text(7950, 350, "*")
 abline(v=median(tmp), lty = 2)
-text(median(tmp), 3500, paste("Median =", median(tmp)), pos = 4)
+text(median(tmp), 3500, paste("Median =", median(tmp), "words"), pos = 4)
+#dev.off()
+
+########################
+## NUMBER OF SPEECHES ##
+########################
+tmp <- data$dv.nspeech[data$dpresoff==0]
+quantile(tmp, probs = seq(0,1,.05))
+# zeroes
+sel <- which(tmp==0)
+length(sel)
+length(sel)/length(tmp)
+# hi participants
+sel <- which(data$dv.nspeech[data$dpresoff==0]>10)
+data$nom[data$dpresoff==0][sel]
+table(data$nom[data$dpresoff==0][sel], data$leg[sel])
+data$part[data$dpresoff==0][sel]
+data$leg[data$dpresoff==0][sel]
+data$dv.nspeech[data$dpresoff==0][sel]
+# tabular
+table(tmp)
+summary(tmp)
+sd(tmp)
+
+#pdf(file = "../plots/dv-nspeech-histogram.pdf", width = 7, height = 5)
+#png(filename = "../plots/dv-nspeech-histogram.png", height = 400, width = 480)
+par(mar=c(4,4,1,1)+0.1) # drop title space and left space
+hist(tmp, breaks = 37, xlim = c(0,40), ylim = c(0,6000), main = NULL, xlab = "Speeches member gave per period")
+abline(v=median(tmp), lty = 2)
+text(median(tmp), 5800, paste("Median =", median(tmp), "speech"), pos = 4)
 #dev.off()
 
 
@@ -598,24 +639,29 @@ data$dextra <- 0
 data$dextra[sel] <- 1
 
 
-###################################
-## nwords and nterms (from data) ##
-###################################
-table(data$nterms)
+############################################
+## nwords, nspeech and nterms (from data) ##
+############################################
+table(data$nterms[data$dpresoff==0])
 sel <- which(data$nterms==0 & data$dpresoff==0)
 mean(data$dv.nword[sel])
+mean(data$dv.nspeech[sel])
 length(sel)
 sel <- which(data$nterms >0 & data$dpresoff==0)
 mean(data$dv.nword[sel])
+mean(data$dv.nspeech[sel])
 length(sel)
 sel <- which(data$nterms==1 & data$dpresoff==0)
 mean(data$dv.nword[sel])
+mean(data$dv.nspeech[sel])
 length(sel)
 sel <- which(data$nterms==2 & data$dpresoff==0)
 mean(data$dv.nword[sel])
+mean(data$dv.nspeech[sel])
 length(sel)
 sel <- which(data$nterms >2 & data$dpresoff==0)
 mean(data$dv.nword[sel])
+mean(data$dv.nspeech[sel])
 length(sel)
 data$nom[sel]
 
@@ -640,8 +686,8 @@ corrplot(tmp, color = TRUE) #plot matrix
 ######################
 ## VAR DESCRIPTIVES ##
 ######################
-summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")])
-round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")], sd), digits = 2) # std devs
+summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh","dv.nspeech", "ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")])
+round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh","dv.nspeech","ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")], sd), digits = 2) # std devs
 round(sd(data$age[data$dpresoff==0], na.rm = TRUE), digits = 2) # std devs
 #
 table(data$dword  [data$dpresoff==0])
@@ -659,35 +705,57 @@ table(data$dpan   [data$dpresoff==0])
 table(data$dleft2 [data$dpresoff==0])
 table(data$dpri   [data$dpresoff==0])
 
-###################
-## NEGBIN MODELS ## 
-###################
-f5 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra")
-f4 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + age")
-#f3 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
-f3 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
-f2 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64")
-f1 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + nterms + dfem + dsup           ")
+#########################
+## NEGBIN MODELS nword ## 
+#########################
+f25 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra")
+f24 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + age")
+#f23 <- formula("dv.nword ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f23 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f22 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64")
+f21 <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + nterms + dfem + dsup           ")
+
+fit21 <- glm.nb  (formula = f21, data = data, subset = dpresoff==0)
+fit22 <- glm.nb  (formula = f22, data = data, subset = dpresoff==0)
+library(lme4)
+#fit23 <- glmer.nb(formula = f23, data = data, subset = dpresoff==0)
+#fit23 <- glmer(formula = f23, data = data, family = poisson, subset = dpresoff==0)
+
+summary(fit22)$coefficients
+summary(fit21)
+x
+
+###########################
+## NEGBIN MODELS nspeech ## 
+###########################
+f5 <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + size.maj  + dpan + dleft2 + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra")
+f4 <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + age")
+#f3 <- formula("dv.nspeech ~ log(ev.pot.dysS) + dmaj + size.majS + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f3 <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + size.maj  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + (1|individual)")
+f2 <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + nterms + dfem + dsup + d62 + d64 + dextra")
+f1 <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd          + nterms + dfem + dsup           ")
 
 fit1 <- glm.nb  (formula = f1, data = data, subset = dpresoff==0)
 fit2 <- glm.nb  (formula = f2, data = data, subset = dpresoff==0)
-library(lme4)
-#fit3 <- glmer.nb(formula = f3, data = data, subset = dpresoff==0)
-#fit3 <- glmer(formula = f3, data = data, family = poisson, subset = dpresoff==0)
+fit2p <- glm    (formula = f2, data = data, family = poisson, subset = dpresoff==0)
+## library(lme4)
+## fit3 <- glmer.nb(formula = f3, data = data, subset = dpresoff==0)
+## fit3 <- glmer(formula = f3, data = data, family = poisson, subset = dpresoff==0)
 
 summary(fit2)$coefficients
-summary(fit1)
+summary(fit2p)
 x
+
 
 # log likelihood
 logLik(fit1)
 logLik(fit2)
-logLik(fit3)
+logLik(fit2p)
 
 # n
 nobs(fit1)
 nobs(fit2)
-nobs(fit3)
+nobs(fit2p)
 
 
 ################
@@ -716,8 +784,8 @@ names(summary(fit13))
 ## ZERO INFLATED NEGBIN MODEL ##
 ################################
 library(pscl) # zero inflated poisson
-f2z <- formula("dv.nword ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64")
-fit2z <- zeroinfl(formula = f2, data=data, dist = "negbin", subset = dpresoff==0) 
+f2z <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64 + dextra")
+fit2z <- zeroinfl(formula = f2, data=data, dist = "poisson", subset = dpresoff==0) 
 summary(fit2z)$coefficients
 summary(fit2)$coefficients
 
@@ -736,19 +804,19 @@ x
 ###########################
 ## FIT VS INTERCEPT-ONLY ##
 ###########################
-f <- formula("dv.nword ~ log(ev.pot.dys)  + 1")
-f <- formula("dv.nword ~ 1")
+f <- formula("dv.nspeech ~ log(ev.pot.dys)  + 1")
+f <- formula("dv.nspeech ~ 1")
 fit0 <- glm.nb  (formula = f, data = data, subset = dpresoff==0)
 anova(fit1, fit0)
 anova(fit2, fit0)
+## fit0 <- glm  (formula = f, data = data, family = poisson, subset = dpresoff==0)
+## anova(fit2p, fit0)
 # not applicable to zero-inflated: anova(fit2z, fit0)
 f <- formula("dv.nword.sh ~ 1")
 fit0 <- lm(formula = f, data=data, subset = dpresoff==0)
 anova(fit11, fit0)
 anova(fit12, fit0)
 anova(fit13, fit0)
-
-
 x
 
 ##################
@@ -759,7 +827,7 @@ stargazer(fit11, fit12, fit13, fit1, fit2, fit2z, align=TRUE, report = ('vc*s'),
           title = "Regression results",
           type = "text", out = "tmp-tab.txt",
           digits = 2,
-          dep.var.labels = c("Words/exposure in period", "Words in period")
+          dep.var.labels = c("Words/exposure in period", "Speeches in period")
           , covariate.labels=
  c("Exposure (logged)",
    "Majority",
@@ -770,7 +838,7 @@ stargazer(fit11, fit12, fit13, fit1, fit2, fit2z, align=TRUE, report = ('vc*s'),
    "SMD",
    "SMD x reelect",
    "Seniority",
-   "Female",
+   "Woman",
    "Suplente",
    "62nd Leg.",
    "64th Leg.",
@@ -788,48 +856,49 @@ library(margins)
 mar2 <- margins(fit2)
 mar2 <- summary(mar2)
 #tmp <- c(6,4,2,3,1,9,10,11,7,8,5); mar3 <- mar3[order(tmp),] # sort rows so coefs appear in same order as in table  *with dmocion*
-#tmp <-  c(1,2,3,4,5,6,7,8,9,10,11,12); mar2 <- mar2[order(tmp),] # sort rows so coefs appear in same order as in table
-tmp <-  c(11,12,5,9,4,2,6,7,10,1,8,3); #mar2 <-  # sort rows so coefs appear in same order as in table
+tmp <-  c(11,12,4,13,6,3,2,8,9,10,1,5,7);   # sort rows so coefs appear in same order as in table
+data.frame(1:13,mar2[,1],tmp)[order(tmp),] # view sort tmp's order
 mar2 <- mar2[order(tmp),]
 tmp <- c("Tenure",
          "Majority",
-         "Party size",
          "Party leader",
          "Comm. chair",
+         "Seniority",
+         "Woman",
+         "Party size",
          "SMD",
          "SMD x reelection",
-         "Seniority",
-         "Female",
          "Suplente",
          "62nd Leg.",
-         "64th Leg.")
+         "64th Leg.",
+         "Extraordinary")
 
 #drop some regressors to not report them
 mar2.dup <- mar2
 mar2 <- mar2[1:9,]
 tmp <- tmp[1:9]
 
-pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
+#pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
 #png(filename = "../plots/avgMgEffects.png", height = 480, width = 480)
 par(mar=c(4,2,2,2)+0.1) # drop title space and left space
-plot(x=c(-1500,1850),#)(-8250,1850),
+plot(x=c(-1.5,2.5),#)(-8250,1850),
      y=-c(1,nrow(mar2)),
      type="n", axes = FALSE,
-     xlab = "Average marginal effect (words in period)",
+     xlab = "Average marginal effect (speeches in period)",
      ylab = "")
-abline(v=seq(-1000, 2000, 250), col = "gray70")
+abline(v=seq(-.5, 2.5, .5), col = "gray70")
 abline(v=0, lty=2)
 abline(h=seq(-1,-nrow(mar2),-1), col = "gray70")
-axis(1, at = seq(-1000, 2000, 250), labels = FALSE)
-axis(1, at = seq(-1000, 2000, 500), labels = c("-1000","-500","0","+500","+1000","+1500","+2000"))
+axis(1, at = seq(-.5, 2.5, .5), labels = FALSE)
+axis(1, at = seq(-.5, 2.5, .5), labels = c("-0.5","0","","+1","","+2",""))
 for (i in c(-1:-nrow(mar2))){
     points(y=i, x=mar2$AME[-i], pch=20, cex=1.5, col = "black")
     lines(y=rep(i, 2), x=c(mar2$lower[-i],mar2$upper[-i]), lwd = 2, col = "black")
 }
 #mar2$factor
-polygon(x= c(-1800,-1100,-1100,-1800), y=c(-12,-12,0,0), col = "white", border = "white")
-text(x=-1700, y=-1:-nrow(mar2), labels=tmp, pos=4)
-dev.off()
+polygon(x= c(-2,-.55,-.55,-2), y=c(-9.1,-9.1,0,0), col = "white", border = "white")
+text(x=-1.5, y=-1:-nrow(mar2), labels=tmp, pos=4)
+#dev.off()
 
 
 ##########################
@@ -870,12 +939,12 @@ sims2 <- within(sims2, {
 #png(filename = "../plots/predictedWords.png", height = 480, width = 480)
 par(mar=c(4,4,2,2)+0.1) # drop title space and left space
 plot(sims2$ptysh, sims2$UL, ylim = c(0,max(sims2$UL)), axes = FALSE, type = "n",
-     main = "", xlab = "Speechmaker's party size (%)", ylab = "Predicted words by speechmaker in session")
+     main = "", xlab = "Speechmaker's party size (%)", ylab = "Predicted speeches per member in period")
 axis(1, at = seq(0,60,5), labels = FALSE)
 axis(1, at = seq(0,60,10), labels = seq(0,60,10))
-axis(2, at = seq(0,8000,1000), labels = FALSE)
-axis(2, at = seq(0,8000,2000), labels = TRUE)
-abline(h = seq(0,8000,1000), col = "gray")
+axis(2, at = seq(0,9,1), labels = FALSE)
+axis(2, at = seq(0,9,2), labels = TRUE)
+abline(h = seq(0,9,1), col = "gray")
 abline(v = seq(0,60,5), col = "gray")
 abline(v=50, lty = 2)
 #
@@ -908,11 +977,11 @@ lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==1)
 lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
 #
-text(50,7000, labels = "Majority", srt = 90, cex = .75, pos = 4)
-text(23,4300, labels = "member", col = "blue")
-text(23,3850, labels = "can reelect", col = "blue")
-text(10,1400, labels = "member is", col = "red")
-text(10,950, labels = "term-limited", col = "red")
+text(50,8, labels = "Majority", srt = 90, cex = .75, pos = 4)
+text(23,5.3, labels = "member", col = "blue")
+text(23,4.8, labels = "can reelect", col = "blue")
+text(10,2.2, labels = "member is", col = "red")
+text(10,1.7, labels = "term-limited", col = "red")
 #
 # add individuals
 tmp <- data[, c("ptysh", "individual")]
@@ -920,9 +989,9 @@ head(tmp)
 tmp <- tmp[duplicated(tmp$individual)==FALSE,]
 table(tmp$ptysh)
 tmp$xjitter <- runif(nrow(tmp),-1,1)/2
-tmp$yjitter <- runif(nrow(tmp),-1,1)*50
+tmp$yjitter <- runif(nrow(tmp),-1,1)/12
 couleur <- rgb(175/255, 175/255, 175/255, alpha = .5) # gray
-points(tmp$ptysh+tmp$xjitter, -150+tmp$yjitter, cex = .005, col = couleur)
+points(tmp$ptysh+tmp$xjitter, -.15+tmp$yjitter, cex = .005, col = couleur)
 #dev.off()
 
 

@@ -581,12 +581,12 @@ agg.emm <- function(x, agg = "periodo"){
 }
 
 
-#####################################################################
-##              AGGREDATE BY DAYS FIRST IN ORDER TO                ##
-##                DROP NON-SPEECHES OF nword < 50                  ##
-## Note: I only consider days' aggregates, so anyone uttering less ##
-## than 50 word throughout a single day gets zero words that day   ##
-#####################################################################
+###################################################################
+#              AGGREDATE BY DAYS FIRST IN ORDER TO                #
+#                DROP NON-SPEECHES OF nword < 50                  #
+# Note: I only consider days' aggregates, so someone with eg. ten #
+# 5-word interventions counted as having made a speech that day   #
+###################################################################
 # create a list with subsets of each speaker's lines 
 speeches$ord <- 1:nrow(speeches)
 tmp.list <- split(speeches, speeches$who)
@@ -689,6 +689,7 @@ for (i in sel.dips){
 }
 # tmp.agg[[601]]
 
+
 ################################################
 ##          Aggregate unit's words            ##
 ##  * *  SELECT AGGREGATION UNIT BELOW  * *   ##
@@ -708,7 +709,7 @@ speech.list <- lapply(speech.list, FUN = function(x){
                   FUN=sum, na.rm=TRUE);
     x <- cbind(x, nword2)
     x <- x[duplicated(x$periodo)==FALSE,]           # drop redundant lines
-    x <- x[,c("who","periodo","nword2")]             # keep cols of interest
+    x <- x[,c("who","periodo","nword2")]            # keep cols of interest
 #    x <- x[,c("who","leg","nword")]                 # keep cols of interest
     colnames(x) <- c("who","sel.agg","nword")       # rename cols for merging
     return(x)
@@ -792,7 +793,7 @@ for (i in sel.dips){
     tmp2 <- ifelse(length(which(is.na(tmp1$nom))) > 0, 1, 0)
     tmp$dhasnas[i] <- tmp2 # return dummy
 }
-which(tmp$dhasnas==1) # mismatches have NAs
+which(tmp$dhasnas==1) # mismatches have NAs in other variables
 
 ##############################################################################
 ## Add nword column that is missing from diputados who did not utter a word ##
@@ -812,7 +813,9 @@ tmp.df <- do.call(rbind, tmp.agg[sel.dips])
 ## dips[sel.dips,"id"]
 ## x
 #
-# dv and exposure
+#########################
+## ADD DV AND EXPOSURE ##
+#########################
 tmp.df$dv.nword <- tmp.df$nword;                    # DV raw
 tmp.df$ev.pot.dys <- tmp.df$pot.dys # exposure: number days dip was not on leave in unit 
 tmp.df$ev.all.dys <- tmp.df$all.dys # exposure: number days dips met in unit (period)
@@ -821,7 +824,7 @@ tmp.df$ev.pot.sh <- tmp.df$pot.sh   # exposure: share of all days dip was not on
 tmp.df$dv.nword.sh <- tmp.df$nword / tmp.df$pot.sh # DV for OLS
 tmp.df$nword <- tmp.df$pot.dys <- tmp.df$all.dys <- tmp.df$pot.sh <- NULL # clean
 
-# covariates
+## COVARIATES
 ################
 ## dip gender ##
 ################
@@ -1088,21 +1091,120 @@ if (leg==64){
     save(data.member.day.64, file = "../data/speech-day-64.RData")
 }
 
-############################################
-## rename and save aggregated data object ##
-############################################
+###################################
+## rename aggregated data object ##
+###################################
 if (leg==60){
     data.periodo.60 <- tmp.df
-    save(data.periodo.60, file = "../data/speech-periodo-60.RData")
 }
 if (leg==62){
     data.periodo.62 <- tmp.df
-    save(data.periodo.62, file = "../data/speech-periodo-62.RData")
 }
 if (leg==64){
     data.periodo.64 <- tmp.df
-    save(data.periodo.64, file = "../data/speech-periodo-64.RData")
 }
+
+#########################################
+## ADD DV = NUMBER SPEECHES BY PERIODO ##
+#########################################
+###########
+## leg60 ##
+###########
+# count number of speeches in member-periodo
+if (leg==60){
+    tmp.dy <- data.member.day.60
+    tmp.dy$nspeach <- ave(tmp.dy$who, as.factor(paste(tmp.dy$who,tmp.dy$periodo)), FUN=length, na.rm=TRUE)
+    tmp.dy <- tmp.dy[duplicated(as.factor(paste(tmp.dy$who,tmp.dy$periodo)))==FALSE,]
+    tmp.dy <- tmp.dy[order(tmp.dy$who),]
+    tmp.dy <- tmp.dy[, c("who","periodo","nspeach")]
+    #tmp.dy[1:10,]
+    #
+    # open slot to add nspeech as dv
+    tmp.per <- data.periodo.60 # duplicate for manipulation
+    tmp.per$dv.nspeech <- 0
+    # loop to fill in nspeech 
+    for (i in 1:nrow(tmp.dy)){
+        #i <- 2 # debug
+        sel <- which(
+            as.factor(paste(tmp.per$nom,tmp.per$sel.agg))
+            %in%
+            as.factor(paste(tmp.dy$who,tmp.dy$periodo))[i]
+        )
+        if (length(sel)==0) break
+        tmp.per$dv.nspeech[sel] <- as.numeric(tmp.dy$nspeach[i])
+    }
+    # return data
+    data.periodo.60 <- tmp.per
+}
+#
+###########
+## leg62 ##
+###########
+# count number of speeches in member-periodo
+if (leg==62){
+    tmp.dy <- data.member.day.62
+    tmp.dy$nspeach <- ave(tmp.dy$who, as.factor(paste(tmp.dy$who,tmp.dy$periodo)), FUN=length, na.rm=TRUE)
+    tmp.dy <- tmp.dy[duplicated(as.factor(paste(tmp.dy$who,tmp.dy$periodo)))==FALSE,]
+    tmp.dy <- tmp.dy[order(tmp.dy$who),]
+    tmp.dy <- tmp.dy[, c("who","periodo","nspeach")]
+    #tmp.dy[1:10,]
+    #
+    # open slot to add nspeech as dv
+    tmp.per <- data.periodo.62 # duplicate for manipulation
+    tmp.per$dv.nspeech <- 0
+    # loop to fill in nspeech 
+    for (i in 1:nrow(tmp.dy)){
+    #i <- 2 # debug
+        sel <- which(
+            as.factor(paste(tmp.per$nom,tmp.per$sel.agg))
+            %in%
+            as.factor(paste(tmp.dy$who,tmp.dy$periodo))[i]
+        )
+        if (length(sel)==0) break
+        tmp.per$dv.nspeech[sel] <- as.numeric(tmp.dy$nspeach[i])
+    }
+    # return data
+    data.periodo.62 <- tmp.per
+}
+#
+###########
+## leg64 ##
+###########
+# count number of speeches in member-periodo
+if (leg==64){
+    tmp.dy <- data.member.day.64
+    tmp.dy$nspeach <- ave(tmp.dy$who, as.factor(paste(tmp.dy$who,tmp.dy$periodo)), FUN=length, na.rm=TRUE)
+    tmp.dy <- tmp.dy[duplicated(as.factor(paste(tmp.dy$who,tmp.dy$periodo)))==FALSE,]
+    tmp.dy <- tmp.dy[order(tmp.dy$who),]
+    tmp.dy <- tmp.dy[, c("who","periodo","nspeach")]
+    #tmp.dy[1:10,]
+    #
+    # open slot to add nspeech as dv
+    tmp.per <- data.periodo.64 # duplicate for manipulation
+    tmp.per$dv.nspeech <- 0
+    # loop to fill in nspeech 
+    for (i in 1:nrow(tmp.dy)){
+        #i <- 2 # debug
+        sel <- which(
+            as.factor(paste(tmp.per$nom,tmp.per$sel.agg))
+            %in%
+            as.factor(paste(tmp.dy$who,tmp.dy$periodo))[i]
+        )
+        if (length(sel)==0) break
+        tmp.per$dv.nspeech[sel] <- as.numeric(tmp.dy$nspeach[i])
+    }
+    # return data
+    data.periodo.64 <- tmp.per
+}
+
+#################################
+## save aggregated data object ##
+#################################
+if (leg==60) save(data.periodo.60, file = "../data/speech-periodo-60.RData")
+if (leg==62) save(data.periodo.62, file = "../data/speech-periodo-62.RData")
+if (leg==64) save(data.periodo.64, file = "../data/speech-periodo-64.RData")
+
+
 
 ###########################
 ## save diputados object ##

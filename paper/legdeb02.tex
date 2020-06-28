@@ -28,6 +28,8 @@
 
 \newcommand{\mc}{\multicolumn}
 
+\usepackage{epigraph}          % format epigraphs
+
 %% TO ADD NOTES IN TEXT, PUT % BEFORE THE ONE YOU WANT DISABLED
 \usepackage[disable]{todonotes}                            % no show
 %\usepackage[colorinlistoftodos, textsize=small]{todonotes} % show notes
@@ -63,7 +65,7 @@
 
 \begin{document}
 
-\title{Speech in Mexico's Cámara de Diputados\thanks{Financial support ITAM, SNI. For shedding light on some parties' internal rules of debate in the period, I am grateful to Fernando Rodríguez Doval, Lupita Vargas Vargas, and one former deputy who wished anonymity. Vidal Mendoza, Eugenio Solís, Sonia Kuri K, ana lu for research assistance.}}
+\title{Floor access in Mexico's Cámara de Diputados\thanks{Financial support ITAM, SNI. For shedding light on some parties' internal rules of debate in the period, I am grateful to Fernando Rodríguez Doval, Lupita Vargas Vargas, and one former deputy who wished anonymity. Vidal Mendoza, Eugenio Solís, Sonia Kuri K, ana lu for research assistance. Data and supporting materials necessary to reproduce the quantitative analysis are available for download at \url{https://github.com/emagar/legdeb}. Supplementary material for this article is available in the appendix in the online edition.}}
 \author{Eric Magar \\ Instituto Tecnológico Autónomo de México}
 \date{\today}
 \maketitle
@@ -71,10 +73,14 @@
 %\newpage
 
 \begin{abstract}
-\noindent Text as data: speeches in lower chamber of Mexico's federal Congress. Analysis covers three pre-midterm election legislative terms since 2006. Argument, findings.\footnote{{Data and supporting materials necessary to reproduce the numerical results in the article are available in the following repository (\url{https://github.com/emagar/legdeb}). Supplementary material for this article is available in the appendix in the online edition.}}
+\noindent Text as data: speeches in lower chamber of Mexico's federal Congress. Examination of three pre-midterm election legislative terms since 2006. Argument. Models uncover a distinctive surge in floor access for majority party members +++
+status oth
+women +
+seniority +
+smd x reelection +.
 \newline
 \newline
-\textbf{Keywords}: Speech, Congress, presidentialism, Mexico 
+\textbf{Keywords}: Floor debate, speech, Congress, presidential democracy, Mexico 
 \end{abstract}
 
 %\newpage
@@ -84,9 +90,21 @@
 \section{Introduction} [max 500 words]
 %% -describe what the chapter is about, key findings, and distinctive features of the country
 
-Interest in the Mexican Congress arrived with democratization.
+Plenary debate in the Mexican Congress has been all but absent in the interest of students of legislative politics. Other than brief and general mentions to the subject, I could find no systematic study of floor access. I therefore rely on my personal recollections to introduce this chapter.
 
-Was more or less a rubber stamp, presidential super-majorities.
+Two impressions seem to predominate in television nightly news rare coverage of current events in Congress. One involves footage from the plenary peppered with short soundbites by deputies who voice contrasting party positions on some subject. The other is when opposition members disrupt the session in order to prevent consideration of legislation, typically seizing la tribuna. 
+
+This chapter describes the institutional setting of debate in the Cámara de Diputados and performs a systematic examination of the determinants of floor participation. I argue that the impressions above capture a central contradiction in floor access. While parties effectively manage the recognition of members towards debate, members retain formal rights of participation  on a first-come-first-serve...
+
+
+Two impressions predominate 
+
+For historic reasons, floor debate has been nearly absent from Mexican legislative studies.
+
+
+From the 1950s to the year 2000 Mexico transitioned from the culprit of hegemonic party 
+
+In the second half of the Twentieth century Mexico went from hegemonic to democratic. Congress went from rubber stamp to key player in competitive politics. Interest in legislative studies soared, but focus on presidential legislative capacity (Casar), party discipline (Weldon), roll call voting (Rosas, me). Other than mentions in passing, debate has been absent from analysis of Mexican congressional politics, as pretty much elsewhere.   
 
 Then came divided government. Constitutional powers scrutinized, descriptive studies of relative influence by president, his party, and opposition parties. Roll call voting = cohesion, gubernatorial influences.
 
@@ -94,65 +112,62 @@ Debate has been overlooked. I could find no reference to anything. Chapter explo
 
 Argument. 
 
-\section{Case selection}
+\subsection{Case selection}
 
-Due to a hard time constraint, I leave out the Senate from analysis and focus on three out of eight Cámara terms since democratization. I examine the 60th (2006-09), 62nd (2012-15), and 64th Legislatures (2018-21). All are pre-midterm election terms for comparability. Data for the 64th runs up to the end of the second ordinary year only (March 19th, 2020, with more than one full year remaining), enough to investigate effects of electoral reform and majority status in debate, as we will see. 
+Due to a hard time constraint, focus is on the Cámara de Diputados of the bicameral Congress only. The chambers have symmetric powers over most legislation, but the Senate is excluded from adoption of the annual budget, and left it out. Moreover, I focus on three out of eight Cámara terms since the advent of competitive politics. I examine the 60th (2006-09), the 62nd (2012-15), and the 64th (2018-21) Legislatures. All are pre-midterm election terms for comparability. Data for the 64th runs up to the end of the second ordinary year only (March 19th, 2020, with more than one full year remaining), enough to investigate effects of electoral reform and majority status in debate, as we will see. 
 
 %I had to limit data span due to a hard time constraint. Focus is on the Cámara de Diputados only. The chambers of the bicameral Congress have symmetric powers over most legislation, but the Senate is excluded from adoption of the annual budget, and I left it out. The limit is also in the time span. Only three legislative terms out of eight since democratization are included. I examine the 60th, 62nd, and 64th Legislatures. All are pre-midterm election, more similar among them. I opted for inclusion of the partial 64th Legislature (2018-21) instead of the 58th (2000-03) in order to investigate effects of electoral reform in debate. 
+
+The chapter is organized as follows. Section 1 political institutions, the party system, and major changes to both. Section 2 narrows the focus, describing the institutional setting of legislative debate in the Cámara. Key players, structure of debate, ecognition-granting motions, party discipline as alternative to centralized agenda power. Section 3 performs data analysis. Findings from a multivariate model of legislative debate. Section 4 discusses findings in the context of Mexican politics. Minority rights. Section 5 concludes. 
+
 
 
 \section{Institutional and party system background} [ca 500-1000 words]
 %% In this section, you need to address the basic institutional design of your country.
 %% Please cover, at least, the following points:
 
-Mexico is a presidential democracy. For most of the 20th century a hegemonic party, the PRI, held the strings of political influence in a tight grip nationwide. While the PRI's electoral fortunes suffered from societal change \citep{scott.1959}(ref) and from formidable economic setbacks in the 1980s, it was not until 1997 that competitive politics became the norm. The PRI lost control of the lower house of Congress in that year's midterm election, the first in six decades. Then in 2000 the country's long-standing right-of-center opposition beat the PRI in the presidential race. 
-
-Congress is bicameral. The only asymmetry in the chambers' authority over legislation is important: the Cámara de Diputados adopts the federal budget without Senate intervention. 
-
-64 partial included because it is the first instance of single-party unified government. And, importantly, first Congress where incumbents allowed to be on the ballot in midterm. Plus clear mutation of governing groups after 2+ decades of the partidocracia party system \citep{magar.2007ref.2015,magar.estevez.rosas.2010}. 
-
-
-Mexico has a presidential constitution. For most of the 20th century a hegemonic party, the PRI, controlled the strings of political influence nationwide. While the PRI's electoral fortunes suffered from societal change and from formidable economic setbacks in the 1980s, it was not until 1997 that competitive politics became the norm \citep{cosio.villegas.1981,molinar.1991a,cornelius.1996}. The PRI lost control of the lower house of Congress in that year's midterm election, something unseen in over six decades. Three year later the country's long-standing right-of-center opposition, the PAN, beat the PRI in the presidential race. 
-
 %% 1. Describe the institutional system: executive-legislative relations; balance of power between executive and legislative branches. Does the executive dominate?
-
-With democratization, two decades of divided government ensued. The executive's control of the legislative process ended abruptly, inaugurating relative balance between the branches \citep{weldon.1997,lujambio.segl.2000}. The president retained a prominent role in lawmaking, but genuine negotiation with the opposition was required to get things done \citep{casarSinMay2013,bejarQuienLegisla2012}. 
 
 %% 2. Parties and party system: describe the most important parties in the window of observation of the chapter. Discuss party system features. Are there dominant parties? Are there extreme left or right parties? Are the latter considered outsider parties?
 
-Competitive politics blended a
-- three party system (local two-party systems mostly) with 
-- entry barriers
-- but weak links to society
-- bunch of opportunistic parties
-- two dims of competition
+%% 3. Discuss the organization of parliamentary party groups/legislative parties. The balance of power between frontbenchers (leadership) and backbenchers.
 
-Partidocracia came crashing down in 2018.
+%% 4. Electoral system: discuss personal vote-seeking incentives. Frame this in a way that answers the questions: is the electoral system party-centered or candidate-centered? Discuss existing empirical work about your country that deals with home style. Discuss the ballot structure and how it allows voters to reward/punish individual legislators. Conclude point by referring to the importance of the ‘party brand’ as an electoral asset? Is the party brand important for vote-seeking (e.g. in CLPR, such as Portugal, Spain or Norway) or is the party brand of less importance (e.g. in Irish STV)?
 
-  \subsection{parties in camara}
+%% 5. How important is party unity/cohesion for electoral success? Do institutional rules make party leaders value unity or can they allow MPs to dissent?
 
-\singlespacing
-\begin{footnotesize}
+\subsection{Executive-legislative relations}
+
+Mexico is a presidential democracy. For most of the 20th century a hegemonic party, the Institutional Revolutionary Party (PRI), held the strings of political influence in a tight grip nationwide. While the PRI's electoral fortunes suffered from societal change and from formidable economic setbacks in the 1980s, it was not until 1997 that competitive politics became the norm \citep{scott.1959,cosio.villegas.1981,molinar.1991a,cornelius.1996}. For the first time in over six decades, the PRI lost control of the lower chamber of Congress in that year's midterm election. Then in 2000 the country's long-standing right-of-center opposition, the National Action Party (PAN) beat the PRI in the presidential race.  
+
+With democracy came two decades of divided government. The executive's control of the legislative process ended abruptly, inaugurating relative balance between the branches \citep{weldon.1997,lujambio.segl.2000}. The president retained a prominent role in lawmaking, but genuine negotiation with the opposition was required to get things done \citep{casarSinMay2013,bejarQuienLegisla2012}. 
+
+The competitive era had a system with three major parties and a handful of small opportunistic parties \citep[see][]{moreno.decisElec.2009,magar.altman.mcd.trelles2016pg,diaz-estevez-magaloni-Poverty-book.2016}. Majors included the PAN, the PRI, and a left-of-center Democratic Revolutionary Party (PRD). Competition was mostly between the PRI and another major at the local level. The PRI retained strongholds from its hegemonic era in rural Mexico, but neither party had particularly strong ties to social groups. Parties would have to rebuild a clientelistic coalition from near scratch at every electoral campaign.
+
+\begin{table}
+\begin{scriptsize}
 \begin{verbatim}
-|----------------------------+------+------+--------|
-|                            | 60th | 62nd |   64th |
-| party                      |    % |    % |      % |
-|----------------------------+------+------+--------|
-| pan                        |   41 |   23 |     16 |
-| pri                        |   21 |   43 |      9 |
-| prd                        |   25 |   20 |      4 |
-| morena                     |      |      |     51 |
-| opportunistic w/ president |      |    8 |     14 |
-| other opportunistic        |   13 |    7 |      6 |
-|----------------------------+------+------+--------|
-| Total                    % |  100 |  100 |    100 |
-|                          N |  500 |  500 |    500 |
-|----------------------------+------+------+--------|
-| president's party          |  pan |  pri | morena |
-|----------------------------+------+------+--------|
+|----------------------------+---------+---------+---------|
+|                            |    60th |    62nd |    64th |
+|                            | 2006-09 | 2012-15 | 2018-21 |
+| Party                      |       % |       % |       % |
+|----------------------------+---------+---------+---------|
+| pan                        |      41 |      23 |      16 |
+| pri                        |      21 |      43 |       9 |
+| prd                        |      25 |      20 |       4 |
+| morena                     |         |         |      51 |
+| opportunistic w/ president |         |       8 |      14 |
+| other opportunistic        |      13 |       7 |       6 |
+|----------------------------+---------+---------+---------|
+| Total                    % |     100 |     100 |     100 |
+| N                          |     500 |     500 |     500 |
+|----------------------------+---------+---------+---------|
+| President's party          |     pan |     pri |  morena |
+|----------------------------+---------+---------+---------|
 \end{verbatim}
-\end{footnotesize}
-\doublespacing
+\end{scriptsize}
+\caption{Parties in three Legislatures of the Cámara de Diputados}\label{T:seats}
+\end{table}
 
 %% |              |  60 |  62 |     64 |
 %% |              |   N |   N |      N |
@@ -166,26 +181,19 @@ Partidocracia came crashing down in 2018.
 %% |--------------+-----+-----+--------+
 %% | Total        | 500 | 500 |    500 |
 
+The three-party system came crashing down in the critical election of 2018. After decades of infighting the left finally split. The faction loyal to Andrés Manuel López Obrador, known as AMLO, successfully launched the National Regeneration Movement (Morena), a new party, overcoming formidable entry barriers \citep{magar.2007ref.2015}. This feat paved his way to winning the presidency by a landslide. Riding AMLO's coattails, Morena acquired majority status in the Cámara, the first instance of single-party unified government since democratization. Inclusion of the 64th Legislature brings unified government to the study. The other terms offer perspective, a minority president in the 60th, an informal coalition with opportunistic parties in the 62nd. 
 
-%% 3. Discuss the organization of parliamentary party groups/legislative parties. The balance of power between frontbenchers (leadership) and backbenchers.
+%One extraordinary event was the critical election of 2018, which marks the demise of the three-party system that brought democracy. A faction led by Andrés Manuel López Obrador, known as AMLO, split from the left, forming the National Regeneration Movement (Morena), a new party, winning the presidency in 2018. Riding AMLO's coattails, Morena acquired majority status in the Cámara. Table \ref{T:seats} reports legislative parties in the three terms examined.
 
-Mandarins quote here. Frontbenchers pull the strings. Single-term limits with centralized nominations. Will change in 2021. 
+\subsection{Legislative parties}
+\epigraph{\singlespacing "At the end of the day, the chambers are a mandarinate where the few decide for all."}%
+{\singlespacing---A former lawmaker from the left, interviewed on condition of anonymity, June 17th, 2020.}
 
-%% 4. Electoral system: discuss personal vote-seeking incentives. Frame this in a way that answers the questions: is the electoral system party-centered or candidate-centered? Discuss existing empirical work about your country that deals with home style. Discuss the ballot structure and how it allows voters to reward/punish individual legislators. Conclude point by referring to the importance of the ‘party brand’ as an electoral asset? Is the party brand important for vote-seeking (e.g. in CLPR, such as Portugal, Spain or Norway) or is the party brand of less importance (e.g. in Irish STV)?
+Weak parties in the electorate lie in sharp contrast to their strength in Congress, which stems from electoral rules. The formula is mixed member plurality---three-hundred deputies elected by first-past-the-post in single member districts (SMDs), two-hundred more by closed-list proportional representation (PR) every three years \citep{weldonMixedMemberSys2001}. All seats are contested in races concurrent with the presidential election, then again at the presidential midterm.
 
-The Cámara's electoral system is mixed member plurality \citep{weldonMixedMemberSys2001}. Three-hundred members elect by first-past-the-post in single member districts (SMDs) and two-hundred members by closed-list proportional representation. All members have three year terms. All seats are contested in races that are concurrent with the presidential election, then again at the presidential midterm. 
+A key feature are single-term limits, which the constitution set on every elected officeholder. Political ambition coul only be progressive \citep{schlesinger.1966}. On top of this is highly centralized ballot access: national and state party leaders control most nominations \citep{rosas.langston.2011,langston.2008}.\footnote{Reliance in primaries for SMD candidate selection, mostly by the PAN \citep{ascencio.kerevel.cand-sel-beh.2021}, on occasions by the PRI \citep{poire.phd.2002}, opens room for exceptions to centralized ballot access.} This institutional combination not just removes personal vote incentives \citep{carey.shugart.1995}, it rewards discipline to party leaders. This, we see below, plays a fundamental role in floor access. 
 
-Reliance in primaries for SMD candidate selection---mostly by the PAN \citep{ascencio.kerevel.cand-sel-beh.2021}, on occasions by the PRI \citep{poire.phd.2002}---opens some exceptions, but in general ballot access is controlled by national and state party leaders \citep{rosas.langston.2011,langston.2008}. With this feature, systems with SMDs (the large portion of the mix) and closed-list PR (the other portion) belong at the bottom of Carey and Shugart's \citeyearpar{carey.shugart.1995} ordinal rank of incentives to cultivate personal vote. 
-
-Another feature of importance are single-term limits, which the constitution set on all elected officeholders. Ambition was perforce progressive \citep{schlesinger.1966} and centralized nominations acted as a potent agent for discipline to party leaders. But, in a surprising recent development, single-term limits were eliminated for selected offices, including federal deputies \citep{magarInstReel.2017}. The 2021 midterm election will be the first since the 1930s where incumbents will be allowed on the ballot.
-
-Deputies elected in 2018 and hereafter have four-term limits instead. Reform should introduce a degree of personal vote seeking among a subset of deputies with static ambition. While reformers further centralized nominations by keeping the ban on consecutive reelection for party switchers in general, this might not fully reign in competitive incumbents: parties removing previous winners of elected office, dynastic candidates \citep{enriquez-dinastias2018itam}, and what \citep{zallerprizeFighters} refers to as "prize fighters", in order to secure nomination of docile newbies, risk losing those districts. I investigate effects of reform on debate. 
-
-Another extraordinary event was the critical election of 2018, marking the demise of the three-party system that brought democracy. After decades of infighting the left finally split. The faction loyal to AMLO successfully launched a new party, Morena, overcoming formidable entry barriers \citep{magar.2007ref.2015}, a feat that placed his in the way of winning the presidential election by a landslide. For the first time in over two decades, the president's party enjoyed majority status in Congress. The effects of electoral reform and party system change, inf any, will be confounded...
-
-%% 5. How important is party unity/cohesion for electoral success? Do institutional rules make party leaders value unity or can they allow MPs to dissent?
-
-Unclear in past. Reelection should change things, incumbency times static ambition should matter more. Mention candado partidista? 
+In a surprising recent development, single-term limits were eliminated for selected offices, including federal deputies. The 2021 midterm election will be the first since the 1930s where incumbents are allowed on the ballot \citep[see][ for details]{magarInstReel.2017}. This should introduce a degree of personal vote seeking among a subset of deputies with static ambition. While reformers further centralized nominations by keeping term limits in place for party switchers, this might not fully reign in competitive incumbents. Parties removing quality candidates---such as previous winners of elected office \citep{jacobson.1997}, dynastic candidates \citep{enriquez-dinastias2018itam}, and what \citet{zallerprizeFighters} calls "prize fighters"---in order to secure nomination of docile newbies, risk losing those districts. The 64th Legislature, despite partial data, allows examination of the effect that static ambition has on debate.
 
 \section{The institutional setting of legislative debate in the Cámara} [ca 1500 words]
 
@@ -200,11 +208,11 @@ Unclear in past. Reelection should change things, incumbency times static ambiti
 %% To conclude this section, please classify the country along Proksch and Slapin’s (2015) contribution. The authors suggest that there are two extreme poles, depending on rules of procedure and electoral system organization. As described by Proksch and Slapin (2015: 96), in some systems, individual MPs are ‘guaranteed access to speaking time’, and ‘backbenchers are granted equal time as party leaders’. In other systems, the rules severely restrict individuals’ access to the floor and parties draft speakers lists, which gives party leaders much more control on this question. A number of countries fall, however, somewhere between these two extreme categories, giving some opportunity for individual MPs to access the floor, but favoring party lists. Please classify your country accordingly. If your country was included in Proksch and Slapin’s study, please refer to this classification when discussing your country’s institutional setting.
 
 
-An overview of the structure of legislative debate shows members who have abdicated most formal speech rights to their parties. The Cámara's Rules \citep{reglamentoDipMx.2019} set most prescriptions for debate, with general guidelines in Congress' Organic Law \citep{loceum.2019}.
+An overview of the structure of legislative debate shows members who have abdicated most formal speech rights to the party. The Cámara's Rules \citep{reglamentoDipMx.2019} set most prescriptions for debate, with general guidelines in Congress' Organic Law \citep{loceum.2019}.
 
 \citet{casar.agsetting.2016} examination of agenda setting puts the focus on results (passage of legislation). Her mention to debate characterizes it as party-centered: "[governing] bodies have the power ... to conduct floor debates, including assigning turns and time to speakers" (p. 154). This, we will see, is not in alignment with formal institutions, which establish individual member rights to be recognized by the presiding officer.
 
-Proksch/Slapin here? the apradox is explained by parties... 
+Proksch/Slapin here? the paradox is explained by parties... 
 
 
 
@@ -291,29 +299,9 @@ Party leaders move the strings of lawmaking. Their influence, however, derives a
 
   \subsection{Continuum}
 
-Proksch and Slapin's \citeyearpar{proksch-slapin2015book} scheme, used across chapters in this volume, compares assemblies according to how members gain access to take the floor in order to deliver speeches (p. 79). A continuum connects two extremes: party-controlled access and individual member-controlled access. Formal rules place the Cámara towards the individual member-controlled access limit of the continuum; but partisan rules pull it towards the party-controlled access side. The removal of single term limits ought to make this tension between formal and de facto institutions harder to manage for all parties.  
+Proksch and Slapin's \citeyearpar{proksch-slapin2015book} scheme, used across chapters in this volume, compares assemblies according to how members gain access to take the floor in order to deliver speeches (p. 79). They posit a continuum connecting two extremes: party-controlled and individual member-controlled floor access. Formal rules place the Cámara towards the individual member-controlled access limit of the continuum; but partisan rules pull it towards the party-controlled access side. The removal of single term limits ought to make this tension between formal and de facto institutions harder to manage for all parties.  
 
-(EMM quizás debo conectar continuum y bottlenecks/minority rights en seccióm Mexico?)
-
-  \subsection{Minority rights}
-
-Arg here: While parties sit atop the status pyramid, their agenda power is relatively limited. 
-Two problems: can't easily prevent unwanted speeches as members retain right to talk; can't easily remove unwanted motions as committee reports proceed automatically to floor discussion. So negative agenda power is diffuse. 
-Parties in fact rely on discipline towards leadership to avoid plenary bottlenecks and get legislation done. 
-
-suspension of rules typified only for discharge, two-thirds
-
-The constitution sets the quorum at half chamber membership.
-
-Reglamento amendments by 2/3 vote
-
-Suspension of rules by Conferencia always a choice, but only typified for committee of the whole. Art 77 cpeum. Risks toma de tribuna.
-
-Presiding officer can summon police to restore order. 
-Can summon public force, but in practice never used. 
-Can kill the mike, but others can raise their voices
-
-4. Para atender una situación no prevista en el Reglamento, el Presidente podrá dictar una resolución de carácter general, siempre que haya la opinión favorable de la Mesa Directiva y de la Junta. En caso contrario, este tipo de resoluciones sólo tendrán efecto con la aprobación de la mayoría simple del Pleno.
+(EMM quizás debo conectar continuum y bottlenecks/minority rights en sección Mexico?)
 
 \section{The role of intra- and interparty politics in legislative debates?} [ca 2500]
  
@@ -325,15 +313,15 @@ Can kill the mike, but others can raise their voices
 
 Digitized speeches come from the stenographic service (scraped from http://cronica.diputados.gob.mx/). I relied on regular expressions to de-htmlize the text and identify speakers and their speech, turning text into data for analysis.\footnote{Data analysis was performed in R \citep{r.cite}, all code is available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.}
 
-The *dependent variable* is a member's participation in plenary debate during legislative periods (see the appendix for terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and five periods, respectively, totaling nineteen. Three are extraordinary periods, the rest ordinary. Mean days per period was 6.7 for the former, 31.4 for the latter, so the debate models control for period length. 
+The dependent variable is a member's participation in plenary debate during legislative periods (see the appendix for terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and five periods, respectively, totaling nineteen. Three are extraordinary periods, the rest ordinary. Mean days per period was 6.7 for the former, 31.4 for the latter, so the debate models control for period length. 
 
-I use two specifications of the dependent variable, one absolute, one relative. The absolute is *words(i,p)* equal the number of words that member i spoke in period p. Days when deputy i spoke fewer than 50 words are arbitrarily considered non-debate and dropped, adding zero towards the member's aggregate. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. Everything remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis.
+I use two specifications of the dependent variable. One is *speeches(i,p)* equal the number of days that member i took the floor in period p. Owing to the permissive agenda, days when a deputy spoke from her seat by means of motions, without taking the lectern, count as debate. Days when deputy i spoke fewer than 50 words in total are arbitrarily considered non-debate and dropped, adding zero towards the member's aggregates. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. Everything remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis.
 
-The relative specification is *words(i,p)/exposure* equal the absolute words divided by the days that member i served as a proportion of all session days in period p (members can take leaves of absence). So the denominator for a member who spoke 2 thousand words and served uninterrupted throughout period p is one, and both specifications are equivalent. If she had served only half of the period instead, then the denominator would be 0.5, making her relative words equal 2000/0.5=4000 in that period. 
+The other specification is *words(i,p)* equal the number of words that member i spoke in period p divided by the number of days that i served as a proportion of all session days in period p---members can take leaves of absence, so many served less than the full period. So the denominators for two members i and j who both spoke 2 thousand words, i served uninterrupted throughout period p, j served only half of period p, are 1 and 0.5, resectively. This makes *words(i,p)*=2000 but *words(j,p)=2000/0.5=4000 instead. 
 
 %As in other chapters, the dependent variable is the number of words that members spoke in the chamber. A given diputado's words throughout a plenary session were summed into a daily total. Daily totals less than 50 words were arbitrarily interpreted as not constituting speech and removed from the data (ie., the member received a value of zero words that day). Thus filtered, members' daily totals were added across sessions in the same period, producing word aggregates for analysis.
 
-Table \ref{T:descriptives} has a summary of the dependent variable along others of interest. Member-period observations total 9494. The median member spoke 593 words per period, 607 when measured relative to days in office. At nearly 1400 words per period, means are substantially higher owing to a right-skewed speech distribution portrayed in Figure \ref{F:dv-hist}. Relevant to the choice of estimation methods, data appear to be over-dispersed (the standard deviation doubles the mean), so negative binomial appears the method of choice over poisson regression; and the nearly two out of five members who uttered not a single word in the period (37.6 percent) suggest adoption of a zero-inflated approach.
+Table \ref{T:descriptives} has a summary of the dependent variable along others of interest. Member-period observations total 9494. The median member spoke once per period, delivering 607 words relative to days in office (593 words per period in absolute terms). At nearly 1400 words per period, means are substantially higher owing to a right-skewed speech distribution portrayed in Figure \ref{F:dv-hist}. Relevant to the choice of estimation methods, speech data might are not evidently over-dispersed (at 3.1, the standard deviation is not that much higher than the mean of 2.1), so both negative binomial and poisson regression will be used for estimation. And the nearly two out of five members who uttered not a single word in the period (37.6 percent) suggest adoption of a zero-inflated approach.
 
 \begin{table}
   \begin{scriptsize}
@@ -341,14 +329,14 @@ Table \ref{T:descriptives} has a summary of the dependent variable along others 
 Part A: Continuous variables
 |                              |   min | median |  mean |     sd |   max |    N |
 |------------------------------+-------+--------+-------+--------+-------|------|
-| Total words (DV1)            |     0 |    593 |  1366 | 2682.3 | 50291 | 9494 |
-| Total words / exposure (DV2) |     0 |    607 |  1391 | 2716.3 | 50291 | 9494 |
+| N speeches (DV1)             |     0 |      1 |   2.1 |    3.1 |    37 | 9494 |
+| N words / exposure (DV2)     |     0 |    607 |  1391 | 2716.3 | 50291 | 9494 |
+| N words                      |     0 |    593 |  1366 | 2682.3 | 50291 | 9494 |
 | Days in office (exposure)    |     1 |     30 |  26.7 |   11.2 |    40 | 9494 |
 | Party share                  |   0.4 |     25 |  29.2 |   15.9 |    51 | 9494 |
 | Seniority                    |     0 |      1 |   1.7 |    2.2 |    17 | 9494 |
 | Previous terms               |     0 |      0 |   0.3 |    0.6 |     4 | 9494 |
 | Age                          |    21 |     46 |  45.9 |   10.1 |    78 | 7332 |
-
 
 Part B: Dichotomous variables
 |          |    0 |    1 | tot |    N |
@@ -374,8 +362,11 @@ Part B: Dichotomous variables
 
 \begin{figure}
   \centering
-    \includegraphics[width=.8\columnwidth]{../plots/dv-histogram.pdf}
-    \caption{The dependent variable, absolute specification. The rightmost column under a star is fictitious, reporting 217 member-periods with 8 thousand words or more (2.2 percent of all, the actual distribution spreads these observations, with increasing sparseness, from 8000 to 50291).}\label{F:dv-hist}
+  \begin{tabular}{cc}
+    \includegraphics[width=.49\columnwidth]{../plots/dv-histogram.pdf} &
+    \includegraphics[width=.49\columnwidth]{../plots/dv-nspeech-histogram.pdf}
+  \end{tabular}
+    \caption{The dependent variable, number of words (left) and number of speeches (right). The column under a star in the left panel is fictitious, reporting 217 member-periods with 8 thousand words or more (2.2 percent of all, the actual distribution spreads these observations, with increasing sparseness, from 8000 to 50291).}\label{F:dv-hist}
 \end{figure}
 
 %% \begin{figure}
@@ -384,7 +375,7 @@ Part B: Dichotomous variables
 %%     \caption{Number of daily speakers}\label{F:nspeakers}
 %% \end{figure}
 
-Debate quantities are easier to grasp when expressed as daily totals instead of the period totals analyzed. In the median session, 36.5 different speakers contributed to daily debate, and six days had over 100 speakers. Figure \ref{F:quantiles} portrays member daily aggregates across the periods analyzed. For clarity, this plot includes speakers only (non-speakers are included in the period aggregates analyzed below.) Solid points report median daily speech length in words. With few exceptions, period medians are much the same as the overall median daily speech length of 599 words. Mild term effects show up too, the 60th medians slightly above and the 64th slightly below the overall median. Horizontal lines report the spread of the central portion of the density---the thicker line is the inter-quartile range, the thinner connects the first and ninth deciles. Period distributions are, in general, similar. The clearest exceptions are extraordinary periods, drawn in gray. The models therefore include controls for Legislature and ordinary session effects.
+Debate length is easier to grasp when expressed as daily totals instead of the period totals analyzed. In the median session, 36.5 different speakers contributed to daily debate, and six days had over 100 speakers. Figure \ref{F:quantiles} portrays member daily aggregates across the periods analyzed. For clarity, this plot includes speakers only (keep in mind that non-speakers are included in the period aggregates analyzed below.) Solid points report median daily speech length in words. With few exceptions, period medians are much the same as the overall median daily speech length of 599 words. Mild term effects show up too, the 60th medians slightly above and the 64th slightly below the overall median. Horizontal lines report the spread of the central portion of the density---the thicker line is the inter-quartile range, the thinner connects the first and ninth deciles. Period distributions are, in general, similar. The clearest exceptions are extraordinary periods, drawn in gray. The models therefore include controls for term and ordinary session effects.
 
 \begin{figure}
   \centering
@@ -392,7 +383,7 @@ Debate quantities are easier to grasp when expressed as daily totals instead of 
     \caption{Daily speech length by legislative period observed. The plot excludes non-speaking members. Solid points indicate the median speech length in the period. Thick and thin lines connect the 25--75 and 10--90 percentiles, respectively. Hollow points are minima and maxima. Ordinary periods in black, extraordinary periods in gray.}\label{F:quantiles}
 \end{figure}
 
-Hollow points are minima and maxima. Diputada Valentina Batres holds the record for delivering the longest speech in the three terms examined. At 15,932 words, her speech delivered March 11th, 2008 is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout that session, delaying the vote of a national geostatistics law. I suspect that filibustering was probably aimed at a bill down the line, with plainer distributive effects \citep[cf.][]{wawro.schickler.filibuster.2007}. A systematic study of filibustering in the Cámara is worthy of further study. The names associated with extreme member-periods (those grouped in Figure \ref{F:dv-hist}'s starred column to the right) are few: only nine deputies repeatedly surpassed 20 thousand words per period, mostly in the 62nd term. They are routine filibusters.
+Hollow points are minima and maxima. Diputada Valentina Batres holds the record for delivering the longest speech in the three terms examined. At 15,932 words, her speech delivered March 11th, 2008 is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout that day's session, delaying the vote of a national geostatistics law. I suspect that filibustering was probably aimed at a bill down the line, with plainer distributive effects \citep[cf.][]{wawro.schickler.filibuster.2007}. A systematic study of filibustering in the Cámara is worthy of further study. The names associated with extreme member-periods (those grouped in the left panel of Figure \ref{F:dv-hist}'s starred column) are few: only nine deputies repeatedly surpassed 20 thousand words per period, mostly in the 62nd term. They are routine filibusters.
 %Most are in AMLO's present government. 
 
 %Sistema Nacional de Información Estadística y Geográfica
@@ -419,8 +410,6 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 %% \doublespacing
 
 
-
-
   \subsection{Independent variables}
 
 %% Please begin this subsection with a descriptive statistics table, including both DVs and all independent variables. Please include Mean, Std. Dv., Min, Max
@@ -429,7 +418,7 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 
 %% 1. Gender: what is the impact of gender in floor access? Do women have access to the floor that is commensurate to their numerical presence in the legislative party? Operationalize gender as a dummy variable: Women takes the value of 1, and Men 0. Please use this coding also in the multivariate analysis (several drafts coded male MPs with 1 and female MPs with zero).
 
-  Two quantities of interest across chapters are the intersections of gender and seniority with floor access. Of 1710 members observed, 39 percent are women. Owing to stricter quotas, 47 percent of the 64th Legislature members were women, up from 28 in the 60th \citep{piscopo.2016}. While disproportional among committee chairs and party leaders, the gender split among Cámara presidents is about proportional relative to women's numerical presence. So is access to the floor in terms of speakers (37 percent), but women are over-represented in terms of words (41 percent). Women delivered longer speeches.
+  The relationships of gender and seniority with floor access are of interest across chapters. Of 1710 members observed, 39 percent are women (see Table \ref{T:women}). Owing to stricter quotas, 47 percent of the 64th Legislature were women, up from 28 in the 60th \citep{piscopo.2016}. Women participation in debate exceeds their numerical presence: despite subrepresentation among committee chairs and party leaders (but not Cámara presidents), 41 percent of both speeches and total words were delivered by women in the floor. A degree of concentration is also manifest, as women represented 37 percent of unique speechmakers, who  spoke more often and quite longer. 
 
 \begin{table}
   \begin{scriptsize}
@@ -446,6 +435,7 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 | - major party     |       0 |    12 |
 | - opportunistic   |      42 |    12 |
 | Speechmakers      |      37 |  5926 |
+| Speeches          |      41 | 23601 |
 | Words spoken      |      41 | 17.5M |
 |-------------------+---------+-------|
 |^Returning members counted once only.|
@@ -457,21 +447,20 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 
 %% 2. Seniority: what is the impact of career stage in the likelihood of accessing the floor? Do more senior legislators get more access to the floor because they have offered party leaders signals of their work as party agents? Operationalize Seniority as a continuous variable that measures the number of years the MP has spent in the legislature.
 
-Single-term limits offer little leverage to evaluate how seniority impacts floor access. Members wishing to return had to wait one term at least. Still, of 1710 members observed, 14 percent had previous federal deputy experiece. This suggests that the removal of single-terms will not be irrelevant due to lack of static ambition (as in Argentina, for instance). Freshmen spoke 1212 words on average in the period, compared to 1966 for members with one past term or more as deputies. Deputy-periods with one past term spoke 48 percent more words than those with none; those with two past terms spoke 61 percent more words than those with one; but members more than two past terms spoke 25 percent less words than those with two. This drop could be attributable to earlier recruitment of senior members, antedating competitve politics; or it could be due to the higher probability that senior members occupy leadership posts that might depress willingness to speak despite floor access possibilities. The multivariate analysis might shed some light.  
-
+Single-term limits offer little leverage to evaluate how seniority impacts floor access. Members wishing to return had to wait one term at least. It is remarkable that, despite this, 14 percent of members had previous federal deputy experience. This hints that the removal of single-terms will not be irrelevant due to lack of static ambition (as in Argentina, for instance). Freshmen spoke 1181 words per period on average, compared to 2082 for members with past terms as deputies. Member-periods with one past term made 37 percent more speeches and spoke 65 percent more words than those with none; with two past terms instead of one, 35 percent more speeches and 49 percent more words; but those with more than two past terms gave 29 percent less speeches and 52 percent fewer words than those with two. This drop could be attributable to earlier recruitment of senior members, antedating competitve politics; or it could be due to higher likelihood that senior members occupy positions that might depress willingness to speak despite floor access possibilities. The multivariate analysis might shed some light.  
 
 \begin{table}
   \begin{scriptsize}
     \begin{verbatim}
-|  Past | Mean words | Member- |
-| terms |  by period | periods |
-|-------+------------+---------|
-|     0 |       1212 |    7558 |
-|   > 0 |       1966 |    1936 |
-|     1 |       1796 |    1523 |
-|     2 |       2892 |     330 |
-|   > 2 |       1413 |      83 |
-|-------+------------+---------|
+| Past  | Mean number | Mean number | Member- |
+| terms | of speeches |    of words | periods |
+|-------+-------------+-------------+---------|
+| 0     |         1.9 |        1181 |    7550 |
+| > 0   |         2.8 |        2082 |    1944 |
+| 1     |         2.6 |        1944 |    1531 |
+| 2     |         3.5 |        2892 |     330 |
+| > 2   |         2.5 |        1413 |      83 |
+|-------+-------------+-------------+---------|
     \end{verbatim}
   \end{scriptsize}
 \caption{Seniority and floor access, member-periods}
@@ -547,7 +536,7 @@ A dummy for *majority* status indicates members from Morena in the 64th Legislat
 
     \subsubsection{Member variables}
 
-Aside from *woman* and *seniority*, regressors in this group include *smd*, a dummy equal one for members elected in single-member districts. Systematic differences in members' pork requests are attributable to the method of election \citep{kerevelPork2015}, which may also translate into higher demand for access to the floor. I also interact this regressor with a dummy indicating the 64th Legislature, which dropped single-term limits (*smd x reelection*). The more personal vote should generate higher demand for floor access. *Party size* is the percentage of seats the member's party holds. Larger parties must divide the slot that all parties get to take the floor among more members, and this should show up as a negative regression coefficient. And a dummy *suplente* controls for substitute members. Regressors not in the right side include members' ages due to incomplete data, and party ideology, which made no difference in the estimates. Replication material is available. 
+Aside from *woman* and *seniority*, regressors in this group include *smd*, a dummy equal one for members elected in single-member districts. Systematic differences in members' pork requests are attributable to the method of election \citep{kerevelPork2015}, which may also translate into higher demand for access to the floor. I also interact this regressor with a dummy indicating the 64th Legislature, which dropped single-term limits (*smd x reelection*). The more personal vote should generate higher demand for floor access. *Party size* is the percentage of seats the member's party holds. Larger parties must divide the slot that all parties get to take the floor among more members, and this should show up as a negative regression coefficient. And a dummy *suplente* controls for substitute members. Regressors not in the right side include members' ages due to incomplete data, and party ideology, which made no difference in the estimates. Replication material is available xxx. 
 
     \subsubsection{Other controls}
 
@@ -555,7 +544,168 @@ Also in the right side are dummies for the *62nd* and *64th* terms (the 60th is 
 
 %A pair of dummies controls for the party's ideology. *Right* equals 1 for members of the right-of-center PAN, 0 otherwise. Left equals 1 for PRD members in 60th and 62nd, and Morena member in the 64th, 0 otherwise. The omitted group includes members of the PRI and the smaller opportunistic parties. The dummy should capture any systematic effect of left's more frequent filibustering attempts. (There is no a priori expectation associated with left and right.)
 
-Table \ref{T:regs} reports the estimation of six different model specifications. In the left side are both flavors of the dependent variable. Models of words relative to tenure (1, 2, and 3) were fit with ordinary least squares, models of the absolute words (4, 5, and 6) with negative binomial regression. Specifications vary the regressors. Models 2, 3, 5, and 6 include fixed term effects, capturing any hetereogeneity between Legislatures that are pooled together. Model 3 estimates separate error terms for each member, capturing individual heterogeneity. And model 6 accounts for the zero-inflated  distribution seen in Figure \ref{F:dv-hist}. The overall fit is correct across models, likelihood ratio tests (not reported) reject the intercept-only model with much confidence. 
+Table \ref{T:regs} reports the estimation of six different model specifications. In the left side are both flavors of the dependent variable. Models of words relative to tenure were fit with ordinary least squares (1, 2, and 3), models of the number of speeches with negative binomial regression (4 and 5) and zero-inflated poisson regression (6). Specifications vary the regressors. Models 2, 3, 5, and 6 include fixed term effects, capturing any hetereogeneity between Legislatures that are pooled together. Model 3 estimates separate error terms for each member, intended to capture individual heterogeneity. And model 6 accounts for the excess of zeroes in the distribution seen in Figure \ref{F:dv-hist}. The overall fit is correct across models, likelihood ratio tests (not reported) reject the intercept-only model with much confidence. 
+
+\begin{table} \centering 
+  \begin{tiny}
+    \begin{verbatim}
+==================================================================================================================================
+                                     DV = Words/exposure in period                              DV = Speeches in period               
+                      --------------------------------------------------------------   -------------------------------------------
+                              (1)                       (2)                 (3)            (4)            (5)           (6)     
+----------------------------------------------------------------------------------------------------------------------------------
+Exposure (logged)                                                                       0.96***        1.30***        1.06***   
+                                                                                         (0.02)         (0.05)        (0.04)    
+                                                                                                                                
+Majority                  1,032.85***               1,494.59***          848.60***      1.22***        0.98***        1.11***   
+                            (91.01)                  (137.23)            (226.06)        (0.05)         (0.06)        (0.04)    
+                                                                                                                                
+Party leader              2,121.40***               1,906.26***         1,292.59***     0.34***        -0.04***      -0.04***   
+                            (206.38)                 (205.16)            (310.20)        (0.08)        (0.001)        (0.001)   
+                                                                                                                                
+Comm. chair                239.92***                  145.14*              51.54        0.27***        0.31***        0.22***   
+                            (87.49)                   (86.86)            (146.09)        (0.04)         (0.08)        (0.04)    
+                                                                                                                                
+Seniority                  224.72***                 258.78***           262.58***      0.11***        0.25***        0.11***   
+                            (48.14)                   (47.53)             (85.76)        (0.02)         (0.04)        (0.02)    
+                                                                                                                                
+Woman                      170.47***                 131.49**              19.91        0.14***         -0.06*         -0.02    
+                            (54.90)                   (54.89)             (99.70)        (0.03)         (0.03)        (0.02)    
+                                                                                                                                
+Party size                 -67.47***                 -72.05***           -63.23***      -0.05***       0.25***        0.10***   
+                             (2.00)                   (2.26)              (3.85)        (0.001)         (0.05)        (0.03)    
+                                                                                                                                
+SMD                          -25.24                   -91.94              -115.00         0.03         0.12***        0.10***   
+                            (55.84)                   (64.91)            (115.48)        (0.03)         (0.02)        (0.01)    
+                                                                                                                                
+SMD x reelect                                        267.78**              7.68                        0.09***        0.04**    
+                                                     (120.85)            (189.51)                       (0.03)        (0.02)    
+                                                                                                                                
+Suplente                   -297.84***               -366.14***           -349.00**      -0.19***        -0.10*       -0.24***   
+                            (110.56)                 (108.95)            (140.66)        (0.06)         (0.06)        (0.05)    
+                                                                                                                                
+62nd Leg.                                            698.07***           836.08***                     0.25***        0.24***   
+                                                      (62.82)             (96.43)                       (0.03)        (0.02)    
+                                                                                                                                
+64th Leg.                                             -114.31            508.02***                     0.19***        0.17***   
+                                                     (114.68)            (165.84)                       (0.05)        (0.03)    
+                                                                                                                                
+Extraordinary                                      -1,102.30***        -1,109.17***                    0.65***        0.68***   
+                                                      (73.17)             (48.30)                       (0.08)        (0.07)    
+                                                                                                                                
+Constant                  3,077.93***               3,075.94***         2,807.58***     -1.53***       -2.91***      -1.91***   
+                            (71.07)                   (86.37)            (144.17)        (0.08)         (0.16)        (0.13)    
+                                                                                                                                
+----------------------------------------------------------------------------------------------------------------------------------
+Fixed effects                  no                      term                term            no           term           term
+Random effects                 no                       no                member           no            no             no
+Estimation method             OLS                      OLS                linear         negative      negative    zero-inflated
+                                                                       mixed-effects     binomial      binomial       poisson   
+----------------------------------------------------------------------------------------------------------------------------------
+Observations                 9,494                     9,494               9,494         9,494          9,494          9,494    
+R2                            0.15                     0.18                                                                     
+Adjusted R2                   0.15                     0.18                                                                     
+Log Likelihood                                                          -85,188.83     -16,232.18     -16,126.53    -17,305.06 
+theta                                                                                1.55*** (0.05) 1.65*** (0.05)             
+Akaike Inf. Crit.                                                       170,407.70     32,484.36      32,281.06                
+Bayesian Inf. Crit.                                                     170,515.00                                              
+Residual Std. Error   2,504.36 (df = 9485)     2,465.37 (df = 9481)                                                             
+F Statistic         210.29*** (df = 8; 9485) 170.19*** (df = 12; 9481)                                                          
+==================================================================================================================================
+Note:                                                                                                  *p<0.1; **p<0.05; ***p<0.01
+\end{verbatim}
+  \end{tiny}
+  \caption{Models of legislative debate (standard errors in parentheses)} 
+  \label{T:regs} 
+\end{table} 
+
+Interesting patterns emerge from coefficient estimates. Party size exerted a negative and statistically significant effect in member floor access across specifications. This is easier to interpret from OLS coefficients: other variables constant, changing the party size from large (40 percent of seats) to small (15 percent) associates with a predicted drop of 1,700 words by member in the period. Martin Luther King took 16 minutes to deliver his famous "I have a dream" speech, which approximates that word count. I also find a positive, significant, and large effect of majority status, which acts against size. Far from letting legislative accomplishments speak for themselves, majority members take the floor systematically more than those of similar-sized parties. Figure \ref{F:predict} demonstrates the discontinuity through simulation with model 5 parameters. As party size crosses the majority threshold the member gets a bonus, delivering a number of speeches comparable to a party with 25 percent of seats.
+
+%Note that the relative equals absolute words divided by the share of period p's duration that member i served, so the *exposure* is in the left side of OLS models and not in the right. 
+%*words(i,p) x days(p)  / exposure(i,p)*
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.67\columnwidth]{../plots/predictedWords.pdf}
+    \caption{Predicted number of speeches by party size. Lines report point predictions using model 5, bands are 95-percent confidence intervals. Miniature gray points are observed members' party sizes, x- and y-jittered for visibility.}\label{F:predict}
+\end{figure}
+
+Other forms of status also associate positively to floor access, but results are sensitive to model specification. Party leadership exerts a substantially larger effect than majority status on speech length, but much smaller on the number of speeches. Leaders get privileged floor access and appear to specialize in longer speeches, probably on more important legislation. Committee chairs also deliver more speeches than other members, but controlling for term and member effects bears upon OLS coefficient significance, both substantially and statistically, hinting to important differences in speeche length across committee jurisdictions and individuals.
+
+%Figure \ref{F:avgmgeff} reports changes in the average predicted number of words associated with unit changes in explanatory variables, using model 5 estimates. Marginal effects make negative binomial regression coefficients interpretable. It is clear in the plot that the largest effect by far is attributable to majority status. Other things constant (at mean values), members in the majority party each gave between 1.75 and 2.25 more speeches per period than the rest of the Cámara. Multiplication of that average by Morena's 254 members in the 64th Legislature produces over 500 additional plenary speeches---47 percent of all words in the median ordinary period. OJO: NEED TO DEDUCT SIZE 51 --- better with predicted plot
+
+I also find positive effects of seniority and gender that resonate with the bivariate patterns of floor access. The coefficient for *women* is not robust to random member effects nor to accounting for zero-inflation. This is probably due to the concentration of debate by women highlighted above, some deputies taking the floor disproportionally more than others. Overall, the effect of gender appears to be on par with that of one additional term of seniority. 
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.67\columnwidth]{../plots/avgMgEffects.pdf}
+    \caption{Average marginal effects from model 5. Circles report the effect in the expected number of speeches per period of a unit change in each independent variable, all else at mean values; bars are 95-percent confidence intervals.}\label{F:avgmgeff}
+\end{figure}
+
+%% model 5 (fit2 in code) average marginal effects
+%%      factor       AME       SE        z      p     lower     upper
+%%  ev.pot.dys   51.3100   2.6546  19.3285 0.0000   46.1070   56.5129
+%%        dmaj 1464.4438 211.4850   6.9246 0.0000 1049.9408 1878.9469
+%%    size.maj  -72.7583   4.9124 -14.8113 0.0000  -82.3863  -63.1303
+%%     dleader  460.6492 298.1915   1.5448 0.1224 -123.7954 1045.0937
+%%      dchair  451.9050 130.7671   3.4558 0.0005  195.6061  708.2039
+%%        dsmd -135.7903  93.9759  -1.4449 0.1485 -319.9796   48.3991
+%%      dsmd64  359.7821 175.2500   2.0530 0.0401   16.2985  703.2657
+%%   seniority  241.5023  69.7417   3.4628 0.0005  104.8111  378.1935
+%%        dfem   93.4748  79.3548   1.1779 0.2388  -62.0578  249.0074
+%%        dsup -507.2173 160.3330  -3.1635 0.0016 -821.4642 -192.9703
+%%         d62  259.0260  89.6724   2.8886 0.0039   83.2712  434.7807
+%%         d64 -132.3693 165.2884  -0.8008 0.4232 -456.3285  191.5899
+
+A null finding of interest involves the method of election. The coefficient for *smd* is indistinguishable from zero across models. Figure \ref{F:avgmgeff} reports average marginal effects to interpret negative binomial regression coefficients: in contrast to PR members and with all other regressors at their mean, deputies elected in SMDs spoke slightly less, about 125 words in the period; the 95-percent confidence interval barely excludes the zero and this signal can't be discarded as product of chance alone. But look at the change in slope when interacted with reelection: this marginal effect is not just positive, but sufficient to cancel the negative pull of SMDs. Now a signal is discernible from random noise, even after controlling for majority status (the other big change in the 64th Legislature). Figure \ref{F:predict} makes this effect plain, a gap separates confidence intervals of predicted speeches by SMD members who can reelect and the term-limited. This finding hints to the invigoration of the personal vote after the removal of term limits and is worthy of more carefull examination. 
+
+\section{Country-Specific Section} [ca 1000 words]
+In this section, you can feel free to make model extensions that have interest in the light of the chapter you are exploring. Please do not forget to explain the variables in use, as well as why they are important for your country. Include a table of results plus a plot for marginal effects. 
+
+  \subsection{Minority rights}
+
+Tension lies at the heart of legislative debate in the Cámara. On one hand, intra-party institutions have informally, but effectively managed to reign in members' capacity to take the floor. The effects that multivariate models uncovered for the majority, for leaders, and for committee chairs are all channelled through party structures in the Junta. On the other hand, formal institutions grant individual members formal rights of recognition to take the floor and, we have seen, these take many guises. The effect attributable to SMDs after the removal of term limits is, in all likelihood, associated to renovated personal vote incentives that members face. 
+
+Whether or not the informal solution to avoid plenary bottlenecks will continue to operate as it has so far is uncertain. Incumbents, some of them at least, may soon start overwhelming the system in their need to strengthen their electoral connection. The collapse of the three-party system in 2018 also plays against. Perhaps the heterogeneous coalition that gave Morena unified control of government will manage to consolidate, imposing a new informal arrangement, in spite of the 2020 covid depression.
+
+In any event, examination of legislative debate has offered an interesting and illuminating perspective on some of the challenges that Mexican parties now face.   
+  
+suspension of rules typified only for discharge, two-thirds
+
+The constitution sets the quorum at half chamber membership.
+
+Reglamento amendments by 2/3 vote
+
+Suspension of rules by Conferencia always a choice, but only typified for committee of the whole. Art 77 cpeum. Risks toma de tribuna.
+
+Presiding officer can summon police to restore order. 
+Can summon public force, but in practice never used. 
+Can kill the mike, but others can raise their voices
+
+4. Para atender una situación no prevista en el Reglamento, el Presidente podrá dictar una resolución de carácter general, siempre que haya la opinión favorable de la Mesa Directiva y de la Junta. En caso contrario, este tipo de resoluciones sólo tendrán efecto con la aprobación de la mayoría simple del Pleno.
+
+
+
+\section{Conclusions} [ca 500 words]
+concluding discussion of general patterns of speechmaking (institutions and empirical results in terms of background variables)
+
+
+Stuff to add to EMM’s text
+DONE 3. In terms of window of observation/time period under study: we don’t have a particular guideline for this. Please use the window of observation that you believe is more representative of the politics of legislative debate in your country. Ideally we would like each chapter to include several legislative periods, but we are pragmatic here, considering data availability.
+EMM: Terminology
+- A Legislature (with Roman numerals for reasons I ignore) is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics.
+- Legislative years break into two "ordinary periods", one covering the months of September through December, inclusive, another February through April, also inclusive. "Extraordinary periods" may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of aggregation in the analysis. 
+- A plenary session is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
+
+\section{Appendix: Terminology}
+
+\singlespacing
+
+- A *Legislature* is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics. Analysis includes the 60th, 62nd, and 64th Legislatures (the Mexican Congress relies on Roman numerals to distinguish Legislatures since the second half of the Nineteenth century).
+
+- Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, inclusive, another February through April, also inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of observation in the analysis. 
+
+- A *plenary session* (or simply a session) is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
 
 \begin{table} \centering 
   \begin{tiny}
@@ -628,124 +778,9 @@ Note:                                                                           
 \end{verbatim}
   \end{tiny}
   \caption{Models of legislative debate. Standard errors in parentheses. } 
-  \label{T:regs} 
+  \label{T:app-regs} 
 \end{table} 
 
-Interesting patterns emerge. Party size exerted a negative and significant effect in the words members spoke across specifications. This is easier to interpret from OLS coefficients: other variables constant, changing the party size from large (40 percent of seats) to small (15 percent) associates with a predicted drop of 1,600 words by member in the period. Martin Luther King took 16 minutes to deliver his famous "I have a dream" speech, which approximates that word count. I also find a positive, significant, and large effect of majority status, which acts against size. Far from letting legislative accomplishments speak for themselves, majority members take the floor systematically more than those of similar-sized parties. Figure \ref{F:predict} demonstrates the discontinuity through simulation with model 5 parameters. As the party crosses the majority threshold, the member gets floor access comparable to a party with 25 percent of seats.
-
-Other forms of status also associate positively to deputies' words in plenary debate, but the results are sensitive to model specification. OLS coefficients for party leadership are markedly larger than those of committee chairs, but only marginally so in count models, possibly due to a non-linear association. But controlling for term and member effects affects coefficient significance, hinting to important differences across the individuals and theor parties. 
-
-I also find positive effects of seniority and gender that resonate with the descriptions above. The coefficients for *women*, however, are not robust, missing statistical significance in four out of six specifications.
-
-Another null finding of interest involves the method of election. The coefficient for *smd* is indistinguishable from zero across models. Figure \ref{F:avgmgeff} reports average marginal effects and makes this plain: in contrast to PR members and with all other regressors at their mean, SMD deputies spoke slightly less, about 125 words in the period; since the 95-percent confidence interval includes the zero, we cannot conclude that this signal is not the product of chance alone. But look at the change in slope when interacted with reelection: this marginal effect is not just positive, but sufficient to cancel the negative pull of SMDs and a signal is discernible from random noise. Moreover, the interactive effect on floor access remains distinguishable even after controlling for majority status. This finding hints to the invigoration of the personal vote after the removal of term limits and is worthy of more carefull examination. 
-
-eric  x
-
-Note that the relative equals absolute words divided by the share of period p's duration that member i served, so the *exposure* is in the left side of OLS models and not in the right. 
-
-
-%*words(i,p) x days(p)  / exposure(i,p)*
-
-
-
-\begin{figure}
-  \centering
-    \includegraphics[width=.67\columnwidth]{../plots/predictedWords.pdf}
-    \caption{Predicted speech length. Lines report point predictions using model 5.}\label{F:predict}
-\end{figure}
-
-
-
-
-\begin{figure}
-  \centering
-    \includegraphics[width=.67\columnwidth]{../plots/avgMgEffects.pdf}
-    \caption{Average marginal effects from model 5. Dots report the effect in expected period speech length of a unit change in each independent variable, all else at mean values; bars are 95-percent confidence intervals.}\label{F:avgmgeff}
-\end{figure}
-
-%% model 5 (fit2 in code) average marginal effects
-%%      factor       AME       SE        z      p     lower     upper
-%%  ev.pot.dys   51.3100   2.6546  19.3285 0.0000   46.1070   56.5129
-%%        dmaj 1464.4438 211.4850   6.9246 0.0000 1049.9408 1878.9469
-%%    size.maj  -72.7583   4.9124 -14.8113 0.0000  -82.3863  -63.1303
-%%     dleader  460.6492 298.1915   1.5448 0.1224 -123.7954 1045.0937
-%%      dchair  451.9050 130.7671   3.4558 0.0005  195.6061  708.2039
-%%        dsmd -135.7903  93.9759  -1.4449 0.1485 -319.9796   48.3991
-%%      dsmd64  359.7821 175.2500   2.0530 0.0401   16.2985  703.2657
-%%   seniority  241.5023  69.7417   3.4628 0.0005  104.8111  378.1935
-%%        dfem   93.4748  79.3548   1.1779 0.2388  -62.0578  249.0074
-%%        dsup -507.2173 160.3330  -3.1635 0.0016 -821.4642 -192.9703
-%%         d62  259.0260  89.6724   2.8886 0.0039   83.2712  434.7807
-%%         d64 -132.3693 165.2884  -0.8008 0.4232 -456.3285  191.5899
-
-Figure \ref{F:avgmgeff} reports changes in the average predicted number of words associated with unit changes in explanatory variables. This exercise uses model 5 estimates. By translating into interpretable quantities, marginal effects are a convenient way to gauge negative binomial regression coefficients. It is clear in the plot that the larges effect is attributable to majority status. Other things constant (at mean values), members in the majority party each spoke between about 1,000 and 1,900 more words per period than the rest of the chamber. Multiplication of that average by Morena's 254 members in the 64th Legislature produces 372 thousand additional words---47 percent of all words in the median ordinary period.
-
-%% The report from a committee with a coalition chair experiences a 0.17
-%% hike (0.06 standard error) in the likelihood of receiving a closed rule compared to a report by an
-%% opposition-chaired committee. The effect is as big as the average marginal effects of Hacienda
-%% Referral (0.18), which capures mostly high-significance draft laws, and that of Multiple Referrals
-%% (0.16), which we view as an indicator of issue complexity. We therefore find no statistical evidence
-%% to reject our Hypothesis 1. The results also confirm hypothesis 2, showing that a bill reported by a
-%% generally less friendly committe (chaired by the opposition), has a higher probability of receiving
-%% an open rule on the floor, thereby allowing the floor majority to bring back the bill to the median
-%% through floor amendments. Thus, presidents use open rules to control bills coming from preference
-%% distant committee chairs.
-%% The substantial effects of Hacienda Referral and Multiple Referrals deserve comment. They
-%% suggest, first, that when spending gets in the way, restrictive rules are the norm in Chile. Recall
-%% that Multiple Referrals exclude the Finance Committee, so there is an independent effect of bills
-%% with jurisdictional overlaps worth investigating further, and which must be associated, in part at
-%% least, to influencing the report through a friendlier committee. 16 Furthermore, note that the Finance
-%% Committee was always chaired by a coalition member but, with the exception of the 1998–2000
-%% period, never by a co-partisan of the president. This may explain the milder effect of the partisan
-%% specification of our key variable in model 1.
-%% Another effect worth highlighting is Introd. in Senate. Bills successfully passing the Upper
-%% Chamber first, where the opposition was systematically larger and attimes in control, were much
-%% less likely to get urgent status (the average marginal effect is −0.15 and significant). This suggests
-%% that agreements and compromises reached in the Senate ignited less, not more, protection from
-%% floor amendments in the Cámara’s plenary, most likely as a consequence of the greater prefer-
-%% ence divergence between the President and the opposition-led Senate. Analysis of inter-chamber
-%% negotiation and the reliance on urgency in the Upper Chamber are interesting venues for future
-%% research.
-%% Finally, there are time trends in fast-track authority that simulations reveal neatly. Figure 5
-%% portrays the predicted probability that a bill enters the fast-track throughout the legislative year.
-%% Regressors in model 3 are held constant to simulate a bill sent to the Cámara in the 2006–10
-%% Legislature that was referred to a single committee, excluding Hacienda. Presidential Approval
-%% (insignificant across models) is set to the mean for President Bachelet’s first term, coinciding in full
-%% with the 2006–10 Legislature. The inverted-U shape shows how fast-track probability, predicted
-%% at 0.17 for coalition-chaired committees at the start, and 0.08 for the rest, becomes much likelier
-%% in the first half of the legislative year. By the second quarter (June–August), the probability is at
-%% its peak, about 0.32 percent and 0.17, respectively. It then experiences a sharp drop, ending the
-%% austral Summer break at 0.13 for coalition-chaired committees, and 0.05 for others. And while 95-
-%% percent confidence bands overlap, they barely do so at the middle of the legislative year, lending
-%% confidence that we are picking up a signal and not just random noise.
-
-    \subsubsection{Predicted words}
-
-
-  
-\section{Country-Specific Section} [ca 1000 words]
-In this section, you can feel free to make model extensions that have interest in the light of the chapter you are exploring. Please do not forget to explain the variables in use, as well as why they are important for your country. Include a table of results plus a plot for marginal effects. 
-
-\section{Conclusions} [ca 500 words]
-concluding discussion of general patterns of speechmaking (institutions and empirical results in terms of background variables)
-
-
-Stuff to add to EMM’s text
-DONE 3. In terms of window of observation/time period under study: we don’t have a particular guideline for this. Please use the window of observation that you believe is more representative of the politics of legislative debate in your country. Ideally we would like each chapter to include several legislative periods, but we are pragmatic here, considering data availability.
-EMM: Terminology
-- A Legislature (with Roman numerals for reasons I ignore) is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics.
-- Legislative years break into two "ordinary periods", one covering the months of September through December, inclusive, another February through April, also inclusive. "Extraordinary periods" may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of aggregation in the analysis. 
-- A plenary session is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
-
-\section{Appendix: Terminology}
-
-\singlespacing
-
-- A *Legislature* is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics. Analysis includes the 60th, 62nd, and 64th Legislatures (the Mexican Congress relies on Roman numerals to distinguish Legislatures since the second half of the Nineteenth century).
-
-- Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, inclusive, another February through April, also inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of observation in the analysis. 
-
-- A *plenary session* (or simply a session) is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
 
 \newpage
 
