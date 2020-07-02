@@ -578,6 +578,7 @@ wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve12mar2020.html 
 wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve18mar2020.html    #    
 wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve19mar2020-JP.html # Juicio Pol
 wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve19mar2020.html    #    
+wget -U "Mozilla Firefox 75.0" http://cronica.diputados.gob.mx/Ve30jun2020.html    # Extraordinaria
 
 # copy this in R's code to get full list of files
 ves60 <- c(   "20060829",   "20060901",   "20060905",   "20060907",   "20060912",   "20060914",   "20060919",   "20060921",   "20060926",
@@ -639,7 +640,7 @@ ves64 <- c(   "20180829",   "20180901",   "20180904",   "20180906",   "20180911"
 "20191024",   "20191029",   "20191030",   "20191031",   "20191105",   "20191106",   "20191126",   "20191128",   "20191203",   "20191205",
 "20191210-1", "20191210-2", "20191211",   "20191212",   "20200201",   "20200205",   "20200206",   "20200211",   "20200213",   "20200218",
 "20200220",   "20200225",   "20200227",   "20200303",   "20200305-1", "20200305-2", "20200310-1", "20200310-2",
-"Ve12mar2020",   "Ve18mar2020",   "Ve19mar2020-JP",   "Ve19mar2020")
+"Ve12mar2020",   "Ve18mar2020",   "Ve19mar2020-JP",   "Ve19mar2020",  "Ve30jun2020")
 
 
 

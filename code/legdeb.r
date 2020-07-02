@@ -305,7 +305,8 @@ par(mar=c(4,4,0,1)+0.1) # drop title space and left space
 plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
 #     main = "Speeches in the legislative periods observed",
      main = "",
-     xlab = "Daily speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
+#     xlab = "Daily speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
+     xlab = "Palabras diarias por orador (escala log)", ylab = "Año",
      xlim = c(1.69,4.5), 
      ylim = c(ymd("20060901"), ymd("20210606"))) # set ranges
 #log(15000,10)
@@ -315,8 +316,10 @@ axis(2, at = c(ymd("20080101"), ymd("20100101"), ymd("20120101"), ymd("20140101"
 #
 abline(v = log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), lty = 2)
 abline(h = c(ymd("20060702"), ymd("20090705"), ymd("20120701"), ymd("20150707"), ymd("20180701")), lty = 3, col = "gray") # ymd("20210606")
-text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Presidential election", pos = 1, offset = .2, col = "gray", cex = .67)
-text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Midterm election", pos = 3, offset = .2, col = "gray", cex = .67)
+#text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Presidential election", pos = 1, offset = .2, col = "gray", cex = .67)
+text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Elecciópn presidencial", pos = 1, offset = .2, col = "gray", cex = .67)
+#text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Midterm election", pos = 3, offset = .2, col = "gray", cex = .67)
+text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Elección intermedia", pos = 3, offset = .2, col = "gray", cex = .67)
 points(summ$nword.day.min, summ$date, col = summ$color, cex = .5)
 points(summ$nword.day.max, summ$date, col = summ$color, cex = .5)
 for (i in 1:19){
@@ -324,15 +327,22 @@ for (i in 1:19){
     lines(c(summ$nword.day.25[i], summ$nword.day.75[i]), rep(summ$date[i],2), lwd = 3, col = summ$color[i])
     points(summ$nword.day.50[i], summ$date[i], pch = 20, col = summ$color[i])
 }
-text(4.35, ymd("20080101"), labels = "60th")
-text(4.35, ymd("20140101"), labels = "62nd")
-text(4.35, ymd("20190915"), labels = "64th")
-text(4.35, ymd("20190215"), labels = "(partial)")
-text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
-text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
-text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
-text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
-text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"]), "words") )
+#text(4.35, ymd("20080101"), labels = "60th")
+#text(4.35, ymd("20140101"), labels = "62nd")
+#text(4.35, ymd("20190915"), labels = "64th")
+text(4.35, ymd("20080101"), labels = "LX")
+text(4.35, ymd("20140101"), labels = "LXII")
+text(4.35, ymd("20190915"), labels = "LXIV")
+text(4.35, ymd("20190215"), labels = "(parcial)")
+#text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
+#text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
+#text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
+#text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
+text(4.35, ymd("20110401"), labels = "LXI",      col = "gray")
+text(4.35, ymd("20100901"), labels = "(no obs.)", col = "gray")
+text(4.35, ymd("20170401"), labels = "LXIII",      col = "gray")
+text(4.35, ymd("20160901"), labels = "(no obs.)", col = "gray")
+text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Mediana =", median(data.dy$nword.day[data.dy$role=="diputado"]), "palabras") )
 ## text(2.75, ymd("20170101"), labels = "(63rd unobserved)", col = "gray")
 ## text(2.75, ymd("20110101"), labels = "(61st unobserved)", col = "gray")
 #dev.off()
@@ -376,11 +386,13 @@ par(mar=c(4,4,1,1)+0.1) # drop title space and left space
 hist(tmp$nspeakers, breaks = 24,
 #     main = "How many spoke in a plenary session",
      main = "",
-     xlab = "Number of speechmakers in daily session",
+#     xlab = "Number of speechmakers in daily session",
+     xlab = "Diputados en tribuna al día", ylab = "Frecuencia",
      xlim = c(0,120),
      ylim = c(0,80))
 abline(v=median(tmp$nspeakers),lty=2)
-text(median(tmp$nspeakers), 77, labels = paste("Median =", median(tmp$nspeakers)) )
+#text(median(tmp$nspeakers), 77, labels = paste("Median =", median(tmp$nspeakers)) )
+text(median(tmp$nspeakers), 77, labels = paste("Mediana =", median(tmp$nspeakers)) )
 #dev.off()
 
 data.mem$ev.pot.sh <- data.mem$ev.pot.dys / data.mem$ev.all.dys # fix share for member
@@ -468,6 +480,7 @@ length(tmp)
 length(sel)/length(tmp)
 summary(tmp[sel])
 tmp[sel][order(tmp[sel])]
+data[which(data$dv.nword==max(tmp)),]
 tmp[sel] <- 7999 # bunch outliers at fake level
 # zeroes
 sel <- which(tmp==0)
@@ -483,10 +496,13 @@ data$dv.nword[data$dpresoff==0][sel]
 #pdf(file = "../plots/dv-histogram.pdf", width = 7, height = 5)
 #png(filename = "../plots/dv-histogram.png", height = 400, width = 480)
 par(mar=c(4,4,1,1)+0.1) # drop title space and left space
-hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Words member spoke per period")
+#hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Words member spoke per period")
+hist(tmp, breaks = 100, xlim = c(0,8000), ylim = c(0,3600), main = NULL, xlab = "Palabras del diputado en el periodo", ylab = "Frecuencia")
 text(7950, 350, "*")
+axis(1, at = seq(0,8000,1000), labels = FALSE)
 abline(v=median(tmp), lty = 2)
-text(median(tmp), 3500, paste("Median =", median(tmp), "words"), pos = 4)
+#text(median(tmp), 3500, paste("Median =", median(tmp), "words"), pos = 4)
+text(median(tmp), 3500, paste("Mediana =", median(tmp), "palabras"), pos = 4)
 #dev.off()
 
 ########################
@@ -513,9 +529,12 @@ sd(tmp)
 #pdf(file = "../plots/dv-nspeech-histogram.pdf", width = 7, height = 5)
 #png(filename = "../plots/dv-nspeech-histogram.png", height = 400, width = 480)
 par(mar=c(4,4,1,1)+0.1) # drop title space and left space
-hist(tmp, breaks = 37, xlim = c(0,40), ylim = c(0,6000), main = NULL, xlab = "Speeches member gave per period")
+#hist(tmp, breaks = 37, xlim = c(0,40), ylim = c(0,6000), main = NULL, xlab = "Speeches member gave per period")
+hist(tmp, breaks = seq(-.5,37.5,1), xlim = c(0,40), ylim = c(0,3600), main = NULL, xlab = "Intervenciones del diputado en el periodo", ylab = "Frecuencia")
 abline(v=median(tmp), lty = 2)
-text(median(tmp), 5800, paste("Median =", median(tmp), "speech"), pos = 4)
+#text(median(tmp), 5800, paste("Median =", median(tmp), "speech"), pos = 4)
+text(median(tmp), 3500, paste("Mediana =", median(tmp), "discurso"), pos = 4)
+text(max(tmp), 300, paste("Máximo =", max(tmp)))
 #dev.off()
 
 
@@ -723,7 +742,7 @@ library(lme4)
 
 summary(fit22)$coefficients
 summary(fit21)
-x
+
 
 ###########################
 ## NEGBIN MODELS nspeech ## 
@@ -744,7 +763,7 @@ fit2p <- glm    (formula = f2, data = data, family = poisson, subset = dpresoff=
 
 summary(fit2)$coefficients
 summary(fit2p)
-x
+
 
 
 # log likelihood
@@ -787,7 +806,9 @@ library(pscl) # zero inflated poisson
 f2z <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair + dsmd + dsmd64 + seniority + dfem + dsup + d62 + d64 + dextra | ev.pot.dys + dsup + seniority + dsmd + dsmd64 + d64 + dextra")
 fit2z <- zeroinfl(formula = f2, data=data, dist = "poisson", subset = dpresoff==0) 
 summary(fit2z)$coefficients
-summary(fit2)$coefficients
+
+help(AIC)
+
 
 #################
 ## LOGIT MODEL ##

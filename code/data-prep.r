@@ -88,7 +88,7 @@ ves64 <- c(   "20180829",   "20180901",   "20180904",   "20180906",   "20180911"
 "20191024",   "20191029",   "20191030",   "20191031",   "20191105",   "20191106",   "20191126",   "20191128",   "20191203",   "20191205",
 "20191210-1", "20191210-2", "20191211",   "20191212",   "20200201",   "20200205",   "20200206",   "20200211",   "20200213",   "20200218",
 "20200220",   "20200225",   "20200227",   "20200303",   "20200305-1", "20200305-2", "20200310-1", "20200310-2",
-"Ve12mar2020",   "Ve18mar2020",   "Ve19mar2020-JP",   "Ve19mar2020")
+"Ve12mar2020",   "Ve18mar2020",   "Ve19mar2020-JP",   "Ve19mar2020",  "Ve30jun2020")
 
 # check that all files are indeed in dir
 setdiff(dir("../estenograficas/"),
@@ -126,8 +126,8 @@ cap.emm <- function(x=dips$nom){
 ## LOOP OVER all.legs WILL START HERE ##
 ########################################
 #leg <- 60 # pick one
-leg <- 62 # pick one
-#leg <- 64 # pick one
+#leg <- 62 # pick one
+leg <- 64 # pick one
 sel <- which(all.ves$leg==leg)
 ves <- all.ves$ves[sel]; 
 length(ves) # debug
@@ -159,7 +159,7 @@ for (f in 1:length(ves)){
         fch <- ses <- tmp[sel]
         fch <- sub.e(".*el (?:lunes|martes|miércoles|jueves|viernes|sábado|domingo) (.+)$", "\\1", fch)
         ses <- sub.e("^Versión estenográfica de la ", "", ses)
-        ses <- sub.e("(?:, )?celebrada el (?:lunes|martes|miércoles|jueves|viernes|sábado|domingo).+$", "", ses)
+        ses <- sub.e("(?:, )?(?:celebrada el|del) (?:lunes|martes|miércoles|jueves|viernes|sábado|domingo).+$", "", ses)
     }
     #
     # bookmarks and session start-end lines
@@ -274,7 +274,7 @@ if (length(sel) > 0) speeches <- speeches[-sel,]
 speeches$who <- cap.emm(speeches$who)
 source("../code/fix-names.r")
 # tabulate names to debug mispellings
-## table(speeches$who)
+#table(speeches$who)
 
 # debug
 sel <- which(nchar(speeches$who)==max(nchar(speeches$who), na.rm = TRUE)) # report longest string -- should be a long name
@@ -345,14 +345,14 @@ tmp <- speeches$file
 tmp <- gsub.e("[-].+$", "", tmp)
 # rename ve files
 sel <- grep.e("ve", tmp)
-if (length(sel) > 0) tmp[sel] <- sub.e("^ve", "202003", tmp[sel])
-if (length(sel) > 0) tmp[sel] <- sub.e("mar.+$", "", tmp[sel])
+if (length(sel) > 0) tmp[sel] <- sub.e("^ve", "20200", tmp[sel])
+if (length(sel) > 0) tmp[sel] <- sub.e("mar.+$", "3", tmp[sel])
+if (length(sel) > 0) tmp[sel] <- sub.e("jun.+$", "6", tmp[sel])
 # date
 tmp <- ymd(tmp)
 speeches$date <- tmp # return to data
 # add periodo
 speeches <- add.periodo(speeches)
-
 
 # DE-HTMLIZE TEXT
 # rvest is supposed to achieve this as Beautiful Soup does, couldn't get it to work
@@ -782,9 +782,9 @@ message(" ********************************************\n ** Checked: all speaker
 } else {print(d.no.hits)}
 
 
-########################################################
-## check in/out mismathches with speeches one-by-one  ##
-########################################################
+#######################################################
+## check in/out mismatches with speeches one-by-one  ##
+#######################################################
 tmp <- data.frame(dip = dips$id)
 tmp$dhasnas <- 0 # set dummy to zero default
 for (i in sel.dips){
@@ -1210,7 +1210,6 @@ if (leg==64) save(data.periodo.64, file = "../data/speech-periodo-64.RData")
 ## save diputados object ##
 ###########################
 save(all.dips, file = "../data/all-dips-list.RData")
-
 x
 
 #####################################

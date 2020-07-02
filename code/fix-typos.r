@@ -104,6 +104,9 @@ tmp[(sel-1)] <- sub(",","", tmp[(sel-1)]) # drop comma
 
 tmp <- gsub(" ", " ", tmp) # udenrscores to spaces
 
+# in extra 62y2
+tmp <- sub.e("<SPAN STYLE=.COLOR:BLACK.>", "", tmp)
+
 
 
 
