@@ -343,11 +343,29 @@ add.periodo <- function(x){
 tmp <- speeches$file
 # drop suffixes, if any
 tmp <- gsub.e("[-].+$", "", tmp)
-# rename ve files
+# rename ve files with proper date format
 sel <- grep.e("ve", tmp)
-if (length(sel) > 0) tmp[sel] <- sub.e("^ve", "20200", tmp[sel])
-if (length(sel) > 0) tmp[sel] <- sub.e("mar.+$", "3", tmp[sel])
-if (length(sel) > 0) tmp[sel] <- sub.e("jun.+$", "6", tmp[sel])
+if (length(sel) > 0){
+    tmp[sel] <- sub.e("^ve", "", tmp[sel])
+    tmp[sel] <- gsub.e("^([0-9]+)([a-z]+)([0-9]+)", "\\3\\2\\1", tmp[sel])
+    tmp[sel] <- sub.e("ene", "01", tmp[sel])
+    tmp[sel] <- sub.e("feb", "02", tmp[sel])
+    tmp[sel] <- sub.e("mar", "03", tmp[sel])
+    tmp[sel] <- sub.e("abr", "04", tmp[sel])
+    tmp[sel] <- sub.e("may", "05", tmp[sel])
+    tmp[sel] <- sub.e("jun", "06", tmp[sel])
+    tmp[sel] <- sub.e("jul", "07", tmp[sel])
+    tmp[sel] <- sub.e("ago", "08", tmp[sel])
+    tmp[sel] <- sub.e("sep", "09", tmp[sel])
+    tmp[sel] <- sub.e("oct", "10", tmp[sel])
+    tmp[sel] <- sub.e("nov", "11", tmp[sel])
+    tmp[sel] <- sub.e("dic", "12", tmp[sel])
+}
+#tmp[sel]
+
+
+
+
 # date
 tmp <- ymd(tmp)
 speeches$date <- tmp # return to data
@@ -419,6 +437,7 @@ if (leg==60) save.image(file = "../data/manipulated-speeches-60.RData")
 if (leg==62) save.image(file = "../data/manipulated-speeches-62.RData")
 if (leg==64) save.image(file = "../data/manipulated-speeches-64.RData")
 
+rm(list = ls())
 leg <- 64
 if (leg==60) load(file = "../data/manipulated-speeches-60.RData")
 if (leg==62) load(file = "../data/manipulated-speeches-62.RData")
@@ -511,7 +530,7 @@ dips$out2 <- ymd(dips$yrout2*10000 + dips$moout2*100 + dips$dyout2)
 dips$in3  <- ymd(dips$ yrin3*10000 + dips$ moin3*100 + dips$ dyin3)
 # clean
 dips$yrin1<- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- dips$yrin3<- dips$moin3 <- dips$dyin3 <- NULL
-# fix these, if any, in dip.csv file
+# fix these by hand, if any, in dip.csv file
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out1)==TRUE)
 sel
 sel <- which(is.na(dips$in3)==FALSE & is.na(dips$out2)==TRUE)

@@ -122,6 +122,9 @@ sel.col <- grep.e("(?:dv|ev|dpresoff)",colnames(data))  # keep only dv and ev
 colnames(data)[sel.col] # debug
 tmp.mem <- data[,sel.col] # keep only selected numeric columns
 tmp.mem <- aggregate(tmp.mem, by = list(data$nom), FUN = "sum")
+
+head(tmp.mem)
+
 tmp.mem$ev.pot.sh <- tmp.mem$ev.pot.dys / tmp.mem$ev.all.dys # fix share for member
 tmp.mem$dv.nword.by.dy <- tmp.mem$dv.nword / tmp.mem$ev.pot.dys # words by day
 tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy

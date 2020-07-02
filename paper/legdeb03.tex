@@ -273,6 +273,9 @@ Current events (/agenda política/) are party leaders' position-taking venue. Th
 Debate under such rules becomes a succession of punctuated, mostly uninterrupted short speeches. Members can approximate back-and-forth talk, at least occasionally, by catching the president's eye from their seats in order to interrupt with a motion. The president has discretion to deny, or grant up to three minutes to elaborate. Such motions are distinct from points of order (which members can also make, see Reglamento art. 114 for typified motions). They grant recognition to speak. One (/cuestionamiento al orador/) to interrogate the speaker, who must also accept the question be made. Another is (/alusiones personales/), to give right of reply to alluded members by recognizing them right after the speaker ends. And (/rectificación de hechos/) wind up an additional name at the end of the list of speakers. 
 
 %\subsection{Party discipline as alternative to centralized agenda power}
+
+[MOVE THIS TO SECTION 2]
+
 The Cámara's debate rules are ill-designed to prevent plenary bottlenecks \citep{cox.2006}. Even in the presence of a majority party, individual members retain speaking rights that water down attempts by the Junta to cartelize the legislative process. So how does the Cámara prevent dilatory motions to get things done? The answer is parties. Party discipline operates as an alternative to agenda cartelization in many systems \citep{prata.2006}. 
 
 Cohesion is near perfect across parties. \citet{tellez-del-rio.2018} computed frequencies with which deputies voted against a majority of their party (excluding unanimous votes). The mean he reports for the 1997--2018 period stands at 2 percent, 3.4 percent when abstentions are coded as votes against the party majority (p. 25). 
@@ -290,13 +293,13 @@ Proksch and Slapin's \citeyearpar{proksch-slapin2015book} scheme, used across ch
 
 %\subsection{Data and methods}
 
+Digitized speeches come from the stenographic service (scraped from http://cronica.diputados.gob.mx). I turned text into data with regular expressions---for html tag removal, for speaker and speech identification.\footnote{Data analysis was performed in R \citep{r.cite}, all code is available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.} The *dependent variable* is a member's participation in plenary debate during legislative periods (the appendix clarifies Mexican congressional terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and six periods, respectively, totaling twenty in the data. Four are extraordinary periods, the rest ordinary. Mean days per period was [CHECK]6.7 for the former, 31.4 for the latter, so the debate models control for period length. 
+
+The units of observation are member-periods and I use two specifications of the dependent variable. One is *speeches(i,p)* equal the number of days that member i took the floor in period p. Owing to the permissive agenda, speech made from the deputy's seat by means of motions, without taking the lectern, count as debate. As elsewhere in the volume, days when deputy i spoke fewer than 50 words in total are arbitrarily considered non-debate and dropped, adding zero towards the member's aggregates. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. All text remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis. 
 
 
-Digitized speeches come from the stenographic service (scraped from http://cronica.diputados.gob.mx). I turned text into data with regular expressions, to de-htmlize the text and to identify speakers and their speech.\footnote{Data analysis was performed in R \citep{r.cite}, all code is available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.} The *dependent variable* is a member's participation in plenary debate during legislative periods (the appendix clarifies Mexican congressional terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and five periods, respectively, totaling nineteen in the data. Three are extraordinary periods, the rest ordinary. Mean days per period was 6.7 for the former, 31.4 for the latter, so the debate models control for period length. 
 
-The units of observation are member-periods and I use two specifications of the dependent variable. One is *speeches(i,p)* equal the number of days that member i took the floor in period p. Owing to the permissive agenda, speech given from the deputy's seat by means of motions, without taking the lectern, count as debate. Days when deputy i spoke fewer than 50 words in total are arbitrarily considered non-debate as elsewhere in the volume and dropped, adding zero towards the member's aggregates. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. Allo text remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis. 
-
-The other specification is *words(i,p)* equal the total words that member i spoke in period p divided by the days that i served as a proportion of all session days in period p---members can take leaves of absence, so many served less than the full period. So the denominators for members i and j who both spoke 2 thousand words, but i served uninterrupted throughout period p while j served only half of period p, are 1 and 0.5, respectively. So words(i,p)=2000 and words(j,p)=2000/0.5=4000. 
+The other specification is *words(i,p)* equal the total words that member i spoke in period p divided by the proportion of all session days in period p that i served in the Cámara---members can take leaves of absence and many served less than the full period. So the denominators for members i and j who both spoke 2 thousand words, but i served uninterrupted throughout period p while j served only half of period p, are 1 and 0.5, respectively, and words(i,p)=2000 while words(j,p)=2000/0.5=4000. 
 
 %As in other chapters, the dependent variable is the number of words that members spoke in the chamber. A given diputado's words throughout a plenary session were summed into a daily total. Daily totals less than 50 words were arbitrarily interpreted as not constituting speech and removed from the data (ie., the member received a value of zero words that day). Thus filtered, members' daily totals were added across sessions in the same period, producing word aggregates for analysis.
 
@@ -339,31 +342,9 @@ Part B: Dichotomous variables
 \caption{Variable descriptives}\label{T:descriptives}
 \end{table}
 
-%% \begin{figure}
-%%   \centering
-%%   \begin{tabular}{cc}
-%%     \includegraphics[width=.49\columnwidth]{../plots/dv-histogram.pdf} &
-%%     \includegraphics[width=.49\columnwidth]{../plots/dv-nspeech-histogram.pdf}
-%%   \end{tabular}
-%%     \caption{The dependent variable, number of words (left) and number of speeches (right). The column under a star in the left panel is fictitious, reporting 217 member-periods with 8 thousand words or more (2.2 percent of all, the actual distribution spreads these observations, with increasing sparseness, from 8000 to 50291).}\label{F:dv-hist}
-%% \end{figure}
+Debate length is easier to grasp when expressed as members' daily totals instead of the period totals analyzed. In the median session, 36.5 different speakers contributed to daily debate, and six days had over 100 speakers. (The appendix offers descriptives.) Considering speakers only, the overall median daily speech length is 599 words. Mild term effects show up---the 60th period-by-period medians slightly above and the 64th slightly below the overall median---but period distributions are, in general, similar. The clearest exceptions are extraordinary periods. The models therefore include controls for term and ordinary session effects.
 
-%% \begin{figure}
-%%   \centering
-%%     \includegraphics[width=.8\columnwidth]{../plots/nspeakers.pdf}
-%%     \caption{Number of daily speakers}\label{F:nspeakers}
-%% \end{figure}
-
-Debate length is easier to grasp when expressed as daily totals instead of the period totals analyzed. In the median session, 36.5 different speakers contributed to daily debate, and six days had over 100 speakers. Figure \ref{F:quantiles} portrays member daily aggregates across the periods analyzed. For clarity, this plot includes speakers only (keep in mind that non-speakers are included in the period aggregates analyzed below.) Solid points report median daily speech length in words. With few exceptions, period medians are much the same as the overall median daily speech length of 599 words. Mild term effects show up too, the 60th medians slightly above and the 64th slightly below the overall median. Horizontal lines report the spread of the central portion of the density---the thicker line is the inter-quartile range, the thinner connects the first and ninth deciles. Period distributions are, in general, similar. The clearest exceptions are extraordinary periods, drawn in gray. The models therefore include controls for term and ordinary session effects.
-
-\begin{figure}
-  \centering
-    \includegraphics[width=.5\columnwidth]{../plots/quantiles-periodo.pdf}
-    \caption{Daily speech length by legislative period observed. The plot excludes non-speaking members. Solid points indicate the median speech length in the period. Thick and thin lines connect the 25--75 and 10--90 percentiles, respectively. Hollow points are minima and maxima. Ordinary periods in black, extraordinary periods in gray.}\label{F:quantiles}
-\end{figure}
-
-Hollow points are minima and maxima. Diputada Valentina Batres holds the record for delivering the longest speech in the three terms examined. At 15,932 words, her speech delivered March 11th, 2008 is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout that day's session, delaying the vote of a national geostatistics law. I suspect that filibustering was probably aimed at a bill down the line, with plainer distributive effects \citep[cf.][]{wawro.schickler.filibuster.2007}. A systematic study of filibustering in the Cámara is worthy of further study. The names associated with extreme member-periods are few: only nine deputies repeatedly surpassed 20 thousand words per period, mostly in the 62nd term. They are routine filibusters.
-%Most are in AMLO's present government. 
+Deputy Valentina Batres holds the record for delivering the longest daily speech in the three terms examined. At 15,932 words, her speech delivered March 11th, 2008 is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout that day's session, delaying the vote of a national geostatistics law. Filibustering was in fact aimed at something other than this technical bill: they wanted the Cámara president to amend the day's order to hear about alleged misconduct by the minister of the interior. The names associated to outlier member-periods are few: only nine deputies repeatedly surpassed 20 thousand words per period, mostly in the 62nd term. A systematic study of routine filibusters in the Cámara is worthy of further study. 
 
 %Sistema Nacional de Información Estadística y Geográfica
 %Deputies close to AMLO were adoting dilatory tactics. Batres requested the addition of a point to JuCoPo's order of the day. Mesa Directiva denied, so a PRD faction threatened to take over the Tribuna (?). Batres introduced motion to suspend and other dilatory tactics (ley sis nal informacion inegi), then filibustered (called art. 103 ley reglamentaria, granting her 30 minutes to present minority vote despite JuCoPo's day aggreement to limit to 10 minutes.)
@@ -373,20 +354,6 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 % Sonnets and Chapters 1 through 7 of El Quijote 16,191, 45+ pages in my edition.
 % Chapters 1 through 7 of El Quijote 17,912, 45+ pages in my edition.
 
-%The log scale magnifies the low side of the distribution. But it also blurs subtle but revealing differences in the high side. From 60th to 62nd, max went up while percentiles 75 and 90 remain at similar levels. Like Batres, an unusually high top decile consists of attempts to disrupt debate through filibustering. Dilatory tactics went down in 62nd compared with 60th, and substantially so in the 64th with a single party majority.
-
-
-%% \singlespacing
-%% \begin{footnotesize}
-%% \begin{verbatim}
-%% Words per day
-%% | Legislatura    | min | 10% | 25% | 50% | 75% |  90% |   max |
-%% | 60th           |  50 | 137 | 392 | 652 | 901 | 1215 | 15932 |
-%% | 62nd           |  50 | 193 | 438 | 611 | 850 | 1254 |  9765 |
-%% | 64th (partial) |  50 | 142 | 327 | 547 | 730 |  975 |  6358 |
-%% \end{verbatim}
-%% \end{footnotesize}
-%% \doublespacing
 
 
 %\subsection{Gender and seniority}
@@ -397,7 +364,7 @@ Hollow points are minima and maxima. Diputada Valentina Batres holds the record 
 
 %% 1. Gender: what is the impact of gender in floor access? Do women have access to the floor that is commensurate to their numerical presence in the legislative party? Operationalize gender as a dummy variable: Women takes the value of 1, and Men 0. Please use this coding also in the multivariate analysis (several drafts coded male MPs with 1 and female MPs with zero).
 
-  The relationships of gender and seniority with floor access are of interest across chapters. Of 1710 members observed, 39 percent are women (see Table \ref{T:women}). Owing to stricter quotas, 47 percent of the 64th Legislature were women, up from 28 in the 60th \citep{piscopo.2016}. Women participation in debate exceeds their numerical presence: despite subrepresentation among committee chairs and party leaders (but not Cámara presidents), 41 percent of both speeches and total words were delivered by women in the floor. A degree of concentration is also manifest, as women represented 37 percent of unique speechmakers, who  spoke more often and quite longer. 
+The impact of gender and seniority in floor access is of interest across chapters. Of 1710 members observed, 39 percent are women (see Table \ref{T:women}). Owing to stricter quotas, 47 percent of the 64th Legislature were women, up from 28 in the 60th \citep{piscopo.2016}. Women participation in debate exceeds their numerical presence: despite subrepresentation among committee chairs and party leaders (but not Cámara presidents), 41 percent of both speeches and total words were delivered by women. A degree of concentration is also manifest, as women represented 37 percent of unique speechmakers, who spoke more often and quite longer. 
 
 \begin{table}
   \begin{scriptsize}
@@ -681,15 +648,59 @@ In any event, examination of legislative debate has offered an interesting and i
 
 \singlespacing
 
-\section{Appendix: terminology}
+\section{Appendix}
 
-%\subsection{Terminology}
+\subsection{Mexican terminology}
 
 - A *Legislature* is an elected chamber for a legislative term, between two congressional elections. The Mexican Congress relies on Roman numerals to distinguish consecutive Legislatures since the second half of the Nineteenth century.
 
 - Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, another February through April, all inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of observation in the analysis. 
 
 - A *plenary session* is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Junta so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days.
+
+\subsection{Dependent variable descriptives}
+
+Figure \ref{F:dv-hist} describes both flavors of the dependent variables. And Figure \ref{F:quantiles} portrays member daily aggregates across the periods analyzed. For clarity, this plot includes speakers only (keep in mind that non-speakers are included in the period aggregates analyzed.)
+
+\begin{figure}
+  \centering
+  \begin{tabular}{cc}
+    \includegraphics[width=.49\columnwidth]{../plots/dv-nspeech-histogram.pdf} &
+    \includegraphics[width=.49\columnwidth]{../plots/dv-histogram.pdf}
+  \end{tabular}
+    \caption{The dependent variable, number of speeches (left) and number of words (right). The column under a star in the right panel is cumulative, reporting 217 member-periods with 8 thousand words or more (2.2 percent of all, the actual distribution spreads these observations, with increasing sparseness, from 8000 to 50291).}\label{F:dv-hist}
+\end{figure}
+
+
+%% \begin{figure}
+%%   \centering
+%%     \includegraphics[width=.8\columnwidth]{../plots/nspeakers.pdf}
+%%     \caption{Number of daily speakers}\label{F:nspeakers}
+%% \end{figure}
+
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.5\columnwidth]{../plots/quantiles-periodo.pdf}
+    \caption{Daily speech length by legislative period observed. The plot excludes non-speaking members. Solid points indicate the median speech length in the period. Thick and thin lines connect the 25--75 and 10--90 percentiles, respectively. Hollow points are minima and maxima. Ordinary periods in black, extraordinary periods in gray.}\label{F:quantiles}
+\end{figure}
+
+%The log scale magnifies the low side of the distribution. But it also blurs subtle but revealing differences in the high side. From 60th to 62nd, max went up while percentiles 75 and 90 remain at similar levels. Like Batres, an unusually high top decile consists of attempts to disrupt debate through filibustering. Dilatory tactics went down in 62nd compared with 60th, and substantially so in the 64th with a single party majority.
+
+
+%% \singlespacing
+%% \begin{footnotesize}
+%% \begin{verbatim}
+%% Words per day
+%% | Legislatura    | min | 10% | 25% | 50% | 75% |  90% |   max |
+%% | 60th           |  50 | 137 | 392 | 652 | 901 | 1215 | 15932 |
+%% | 62nd           |  50 | 193 | 438 | 611 | 850 | 1254 |  9765 |
+%% | 64th (partial) |  50 | 142 | 327 | 547 | 730 |  975 |  6358 |
+%% \end{verbatim}
+%% \end{footnotesize}
+%% \doublespacing
+
+
 
 %% \subsection{Alternative model specifications}
 
