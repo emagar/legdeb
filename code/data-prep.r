@@ -362,10 +362,7 @@ if (length(sel) > 0){
     tmp[sel] <- sub.e("dic", "12", tmp[sel])
 }
 #tmp[sel]
-
-
-
-
+#
 # date
 tmp <- ymd(tmp)
 speeches$date <- tmp # return to data
@@ -553,6 +550,7 @@ all.dips[[grep(leg, names(all.dips))]]  <- dips # return manip dips to data
 #
 # all dates when assembly convened
 all.ses <- speeches[,c("date","leg")]
+#tail(all.ses)
 all.ses <- all.ses[duplicated(all.ses$date)==FALSE,]
 all.ses <- all.ses[order(all.ses$date),] # sort
 # add periodo

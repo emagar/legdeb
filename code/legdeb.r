@@ -122,9 +122,6 @@ sel.col <- grep.e("(?:dv|ev|dpresoff)",colnames(data))  # keep only dv and ev
 colnames(data)[sel.col] # debug
 tmp.mem <- data[,sel.col] # keep only selected numeric columns
 tmp.mem <- aggregate(tmp.mem, by = list(data$nom), FUN = "sum")
-
-head(tmp.mem)
-
 tmp.mem$ev.pot.sh <- tmp.mem$ev.pot.dys / tmp.mem$ev.all.dys # fix share for member
 tmp.mem$dv.nword.by.dy <- tmp.mem$dv.nword / tmp.mem$ev.pot.dys # words by day
 tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy
@@ -160,12 +157,10 @@ ctrl <- data$nom[-sel.row] # agg criterion
 tmp.mem <- data[-sel.row,sel.col] # keep only selected numeric columns and ordinary sessions
 tmp.mem <- aggregate(tmp.mem, by = list(ctrl), FUN = "sum")
 table(tmp.mem$dpresoff)
-
-
+#
 tmp.mem$dpresoff <- as.numeric(tmp.mem$dpresoff>0) # fix dummy
-
+#
 tmp.mem[1,]
-
 rm(ctrl, sel,sel.col,tmp.mem,tmp) # clean
 
 
@@ -214,8 +209,40 @@ tmp; tmp/sum(tmp)
 ###########
 ## WOMEN ##
 ###########
-table(all.dips.norep$gen)/sum(tmp)
-table(all.dips.norep$gen[all.dips.norep$leg==62])/sum(tmp)
+# object to export plot data
+women <- data.frame(party = c("pan","pri","left","other","total"),
+                    pct.women = NA,
+                    pct.speech = NA,
+                    pct.words = NA)
+# start to fill it up
+sel1 <- which(all.dips.norep$gen=="F" & all.dips.norep$part=="pan")
+sel2 <- which(                          all.dips.norep$part=="pan")
+tmp <- nrow(all.dips.norep[sel1,]) * 100 / nrow(all.dips.norep[sel2,])
+women$pct.women[women$party=="pan"] <- round(tmp,2)
+#
+sel1 <- which(all.dips.norep$gen=="F" & all.dips.norep$part=="pri")
+sel2 <- which(                          all.dips.norep$part=="pri")
+tmp <- nrow(all.dips.norep[sel1,]) * 100 / nrow(all.dips.norep[sel2,])
+women$pct.women[women$party=="pri"] <- round(tmp,2)
+#
+sel1 <- which(all.dips.norep$gen=="F" & (all.dips.norep$part=="prd" | all.dips.norep$part=="morena"))
+sel2 <- which(                          (all.dips.norep$part=="prd" | all.dips.norep$part=="morena"))
+tmp <- nrow(all.dips.norep[sel1,]) * 100 / nrow(all.dips.norep[sel2,])
+women$pct.women[women$party=="left"] <- round(tmp,2)
+#
+sel1 <- which(all.dips.norep$gen=="F" & all.dips.norep$part!="pan" & all.dips.norep$part!="pri" & all.dips.norep$part!="prd" & all.dips.norep$part!="morena")
+sel2 <- which(                          all.dips.norep$part!="pan" & all.dips.norep$part!="pri" & all.dips.norep$part!="prd" & all.dips.norep$part!="morena")
+tmp <- nrow(all.dips.norep[sel1,]) * 100 / nrow(all.dips.norep[sel2,])
+women$pct.women[women$party=="other"] <- round(tmp,2)
+#
+sel1 <- which(all.dips.norep$gen=="F")
+tmp <- nrow(all.dips.norep[sel1,]) * 100 / nrow(all.dips.norep)
+women$pct.women[women$party=="total"] <- round(tmp,2)
+#
+women
+#############################
+## fill-up continues below ##
+#############################
 
 
 ########################################################################
@@ -293,23 +320,23 @@ print(summ)
 head(summ)
 #
 # date-ify periodo for plotting
-summ$date <- c(ymd("20060901"), ymd("20070201"), ymd("20070901"), ymd("20080201"), ymd("20080901"), ymd("20090201"), ymd("20120901"), ymd("20130201"), ymd("20130515"), ymd("20130901"), ymd("20140201"), ymd("20140515"), ymd("20140901"), ymd("20150201"), ymd("20180901"), ymd("20190201"), ymd("20190515"), ymd("20190901"), ymd("20200201"))
+summ$date <- c(ymd("20060901"), ymd("20070201"), ymd("20070901"), ymd("20080201"), ymd("20080901"), ymd("20090201"), ymd("20120901"), ymd("20130201"), ymd("20130515"), ymd("20130901"), ymd("20140201"), ymd("20140515"), ymd("20140901"), ymd("20150201"), ymd("20180901"), ymd("20190201"), ymd("20190515"), ymd("20190901"), ymd("20200201"), ymd("20200630"))
 #
-summ$dextra <- c(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0) # extraordinarios
+summ$dextra <- c(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1) # extraordinarios
 summ$color <- ifelse(summ$dextra==0, "black", "gray") # color for extraordinarios
 #
 summ[,grep.e("nword",colnames(summ))] <- log(summ[,grep.e("nword",colnames(summ))],10) # log scale
 #
 
 # plot periodo quartiles
-#pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
+pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
 #png(filename = paste(gd, "quantiles-periodo.png", sep = ""), height = 480, width = 480)
 par(mar=c(4,4,0,1)+0.1) # drop title space and left space
-plot(c(rep(min(summ$nword.day.min),19), rep(max(summ$nword.day.max),19)), c(rep(summ$date,2)), type = "n", axes = FALSE,
+plot(c(rep(min(summ$nword.day.min),20), rep(max(summ$nword.day.max),20)), c(rep(summ$date,2)), type = "n", axes = FALSE,
 #     main = "Speeches in the legislative periods observed",
      main = "",
-#     xlab = "Daily speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
-     xlab = "Palabras diarias por orador (escala log)", ylab = "Año",
+     xlab = "Daily speechmaking by deputy (number of words, log scale)", ylab = "Calendar year",
+#     xlab = "Palabras diarias por orador (escala log)", ylab = "Año",
      xlim = c(1.69,4.5), 
      ylim = c(ymd("20060901"), ymd("20210606"))) # set ranges
 #log(15000,10)
@@ -319,35 +346,34 @@ axis(2, at = c(ymd("20080101"), ymd("20100101"), ymd("20120101"), ymd("20140101"
 #
 abline(v = log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), lty = 2)
 abline(h = c(ymd("20060702"), ymd("20090705"), ymd("20120701"), ymd("20150707"), ymd("20180701")), lty = 3, col = "gray") # ymd("20210606")
-#text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Presidential election", pos = 1, offset = .2, col = "gray", cex = .67)
-text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Elecciópn presidencial", pos = 1, offset = .2, col = "gray", cex = .67)
-#text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Midterm election", pos = 3, offset = .2, col = "gray", cex = .67)
-text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Elección intermedia", pos = 3, offset = .2, col = "gray", cex = .67)
+text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Presidential election", pos = 1, offset = .2, col = "gray", cex = .67)
+#text(rep(2,3), c(ymd("20060702"),ymd("20120701"),ymd("20180701")), labels = "Elección presidencial", pos = 1, offset = .2, col = "gray", cex = .67)
+text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Midterm election", pos = 3, offset = .2, col = "gray", cex = .67)
+#text(rep(2,2), c(ymd("20090705"),ymd("20150707")), labels = "Elección intermedia", pos = 3, offset = .2, col = "gray", cex = .67)
 points(summ$nword.day.min, summ$date, col = summ$color, cex = .5)
 points(summ$nword.day.max, summ$date, col = summ$color, cex = .5)
-for (i in 1:19){
+for (i in 1:20){
     lines(c(summ$nword.day.10[i], summ$nword.day.90[i]), rep(summ$date[i],2), col = summ$color[i])
     lines(c(summ$nword.day.25[i], summ$nword.day.75[i]), rep(summ$date[i],2), lwd = 3, col = summ$color[i])
     points(summ$nword.day.50[i], summ$date[i], pch = 20, col = summ$color[i])
 }
-#text(4.35, ymd("20080101"), labels = "60th")
-#text(4.35, ymd("20140101"), labels = "62nd")
-#text(4.35, ymd("20190915"), labels = "64th")
-text(4.35, ymd("20080101"), labels = "LX")
-text(4.35, ymd("20140101"), labels = "LXII")
-text(4.35, ymd("20190915"), labels = "LXIV")
-text(4.35, ymd("20190215"), labels = "(parcial)")
-#text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
-#text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
-#text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
-#text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
-text(4.35, ymd("20110401"), labels = "LXI",      col = "gray")
-text(4.35, ymd("20100901"), labels = "(no obs.)", col = "gray")
-text(4.35, ymd("20170401"), labels = "LXIII",      col = "gray")
-text(4.35, ymd("20160901"), labels = "(no obs.)", col = "gray")
-text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Mediana =", median(data.dy$nword.day[data.dy$role=="diputado"]), "palabras") )
-## text(2.75, ymd("20170101"), labels = "(63rd unobserved)", col = "gray")
-## text(2.75, ymd("20110101"), labels = "(61st unobserved)", col = "gray")
+text(4.35, ymd("20080101"), labels = "60th")
+text(4.35, ymd("20140101"), labels = "62nd")
+text(4.35, ymd("20190915"), labels = "64th")
+## text(4.35, ymd("20080101"), labels = "LX")
+## text(4.35, ymd("20140101"), labels = "LXII")
+## text(4.35, ymd("20190915"), labels = "LXIV")
+## text(4.35, ymd("20190215"), labels = "(parcial)")
+text(4.35, ymd("20110401"), labels = "61st",      col = "gray")
+text(4.35, ymd("20100901"), labels = "(unobserved)", col = "gray")
+text(4.35, ymd("20170401"), labels = "63rd",      col = "gray")
+text(4.35, ymd("20160901"), labels = "(unobserved)", col = "gray")
+## text(4.35, ymd("20110401"), labels = "LXI",      col = "gray")
+## text(4.35, ymd("20100901"), labels = "(no obs.)", col = "gray")
+## text(4.35, ymd("20170401"), labels = "LXIII",      col = "gray")
+## text(4.35, ymd("20160901"), labels = "(no obs.)", col = "gray")
+text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Median =", median(data.dy$nword.day[data.dy$role=="diputado"]), "words") )
+## text(log(median(data.dy$nword.day[data.dy$role=="diputado"]), 10), ymd("20210606"), labels = paste("Mediana =", median(data.dy$nword.day[data.dy$role=="diputado"]), "palabras") )
 #dev.off()
 
 ####################
@@ -459,15 +485,96 @@ table(tmp.dips$gen[-sel], tmp.dips$dleader[-sel])
 5/(5+7)
 0 # pct leaders maj party women
 # words women speakers
-round(sum(data$dv.nword[data$dfem==1])*100 / (sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0]))) # %
-                                              sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0])   # N
+tmp <- round(sum(data$dv.nword[data$dfem==1])*100 / (sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0])), 2)# %
+tmp
+                                                     sum(data$dv.nword[data$dfem==1]) + sum(data$dv.nword[data$dfem==0])     # N
+#################################
+## continue filling women data ##
+#################################
+women$pct.words[women$party=="total"] <- tmp
+# words women speakers
+sel1 <- which(data$dfem==1 & data$part=="pan")
+sel2 <- which(               data$part=="pan")
+tmp <- round( sum(data$dv.nword[sel1])*100 / sum(data$dv.nword[sel2]), digits = 2) # %
+#tmp
+women$pct.words[women$party=="pan"] <- tmp
+#
+sel1 <- which(data$dfem==1 & data$part=="pri")
+sel2 <- which(               data$part=="pri")
+tmp <- round( sum(data$dv.nword[sel1])*100 / sum(data$dv.nword[sel2]), digits = 2) # %
+#tmp
+women$pct.words[women$party=="pri"] <- tmp
+#
+sel1 <- which(data$dfem==1 & (data$part=="prd" | data$part=="morena"))
+sel2 <- which(                data$part=="prd" | data$part=="morena" )
+tmp <- round( sum(data$dv.nword[sel1])*100 / sum(data$dv.nword[sel2]), digits = 2) # %
+#tmp
+women$pct.words[women$party=="left"] <- tmp
+#
+sel1 <- which(data$dfem==1 & data$part!="pan" & data$part!="pri" & data$part!="prd" & data$part!="morena")
+sel2 <- which(               data$part!="pan" & data$part!="pri" & data$part!="prd" & data$part!="morena")
+tmp <- round( sum(data$dv.nword[sel1])*100 / sum(data$dv.nword[sel2]), digits = 2) # %
+#tmp
+women$pct.words[women$party=="other"] <- tmp
+#
+women
+
 # nspeech women speakers
-round(sum(data$dv.nspeech[data$dfem==1])*100 / (sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0]))) # %
-                                                sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])   # N
+tmp <- round(sum(data$dv.nspeech[data$dfem==1])*100 / (sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])), 2) # %
+tmp
+                                                       sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])   # N
+#################################
+## continue filling women data ##
+#################################
+women$pct.speech[women$party=="total"] <- tmp
+# words women speakers
+sel1 <- which(data$dfem==1 & data$part=="pan")
+sel2 <- which(               data$part=="pan")
+tmp <- round( sum(data$dv.nspeech[sel1])*100 / sum(data$dv.nspeech[sel2]), digits = 2) # %
+#tmp
+women$pct.speech[women$party=="pan"] <- tmp
+#
+sel1 <- which(data$dfem==1 & data$part=="pri")
+sel2 <- which(               data$part=="pri")
+tmp <- round( sum(data$dv.nspeech[sel1])*100 / sum(data$dv.nspeech[sel2]), digits = 2) # %
+#tmp
+women$pct.speech[women$party=="pri"] <- tmp
+#
+sel1 <- which(data$dfem==1 & (data$part=="prd" | data$part=="morena"))
+sel2 <- which(                data$part=="prd" | data$part=="morena" )
+tmp <- round( sum(data$dv.nspeech[sel1])*100 / sum(data$dv.nspeech[sel2]), digits = 2) # %
+#tmp
+women$pct.speech[women$party=="left"] <- tmp
+#
+sel1 <- which(data$dfem==1 & data$part!="pan" & data$part!="pri" & data$part!="prd" & data$part!="morena")
+sel2 <- which(               data$part!="pan" & data$part!="pri" & data$part!="prd" & data$part!="morena")
+tmp <- round( sum(data$dv.nspeech[sel1])*100 / sum(data$dv.nspeech[sel2]), digits = 2) # %
+#tmp
+women$pct.speech[women$party=="other"] <- tmp
+#
+women
+#######################################
+## data for women plot ready, export ##
+#######################################
+write.csv(women, file = "data-for-women-figure-mexico.csv")
 
-round(sum(data$dv.nspeech[data$dfem==1])*100 / (sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0]))) # %
-                                                sum(data$dv.nspeech[data$dfem==1]) + sum(data$dv.nspeech[data$dfem==0])   # N
-
+# do a plot
+#pdf(file = paste(gd, "women-bar.pdf", sep = ""), height = 5, width = 7)
+#png(filename = paste(gd, "women-bar.png", sep = ""), height = 340, width = 480)
+abcd <- c(0,.25,.5,.75)+.125 # increments for 3 cols .25-wide, centered at .5
+par(mar=c(0,4,0,1)+0.1) # bottom, left, top, and right. The default is c(5.1, 4.1, 4.1, 2.1)
+plot(x = 1:5, y = seq(-6,55,length.out = 5), ylab = "Percentage", xlab = "", type = 'n', axes = FALSE)
+axis(2)
+text(x = (1:4)+.5, y = -2, labels = c("PAN","PRI","Left","Other"))
+text(x = 3, y = -6, labels = c("Party"))
+abline(h = seq(0,50,10), col = "gray")
+for (p in 1:4){
+    polygon( x = p + c(abcd[1],abcd[1],abcd[2],abcd[2]), y = c(0,women$pct.speech[p],women$pct.speech[p],0), col = "gray85", border = "gray85" )
+    polygon( x = p + c(abcd[2],abcd[2],abcd[3],abcd[3]), y = c(0,women$pct.words [p],women$pct.words [p],0), col = "gray60", border = "gray60" )
+    polygon( x = p + c(abcd[3],abcd[3],abcd[4],abcd[4]), y = c(0,women$pct.women [p],women$pct.women [p],0), col = "gray35", border = "gray35" )
+}
+legend(4,55, legend = c("% speeches","% words","% women"), fill = c("gray85","gray60","gray35"))
+#dev.off()
 
 
 #############
