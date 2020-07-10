@@ -294,21 +294,21 @@ Proksch and Slapin's \citeyearpar{proksch-slapin2015book} scheme, used across ch
 
 \section{Predictors of legislative debate} % [ca 2500]
  
-  %% In this empirical section, we want you to explore how intra and interparty, as well as individual features, play a role in determining the likelihood that MPs take the floor (and how often they will take the floor). 
+%% In this empirical section, we want you to explore how intra and interparty, as well as individual features, play a role in determining the likelihood that MPs take the floor (and how often they will take the floor). 
 %% The section is divided into subsections. The first uses descriptive statistics and bivariate analysis. The second turns to multivariate analysis. 
 %% Please note that the contents of this section are rigid. Please save important aspects that are relevant to your case to a subsequent section on ‘Country Specific Matters’. 
 
 %\subsection{Data and methods}
 
-Speeches were digitized by the stenographic service (scraped from http://cronica.diputados.gob.mx). I turned text into data with regular expressions---for html tag removal, for speaker and speech identification.\footnote{Data analysis was performed in R \citep{r.cite}, all code is available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.} The *dependent variable* is a member's participation in plenary debate during legislative periods (the appendix clarifies Mexican congressional terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and six periods, respectively, totaling twenty in the data. Four are extraordinary periods, the rest ordinary. Mean days per extraordinary period was 5.3, 31.4 for the ordinary. Debate models control for period type and length. 
+Speeches were digitized by the stenographic service (scraped from http://cronica.diputados.gob.mx). I turned text into data with regular expressions---for HTML tag removal, for speaker and speech identification.\footnote{Analysis was performed in R \citep{r.cite}, data and code are available at https://github.com/emagar/legdeb. I relied on libraries lme4 \citep{r.lme4}, lubridate \citep{r.lubridate}, margins \citep{r.margins}, MASS \citep{r.mass}, plyr \citep{r.plyr}, stargazer \citep{r.stargazer}, and zoo \citep{r.zoo}.} The *dependent variable* is a member's participation in plenary debate during each of the legislative periods observed (the appendix clarifies Mexican congressional terminology). The 60th, 62nd, and 64th Legislatures had six, eight, and six periods, respectively, totaling twenty in the data. Four are extraordinary periods, the rest ordinary. Mean days per extraordinary period was 5.3, 31.4 for the ordinary. Debate models control for period type and length. 
 
-The units of observation are member-periods and I use two specifications of the dependent variable. One is *speeches(i,p)* equal the number of days that member i took the floor in period p. Owing to the permissive agenda, speech made from the deputy's seat by means of motions, without taking the lectern, count as debate. As elsewhere in the volume, days when deputy i spoke fewer than 50 words in total are arbitrarily considered non-debate and dropped, adding zero towards the member's aggregates. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. All text remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis. 
+The units of observation are member-periods. I use two specifications of the dependent variable. One is *speeches(i,p)* equal the number of days that member i took the floor in period p. Owing to the permissive agenda, speech made from the deputy's seat by means of motions, without taking the lectern, count as debate. As elsewhere in the volume, days when a deputy spoke fewer than 50 words in total are arbitrarily considered non-debate and dropped, adding zero towards the member's aggregates. Since officers do not participate in legislative debate, all steering speech, as when the president recognizes a deputy or the secretary calls a voice vote to dispense reading of the bill, was also removed. So was speech by non-deputies, as in cabinet member hearings. All text remaining is considered debate, members' daily totals added across sessions in the same period to produce aggregates for analysis. 
 
 The other specification is *words(i,p)* equal the total words that member i spoke in period p divided by the proportion of all session days in period p that i served in the Cámara---members can take leaves of absence and many served less than the full period. So the denominators for members i and j who both spoke 2 thousand words, but i served uninterrupted throughout period p while j served only half of period p, are 1 and 0.5, respectively, and words(i,p)=2000 while words(j,p)=2000/0.5=4000. 
 
 %As in other chapters, the dependent variable is the number of words that members spoke in the chamber. A given diputado's words throughout a plenary session were summed into a daily total. Daily totals less than 50 words were arbitrarily interpreted as not constituting speech and removed from the data (ie., the member received a value of zero words that day). Thus filtered, members' daily totals were added across sessions in the same period, producing word aggregates for analysis.
 
-Table \ref{T:descriptives} has a summary of the dependent variable along others of interest. Member-period observations total 9494. The median member spoke once per period, delivering 607 words relative to days in office (593 words per period in absolute terms). At nearly 1400 words per period, means are substantially higher owing to a right-skewed speech distribution. Relevant to the choice of estimation methods, speech data are not evidently over-dispersed (at 3.1, the standard deviation is not that much higher than the mean of 2.1), so both negative binomial and poisson regression will be used for model fitting. And with nearly two out of five members (37.6 percent) uttering not a single word in the period, a zero-inflated approach is adopted too.
+Table \ref{T:descriptives} has a summary of the dependent variable along others of interest. Member-period observations total 9978. The median member spoke once per period, delivering 556 words relative to days in office (544 words per period in absolute terms). At 1300 words per period, means are substantially higher owing to a right-skewed speech distribution. Relevant to the choice of estimation methods, speech data are not evidently over-dispersed (at 3.1, the standard deviation is not that much higher than the mean of 2), so both negative binomial and poisson regression will be used for model fitting. And with nearly two out of five members (40.3 percent) uttering not a single word in the period, a zero-inflated approach is adopted too.
 
 \begin{table}
   \begin{scriptsize}
@@ -316,38 +316,38 @@ Table \ref{T:descriptives} has a summary of the dependent variable along others 
 Part A: Continuous variables
 |                              |   min | median |  mean |     sd |   max |    N |
 |------------------------------+-------+--------+-------+--------+-------|------|
-| N speeches (DV1)             |     0 |      1 |   2.1 |    3.1 |    37 | 9494 |
-| N words / exposure (DV2)     |     0 |    607 |  1391 | 2716.3 | 50291 | 9494 |
-| N words                      |     0 |    593 |  1366 | 2682.3 | 50291 | 9494 |
-| Days in office (exposure)    |     1 |     30 |  26.7 |   11.2 |    40 | 9494 |
-| Party share                  |   0.4 |     25 |  29.2 |   15.9 |    51 | 9494 |
-| Seniority                    |     0 |      1 |   1.7 |    2.2 |    17 | 9494 |
-| Previous terms               |     0 |      0 |   0.3 |    0.6 |     4 | 9494 |
-| Age                          |    21 |     46 |  45.9 |   10.1 |    78 | 7332 |
+| N speeches (DV1)             |     0 |      1 |     2 |    3.1 |    37 | 9978 |
+| N words / exposure (DV2)     |     0 |    556 |  1326 | 2665.7 | 50291 | 9978 |
+| N words                      |     0 |    544 |  1301 | 2632.2 | 50291 | 9978 |
+| Days in office (exposure)    |     1 |     29 |  25.4 |   12.2 |    40 | 9978 |
+| Party share                  |   0.4 |     25 |  29.3 |   16.2 |    51 | 9978 |
+| Years since frosh            |     0 |      1 |   1.7 |    2.2 |    17 | 9978 |
+| Seniority (previous terms)   |     0 |      0 |   0.3 |    0.6 |     4 | 9978 |
+| Age                          |    21 |     46 |  45.9 |   10.1 |    78 | 7453 |
 
 Part B: Dichotomous variables
 |          |    0 |    1 | tot |    N |
 |----------+------+------+-----+------|
-| Spoke    | 37.6 | 62.4 | 100 | 9494 |
-| Majority | 86.6 | 13.4 | 100 | 9494 |
-| Leader   | 98.3 |  1.7 | 100 | 9494 |
-| Chair    | 90.6 |  9.4 | 100 | 9494 |
-| SMD      | 39.3 | 60.7 | 100 | 9494 |
-| Suplente | 94.2 |  5.8 | 100 | 9494 |
-| Extraord | 84.5 | 15.5 | 100 | 9494 |
-| Female   | 64.2 | 35.8 | 100 | 9494 |
-| 60th     | 68.2 | 31.8 | 100 | 9494 |
-| 62nd     | 57.6 | 42.4 | 100 | 9494 |
-| 64th     | 74.2 | 25.8 | 100 | 9494 |
-| PAN      | 72.8 | 27.2 | 100 | 9494 |
-| PRI      | 72.9 | 27.1 | 100 | 9494 |
-| Left     | 70.0 | 30.0 | 100 | 9494 |
+| Spoke    | 40.3 | 59.7 | 100 | 9978 |
+| Majority | 84.7 | 15.3 | 100 | 9978 |
+| Leader   | 98.4 |  1.6 | 100 | 9978 |
+| Chair    | 88.4 | 11.6 | 100 | 9978 |
+| SMD      | 39.3 | 60.7 | 100 | 9978 |
+| PAN      | 73.4 | 26.6 | 100 | 9978 |
+| PRI      | 73.7 | 26.3 | 100 | 9978 |
+| Left     | 68.9 | 31.1 | 100 | 9978 |
+| Suplente | 94.1 |  5.9 | 100 | 9978 |
+| Extraord | 80.4 | 19.6 | 100 | 9978 |
+| Female   | 63.7 | 36.3 | 100 | 9978 |
+| 60th     | 69.8 | 30.2 | 100 | 9978 |
+| 62nd     | 59.7 | 40.3 | 100 | 9978 |
+| 64th     | 70.6 | 29.4 | 100 | 9978 |
     \end{verbatim}
   \end{scriptsize}
 \caption{Variable descriptives}\label{T:descriptives}
 \end{table}
 
-Debate length is more intuitive when expressed as members' daily totals instead of the period totals analyzed. In the median session, 36.5 different speakers contributed to daily debate, and six days had over 100 speakers. (The appendix has more descriptives.) Considering speakers only, the overall median daily speech length is 599 words. Mild term effects show up---the 60th period-by-period medians slightly above and the 64th slightly below the overall median---but period distributions are, in general, similar. The clearest exceptions are extraordinary periods. Models therefore also control for term and period type effects.
+Debate length is more intuitive when expressed as members' daily totals instead of the period totals analyzed. In the median session, 36 different speakers contributed to daily debate, and six days had over 100 speakers. (The appendix has more descriptives.) Considering speakers only, the overall median daily speech length is 606 words. Mild term effects show up---the 60th period-by-period medians slightly above and the 64th slightly below the overall median---but period distributions are, in general, similar. The clearest exceptions are extraordinary periods. Models therefore also control for term and period type effects.
 
 Deputy Valentina Batres holds the record for delivering the longest daily speech in the three terms examined. At 15,932 words, her March 11th, 2008 speech is 50 percent longer than the runner-up and has about as many words as \emph{Don Quijote de la Mancha}'s chapters 1 through 7 (forty-five pages in the edition I own). Batres and legislators close to AMLO used dilatory tactics throughout that day's session, delaying the vote of a national geostatistics law. Filibustering was in fact aimed at something other than this technocratic bill: they wanted the Cámara president to amend the day's order to hear about alleged misconduct by the minister of the interior. The names associated to outlier member-periods are few: only nine deputies repeatedly surpassed 20 thousand words per period, mostly in the 62nd term. Routine filibusters in the Cámara are worthy of further study. 
 
@@ -371,12 +371,12 @@ Deputy Valentina Batres holds the record for delivering the longest daily speech
 | -62nd             |      41 |   640 |
 | -64th             |      47 |   531 |
 | Cámara presidents |      35 |    31 |
-| Committee chairs  |      25 |   143 |
+| Committee chairs  |      28 |   174 |
 | Party leaders     |      21 |    24 |
 | - major party     |       0 |    12 |
 | - opportunistic   |      42 |    12 |
 | Speechmakers      |      37 |  5926 |
-| Speeches          |      41 | 23601 |
+| Speeches          |      41 | 23637 |
 | Words spoken      |      41 | 17.5M |
 |-------------------+---------+-------|
 |^Returning members counted once only.|
@@ -395,12 +395,12 @@ The impact of gender in floor access is of interest across chapters. Of 1710 mem
 \begin{scriptsize}
 \begin{verbatim}
 (Data to redo the barchart in Stata is this.)
-       party pct.women pct.speech pct.words
-     1   pan     38.25      32.94     31.39
-     2   pri     38.44      42.15     41.47
-     3  left     37.61      46.06     50.03
-     4 other     42.06      41.13     38.29
-     5 total     38.65      41.18     40.76
+     party pct.women pct.speech pct.words
+   1   pan     38.25      32.94     31.39
+   2   pri     38.44      42.15     41.47
+   3  left     37.61      46.06     50.03
+   4 other     42.06      41.13     38.29
+   5 total     38.65      41.18     40.76
 \end{verbatim}
 \end{scriptsize}
 \doublespacing
@@ -411,7 +411,7 @@ Figure \ref{F:women} shows the percentage of debate by female members, pooled ac
 
 %% Considering term-limits, I am not sure whether it makes sense to include seniority as part of the analysis. I would not include, nor produce the figure. Simply, I would mention the effects of term limits. Also, it can be interesting, later, in the multivariate analysis, to discuss more at length the implications of term-limits to legislative debates. I believe Mexico is the only country in our sample that includes such provision, which makes it interesting in and of itself.
 
-Single-term limits offer little leverage to evaluate seniority effects on floor access. Members wishing to return had to wait one term at least. It is remarkable that, despite this, 14 percent of members had previous federal deputy experience. This hints that the removal of single-terms will not be shunned by lack of static ambition (as in Argentina, for instance). Freshmen spoke 1181 words per period on average, compared to 2082 for members with past terms in Congress. Member-periods with one past term made 37 percent more speeches and spoke 65 percent more words than those with none; with two past terms instead of one, 35 percent more speeches and 49 percent more words; but those with more than two past terms gave 29 percent less speeches and 52 percent fewer words than those with two. This drop could be attributable to earlier recruitment of senior members, antedating competitive politics; or it could be due to higher likelihood that senior members occupy positions that might depress willingness to speak despite floor access possibilities. The multivariate analysis might shed some light.  
+Single-term limits offer little leverage to evaluate seniority effects on floor access. Members wishing to return had to wait one term at least. It is remarkable that, despite this, 14 percent of members had previous federal deputy experience. A hint that the removal of single-terms will not be shunned by lack of static ambition (as in Argentina, for instance). Freshmen spoke 1122 words per period on average, compared to 2019 for members with past terms in Congress. Member-periods with one past term made 44 percent more speeches and spoke 68 percent more words than those with none; with two past terms instead of one, 30 percent more speeches and 48 percent more words; but those with more than two past terms gave 33 percent less speeches and 53 percent fewer words than those with two. This drop could be attributable to earlier recruitment of senior members, antedating competitive politics; or it could be due to higher likelihood that senior members occupy positions that might depress willingness to speak despite floor access possibilities. The multivariate analysis might shed some light.  
 
 \begin{table}
   \begin{scriptsize}
@@ -419,11 +419,11 @@ Single-term limits offer little leverage to evaluate seniority effects on floor 
 | Past  | Mean number | Mean number | Member- |
 | terms | of speeches |    of words | periods |
 |-------+-------------+-------------+---------|
-| 0     |         1.9 |        1181 |    7550 |
-| > 0   |         2.8 |        2082 |    1944 |
-| 1     |         2.6 |        1944 |    1531 |
-| 2     |         3.5 |        2892 |     330 |
-| > 2   |         2.5 |        1413 |      83 |
+| 0     |         1.8 |        1122 |    7959 |
+| > 0   |         2.7 |        2019 |    2019 |
+| 1     |         2.6 |        1880 |    1585 |
+| 2     |         3.4 |        2774 |     344 |
+| > 2   |         2.3 |        1305 |      90 |
 |-------+-------------+-------------+---------|
     \end{verbatim}
   \end{scriptsize}
@@ -502,72 +502,72 @@ To analyze participation in floor debates, I fit multivariate regression models 
 
 %A pair of dummies controls for the party's ideology. *Right* equals 1 for members of the right-of-center PAN, 0 otherwise. Left equals 1 for PRD members in 60th and 62nd, and Morena member in the 64th, 0 otherwise. The omitted group includes members of the PRI and the smaller opportunistic parties. The dummy should capture any systematic effect of left's more frequent filibustering attempts. (There is no a priori expectation associated with left and right.)
 
-Table \ref{T:regs} reports the estimation of six different model specifications. In the left side are both flavors of the dependent variable. Count models of speeches were fit with negative binomial regression (1 and 2) and zero-inflated poisson regression (3), while models of words relative to tenure with ordinary least squares (4, 5, and 6). Specifications vary the regressors. Models 2, 3, 5, and 6 include fixed term effects, capturing any heterogeneity between Legislatures that are pooled together. Model 6 also estimates separate error terms for each member, intended to capture individual heterogeneity. And model 3 accounts for the excess of zeroes in the distribution. The overall fit is correct across models, likelihood ratio tests (not reported) reject the intercept-only model with much confidence.
-
+Table \ref{T:regs} reports the estimation of six different model specifications. In the left side are both flavors of the dependent variable. Count models of speeches were fit with negative binomial regression (1 and 2) and zero-inflated poisson regression (3), while models of words relative to tenure with ordinary least squares (4, 5, and 6). Specifications vary the regressors. Models 2, 3, 5, and 6 include fixed term effects to capture any heterogeneity between Legislatures that are pooled together. Model 6 also estimates separate error terms for each member, intended to capture individual heterogeneity. And model 3 accounts for the excess of zeroes in the distribution. The overall fit is correct across models, likelihood ratio tests (not reported) reject the intercept-only model with much confidence.
 
 
 \begin{table} \centering 
   \begin{tiny}
-    \begin{verbatim}
+\begin{verbatim}
+Regression results
 ============================================================================================================================
-                                  DV = Speeches in period                           DV = Words/exposure in period           
-                      ----------------------------------------------     ---------------------------------------------------
-                            (1)              (2)             (3)             (4)                (5)                 (6)       
-----------------------------------------------------------------------------------------------------------------------------
-Exposure (logged)         0.96***          1.30***          1.06***                                                           
-                           (0.02)           (0.05)          (0.04)                                                            
-                                                                                                                              
-Majority                  1.22***          0.98***          1.11***       1,032.85***        1,494.59***          848.60***   
-                           (0.05)           (0.06)          (0.04)          (91.01)           (137.23)            (226.06)    
-                                                                                                                              
-Party leader              0.34***          -0.04***        -0.04***       2,121.40***        1,906.26***         1,292.59***  
-                           (0.08)          (0.001)          (0.001)         (206.38)          (205.16)            (310.20)    
-                                                                                                                              
-Comm. chair               0.27***          0.31***          0.22***        239.92***           145.14*              51.54     
-                           (0.04)           (0.08)          (0.04)          (87.49)            (86.86)            (146.09)    
-                                                                                                                              
-Seniority                 0.11***          0.25***          0.11***        224.72***          258.78***           262.58***   
-                           (0.02)           (0.04)          (0.02)          (48.14)            (47.53)             (85.76)    
-                                                                                                                              
-Woman                     0.14***           -0.06*           -0.02         170.47***          131.49**              19.91     
-                           (0.03)           (0.03)          (0.02)          (54.90)            (54.89)             (99.70)    
-                                                                                                                              
-Party size                -0.05***         0.25***          0.10***        -67.47***          -72.05***           -63.23***   
-                          (0.001)           (0.05)          (0.03)           (2.00)            (2.26)              (3.85)     
-                                                                                                                              
-SMD                         0.03           0.12***          0.10***          -25.24            -91.94              -115.00    
-                           (0.03)           (0.02)          (0.01)          (55.84)            (64.91)            (115.48)    
-                                                                                                                              
-SMD x reelect                              0.09***          0.04**                            267.78**              7.68      
-                                            (0.03)          (0.02)                            (120.85)            (189.51)    
-                                                                                                                              
-Suplente                  -0.19***          -0.10*         -0.24***        -297.84***        -366.14***           -349.00**   
-                           (0.06)           (0.06)          (0.05)          (110.56)          (108.95)            (140.66)    
-                                                                                                                              
-62nd Leg.                                  0.25***          0.24***                           698.07***           836.08***   
-                                            (0.03)          (0.02)                             (62.82)             (96.43)    
-                                                                                                                              
-64th Leg.                                  0.19***          0.17***                            -114.31            508.02***   
-                                            (0.05)          (0.03)                            (114.68)            (165.84)    
-                                                                                                                              
-Extraordinary                              0.65***          0.68***                         -1,102.30***        -1,109.17***  
-                                            (0.08)          (0.07)                             (73.17)             (48.30)    
-                                                                                                                              
-Constant                  -1.53***         -2.91***        -1.91***       3,077.93***        3,075.94***         2,807.58***  
-                           (0.08)           (0.16)          (0.13)          (71.07)            (86.37)            (144.17)    
-                                                                                                                              
---------------------------------------------------------------------------------------------------------------------------------
-Fixed effects                no             term             term              no               term                term      
-Random effects               no              no               no               no                no                member     
-Estimation method          negative        negative      zero-inflated        OLS               OLS                linear     
-                           binomial        binomial         poisson                                             mixed-effects 
---------------------------------------------------------------------------------------------------------------------------------
-theta                  1.55*** (0.05)   1.65*** (0.05)                                                                        
---------------------------------------------------------------------------------------------------------------------------------
-Observations               9,494            9,494            9,494           9,494              9,494               9,494     
-R2                                                                            0.15              0.18                          
-Akaike Inf. Crit.        32,484.36        32,281.06        34,654.12                                             170,407.70    
-================================================================================================================================
+                               DV = Speeches in period                           DV = Words/exposure in period           
+                   ----------------------------------------------     ---------------------------------------------------
+                         (1)            (2)            (3)                (4)                  (5)                 (6)       
+---------------------------------------------------------------------------------------------------------------------------
+Exposure (logged)      0.99***        1.32***        1.07***                                                               
+                        (0.02)         (0.04)        (0.04)                                                                
+                                                                                                                           
+Majority               1.20***        0.98***        1.11***           826.87***           1,738.55***         1,102.46*** 
+                        (0.05)         (0.06)        (0.04)             (84.75)             (128.10)            (219.25)   
+                                                                                                                           
+Party leader           0.35***        0.31***        0.22***          2,241.56***          1,911.89***         1,260.70*** 
+                        (0.08)         (0.08)        (0.04)             (202.81)            (199.88)            (302.50)   
+                                                                                                                           
+Comm. chair            0.28***        0.26***        0.12***           289.72***            225.24***            184.63    
+                        (0.04)         (0.03)        (0.02)             (78.23)              (76.64)            (127.37)   
+                                                                                                                           
+Seniority              0.11***        0.12***        0.10***           210.68***            245.54***           253.18***  
+                        (0.02)         (0.02)        (0.01)             (46.37)              (45.33)             (83.10)   
+                                                                                                                           
+Woman                  0.13***        0.09***        0.04**            136.54***            125.68**              16.18    
+                        (0.02)         (0.02)        (0.02)             (52.64)              (52.14)             (96.83)   
+                                                                                                                           
+Party size             -0.05***       -0.04***      -0.04***           -61.52***            -71.85***           -63.13***  
+                       (0.001)        (0.001)        (0.001)             (1.92)              (2.20)              (3.76)    
+                                                                                                                           
+SMD                      0.03          -0.06*         -0.01              -48.69              -90.05              -113.31   
+                        (0.03)         (0.03)        (0.02)             (53.48)              (63.34)            (112.33)   
+                                                                                                                           
+SMD x reelect                         0.26***        0.10***                                232.39**              -8.32    
+                                       (0.05)        (0.03)                                 (111.13)            (182.94)   
+                                                                                                                           
+Suplente               -0.17***        -0.09        -0.23***           -271.52**           -346.94***           -330.99**  
+                        (0.06)         (0.06)        (0.05)             (106.35)            (103.79)            (137.19)   
+                                                                                                                           
+62nd Leg.                             0.25***        0.24***                                726.90***           843.14***  
+                                       (0.03)        (0.02)                                  (60.94)             (94.39)   
+                                                                                                                           
+64th Leg.                             0.17***        0.16***                               -279.10***           316.26**   
+                                       (0.05)        (0.03)                                 (107.10)            (158.53)   
+                                                                                                                           
+Extraordinary                         0.67***        0.69***                              -1,234.16***        -1,240.27*** 
+                                       (0.08)        (0.07)                                  (64.62)             (43.42)   
+                                                                                                                           
+Constant               -1.66***       -2.97***      -1.95***          2,874.07***          3,064.88***         2,805.63*** 
+                        (0.08)         (0.15)        (0.13)             (68.55)              (84.01)            (140.25)   
+                                                                                                                           
+---------------------------------------------------------------------------------------------------------------------------
+Fixed effects             no            term           term                no                term                term      
+Random effects            no             no             no                 no                  no                member     
+Estimation method      negative       negative    zero-inflated           OLS                 OLS                linear     
+                       binomial       binomial       poisson                                                  mixed-effects 
+---------------------------------------------------------------------------------------------------------------------------
+theta                  1.55*** (0.05)   1.65*** (0.05)                                                                   
+---------------------------------------------------------------------------------------------------------------------------
+Observations            9,978          9,978          9,978              9,978                9,978               9,978    
+R2                                                                        0.14                0.18                         
+Akaike Inf. Crit.     32,689.90      32,478.98     34,832.82                                                   178,880.70  
+===========================================================================================================================
 Note:                                                                                                *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
   \end{tiny}
@@ -581,17 +581,16 @@ Note:                                                                           
 %Residual Std. Error   2,504.36 (df = 9485)     2,465.37 (df = 9481)                                                             
 %F Statistic         210.29*** (df = 8; 9485) 170.19*** (df = 12; 9481)                                                          
 
-
-Interesting patterns emerge from coefficient estimates. Party size exerted a negative and statistically significant effect in member floor access across specifications. This is easier to interpret from OLS coefficients: other variables constant, changing the party size from large (40 percent of seats) to small (15 percent) associates with a predicted drop of 1,700 words by member in the period. Martin Luther King took 16 minutes to deliver his famous "I have a dream" speech, which approximates that word count. I also find a positive, significant, and large effect of majority status, which acts against size. Far from letting legislative accomplishments speak for themselves, majority members take the floor systematically more than those of similar-sized parties. Figure \ref{F:predict} demonstrates the discontinuity through simulation with model 2 parameters. As party size crosses the majority threshold the member gets a bonus, delivering a number of speeches comparable to a party with 25 percent of seats.
+Interesting patterns emerge from coefficient estimates. Party size exerted a negative and statistically significant effect in member floor access across specifications. This is easier to interpret from OLS coefficients: other variables constant, changing the party size from large (40 percent of seats) to small (15 percent) associates with a predicted drop of 1,650 words per member in the period. Martin Luther King took 16 minutes to deliver his famous "I have a dream" speech, which approximates that word count. I also find a positive, large, and statistically significant effect of majority status, which acts against size. Far from letting legislative accomplishments speak for themselves, majority members take the floor systematically more than those of similar-sized parties. Figure \ref{F:predict} demonstrates the discontinuity through simulation with model 2 parameters. As party size crosses the majority threshold the member gets a bonus, delivering a number of speeches comparable to a party with 25 to 30 percent of seats.
 
 %Note that the relative equals absolute words divided by the share of period p's duration that member i served, so the *exposure* is in the left side of OLS models and not in the right. 
 %*words(i,p) x days(p)  / exposure(i,p)*
 
-Other forms of status also associate positively to floor access, but results are sensitive to model specification. Party leadership exerts a substantially larger effect than majority status on speech length, but much smaller on the number of speeches. Leaders get privileged floor access and appear to specialize in longer speeches, probably on more important legislation. Committee chairs also deliver more speeches than other members, but controlling for term and member effects bears upon OLS coefficient significance, both substantially and statistically, hinting to important differences in speeches length across committee jurisdictions and individuals.
+Other forms of status also associate positively to floor access, with results somewhat sensitive to model specification. Party leadership exerts a substantially larger effect than majority status on speech length, but much smaller on the number of speeches. Leaders get privileged floor access and appear to specialize in longer speeches, probably on more significant legislation. Committee chairs also deliver more speeches than other members, but controlling for term and member effects bears upon OLS coefficient significance, both substantially and statistically, hinting to important differences in speech length across committee jurisdictions and individuals.
 
 %Figure \ref{F:avgmgeff} reports changes in the average predicted number of words associated with unit changes in explanatory variables, using model 2 estimates. Marginal effects make negative binomial regression coefficients interpretable. It is clear in the plot that the largest effect by far is attributable to majority status. Other things constant (at mean values), members in the majority party each gave between 1.75 and 2.25 more speeches per period than the rest of the Cámara. Multiplication of that average by Morena's 254 members in the 64th Legislature produces over 500 additional plenary speeches---47 percent of all words in the median ordinary period. OJO: NEED TO DEDUCT SIZE 51 --- better with predicted plot
 
-I also find positive effects of seniority and gender that resonate with the bivariate patterns of floor access. The coefficient for *women* is not robust to random member effects nor to accounting for zero-inflation. This is probably due to the concentration of debate by women highlighted above, some deputies taking the floor disproportionally more than others. Overall, the effect of gender appears to be on par with that of one additional term of seniority. 
+I also find positive effects of seniority and gender that resonate with the bivariate patterns of floor access. The coefficient for *women* is not robust to random member effects (accounting for zero-inflation also bears on impact). This is probably due to the concentration of debate by women highlighted above, some deputies taking the floor disproportionally more than others. Overall, the effect of gender appears to be on par with that of one additional term of seniority in Figure \ref{F:avgmgeff}, which reports average marginal effects.
 
 \begin{figure}
   \centering
@@ -600,26 +599,28 @@ I also find positive effects of seniority and gender that resonate with the biva
 \end{figure}
 
 %% model 2 (fit2 in code) average marginal effects
-%%      factor       AME       SE        z      p     lower     upper
-%%  ev.pot.dys   51.3100   2.6546  19.3285 0.0000   46.1070   56.5129
-%%        dmaj 1464.4438 211.4850   6.9246 0.0000 1049.9408 1878.9469
-%%    size.maj  -72.7583   4.9124 -14.8113 0.0000  -82.3863  -63.1303
-%%     dleader  460.6492 298.1915   1.5448 0.1224 -123.7954 1045.0937
-%%      dchair  451.9050 130.7671   3.4558 0.0005  195.6061  708.2039
-%%        dsmd -135.7903  93.9759  -1.4449 0.1485 -319.9796   48.3991
-%%      dsmd64  359.7821 175.2500   2.0530 0.0401   16.2985  703.2657
-%%   seniority  241.5023  69.7417   3.4628 0.0005  104.8111  378.1935
-%%        dfem   93.4748  79.3548   1.1779 0.2388  -62.0578  249.0074
-%%        dsup -507.2173 160.3330  -3.1635 0.0016 -821.4642 -192.9703
-%%         d62  259.0260  89.6724   2.8886 0.0039   83.2712  434.7807
-%%         d64 -132.3693 165.2884  -0.8008 0.4232 -456.3285  191.5899
+%% > mar2.dup
+%%      factor     AME     SE        z      p   lower   upper
+%%  ev.pot.dys  0.1029 0.0032  32.0872 0.0000  0.0967  0.1092
+%%        dmaj  1.9258 0.1256  15.3299 0.0000  1.6796  2.1720
+%%     dleader  0.6200 0.1543   4.0181 0.0001  0.3176  0.9224
+%%      dchair  0.5110 0.0686   7.4456 0.0000  0.3765  0.6455
+%%      nterms  0.2298 0.0394   5.8267 0.0000  0.1525  0.3071
+%%        dfem  0.1705 0.0493   3.4615 0.0005  0.0740  0.2670
+%%       ptysh -0.0857 0.0025 -33.6091 0.0000 -0.0907 -0.0807
+%%        dsmd -0.1129 0.0592  -1.9074 0.0565 -0.2290  0.0031
+%%      dsmd64  0.5032 0.1053   4.7774 0.0000  0.2967  0.7096
+%%        dsup -0.1820 0.1170  -1.5553 0.1199 -0.4113  0.0473
+%%         d62  0.4859 0.0582   8.3514 0.0000  0.3719  0.5999
+%%         d64  0.3445 0.0952   3.6165 0.0003  0.1578  0.5311
+%%      dextra  1.3190 0.1559   8.4624 0.0000  1.0135  1.6245
 
-A null finding of interest involves the method of election. The coefficient for *smd* is indistinguishable from zero across models. Figure \ref{F:avgmgeff} reports average marginal effects to interpret negative binomial regression coefficients: in contrast to PR members and with all other regressors at their mean, deputies elected in SMDs spoke slightly less, about 125 words in the period; the 95-percent confidence interval barely excludes the zero and this signal can't be discarded as product of chance alone. But look at the change in slope when interacted with reelection: this marginal effect is not just positive, but sufficient to cancel the negative pull of SMDs. Now a signal is discernible from random noise, even after controlling for majority status (the other big change in the 64th Legislature). Figure \ref{F:predict} makes this effect plain, a gap separates confidence intervals of predicted speeches by SMD members who can reelect and the term-limited. This finding hints to the invigoration of the personal vote after the removal of term limits and is worthy of more careful examination. 
+A null finding of interest involves the method of election. The coefficient for *smd* is indistinguishable from zero across models. Average marginal effects aid in negative binomial regression coefficient interpretation: in contrast to PR members and holding all other regressors at their mean, deputies elected in SMDs spoke slightly less, about 125 words in the period; the 95-percent confidence interval, however, barely excludes the zero and this signal therefore could be the product of chance alone. But look at the change in slope when interacted with reelection: this marginal effect is not just positive, but sufficient to cancel the negative pull of SMDs. Now a signal is discernible from random noise, even after controlling for majority status (the other big change in the 64th Legislature). Figure \ref{F:predict} makes this effect plain, a gap separates confidence intervals of predicted speeches by SMD members who can reelect (darker) and the term-limited (lighter). This finding hints to the invigoration of the personal vote after the removal of term limits and is worthy of more careful examination. 
 
 \begin{figure}
   \centering
     \includegraphics[width=.67\columnwidth]{../plots/predictedWords.pdf}
-    \caption{Predicted number of speeches by party size. Lines report point predictions using model 2, bands are 95-percent confidence intervals. Miniature gray points are observed members' party sizes, x- and y-jittered for visibility.}\label{F:predict}
+    \caption{Predicted number of speeches by party size. Lines report point predictions using model 2, bands are 95-percent confidence intervals. Miniature points above the x-axis are observed members' party sizes (x- and y-jittered for visibility).}\label{F:predict}
 \end{figure}
 
 

@@ -275,23 +275,25 @@ tmp2$nspeakers.day <- tmp2$nword.day
 tmp2$leg <- tmp3
 tmp2$Group.1 <- tmp2$nword.day <- NULL # keep nspeakers only
 ctrl <- tmp2$leg # now follow legs
+median(tmp2$nspeakers.day)
 tmp2 <- aggregate(tmp2, by = list(ctrl), FUN = "quantile", probs = c(.5,.9))
 summ$nspeakers.day <- tmp2$nspeakers.day
 #
 print("* * Descriptives by legislatura * *")
 print(round(summ,0))
 
+
 #######################################
 # version with nword percentiles only #
 #######################################
 # follow legislaturas
+median(data.dy$nword.day)
 ctrl <- data.dy$leg[data.dy$dpresoff==0]
 summ <- aggregate(tmp.dy, by = list(ctrl), FUN = "quantile", probs = c(0,.1,.25,.5,.75,.9,1))
 summ <- summ[,-grep.e("leg",colnames(summ))]
 #
 print("* * Descriptives by legislatura * *")
 print(round(summ,0))
-
 
 ####################################
 ## 2. days aggregated by periodos ##
@@ -329,7 +331,7 @@ summ[,grep.e("nword",colnames(summ))] <- log(summ[,grep.e("nword",colnames(summ)
 #
 
 # plot periodo quartiles
-pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
+#pdf(file = paste(gd, "quantiles-periodo.pdf", sep = ""), height = 7, width = 7)
 #png(filename = paste(gd, "quantiles-periodo.png", sep = ""), height = 480, width = 480)
 par(mar=c(4,4,0,1)+0.1) # drop title space and left space
 plot(c(rep(min(summ$nword.day.min),20), rep(max(summ$nword.day.max),20)), c(rep(summ$date,2)), type = "n", axes = FALSE,
@@ -467,11 +469,10 @@ sel <- which(all.dips$leg64$doath==1 & all.dips$leg64$gen=="M"); tmp <- tmp + le
 tmp # men in 3 legs
 # diputadas presiding officer
 sel <- which(data.dy$role=="pres")
-table(data.dy$who[sel])
 # diputadas committee chair
 tmp.dips$dchair <- 1 - as.numeric(tmp.dips$prescom=="")
 table(tmp.dips$gen, tmp.dips$dchair)
-35/(35+108) # pct chairs women
+49/(49+125) # pct chairs women
 tmp <- round(table(tmp.dips$gen, tmp.dips$dchair) * 100 / rowSums(table(tmp.dips$gen, tmp.dips$dchair)), 0)
 cbind(tmp, tot=100, N= rowSums(table(tmp.dips$gen, tmp.dips$dchair)))
 # diputadas party leader
@@ -792,7 +793,7 @@ sel <- which(data$nterms >2 & data$dpresoff==0)
 mean(data$dv.nword[sel])
 mean(data$dv.nspeech[sel])
 length(sel)
-data$nom[sel]
+unique(data$nom[sel])
 
 
 #######################################
@@ -819,20 +820,21 @@ summary(data[data$dpresoff==0, c("dv.nword","dv.nword.sh","dv.nspeech", "ev.pot.
 round(sapply(data[data$dpresoff==0, c("dv.nword","dv.nword.sh","dv.nspeech","ev.pot.dys", "size.maj", "ptysh", "seniority", "nterms", "age")], sd), digits = 2) # std devs
 round(sd(data$age[data$dpresoff==0], na.rm = TRUE), digits = 2) # std devs
 #
-table(data$dword  [data$dpresoff==0])
-table(data$dmaj   [data$dpresoff==0])
-table(data$dleader[data$dpresoff==0])
-table(data$dchair [data$dpresoff==0])
-table(data$dsmd   [data$dpresoff==0])
-table(data$dsup   [data$dpresoff==0])
-table(data$dextra [data$dpresoff==0])
-table(data$dfem   [data$dpresoff==0])
-table(data$d60    [data$dpresoff==0])
-table(data$d62    [data$dpresoff==0])
-table(data$d64    [data$dpresoff==0])
-table(data$dpan   [data$dpresoff==0])
-table(data$dleft2 [data$dpresoff==0])
-table(data$dpri   [data$dpresoff==0])
+sum(as.numeric(data$dpresoff==0))
+round( table(data$dword  [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dmaj   [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dleader[data$dpresoff==0]) / 9978, 3 )
+round( table(data$dchair [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dsmd   [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dsup   [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dextra [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dfem   [data$dpresoff==0]) / 9978, 3 )
+round( table(data$d60    [data$dpresoff==0]) / 9978, 3 )
+round( table(data$d62    [data$dpresoff==0]) / 9978, 3 )
+round( table(data$d64    [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dpan   [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dleft2 [data$dpresoff==0]) / 9978, 3 )
+round( table(data$dpri   [data$dpresoff==0]) / 9978, 3 )
 
 #########################
 ## NEGBIN MODELS nword ## 
@@ -954,7 +956,7 @@ x
 ## EXPORT TABLE ##
 ##################
 library(stargazer)
-stargazer(fit11, fit12, fit13, fit1, fit2, fit2z, align=TRUE, report = ('vc*s'),
+stargazer(fit1, fit2, fit2z, fit11, fit12, fit13, align=TRUE, report = ('vc*s'),
           title = "Regression results",
           type = "text", out = "tmp-tab.txt",
           digits = 2,
@@ -1048,7 +1050,8 @@ sims2 <- with(data,
                          dsup = 0,
                          dfem = 1,
                          d62 = 1, #c(rep(1,60),rep(0,60)),
-                         d64 = 0  #c(rep(0,60),rep(1,60))
+                         d64 = 0, #c(rep(0,60),rep(1,60)),
+                         dextra = 0
                          )
               )
 #sims2$dmaj <- as.numeric(sims2$size.maj > 0) # fix dmaj
@@ -1080,7 +1083,7 @@ abline(v = seq(0,60,5), col = "gray")
 abline(v=50, lty = 2)
 #
 #couleur <- rgb(175/255, 175/255, 175/255, alpha = .5) # gray
-couleur <- rgb(255/255, 0/255, 0/255, alpha = .33) # red
+couleur <- rgb(140/255, 140/255, 140/255, alpha = .33) # gray 55
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==0)
 polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
@@ -1088,7 +1091,7 @@ sel <- which(sims2$dmaj==1 & sims2$dsmd64==0)
 polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
 #couleur <- rgb(150/255, 150/255, 150/255, alpha = .5) # gray
-couleur <- rgb(0/255, 0/255, 255/255, alpha = .33) # blue
+couleur <- rgb(51/255, 51/255, 51/255, alpha = .33) # gray 20
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==1)
 polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$UL[sel])), col = couleur, border = couleur)
 #
@@ -1097,22 +1100,22 @@ polygon(c(sims2$ptysh[sel], rev(sims2$ptysh[sel])), c(sims2$LL[sel], rev(sims2$U
 #
 #
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==0)
-lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "red")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "gray55")
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==0)
-lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "red")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "gray55")
 #
 sel <- which(sims2$dmaj==0 & sims2$dsmd64==1)
-lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "gray20")
 #
 sel <- which(sims2$dmaj==1 & sims2$dsmd64==1)
-lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "blue")
+lines(sims2$ptysh[sel], sims2$PredictedWords[sel], col = "gray20")
 #
-text(50,8, labels = "Majority", srt = 90, cex = .75, pos = 4)
-text(23,5.3, labels = "member", col = "blue")
-text(23,4.8, labels = "can reelect", col = "blue")
-text(10,2.2, labels = "member is", col = "red")
-text(10,1.7, labels = "term-limited", col = "red")
+text(50,7.5, labels = "Majority", srt = 90, cex = .75, pos = 4)
+text(23,5.3, labels = "member", col = "gray20")
+text(23,4.8, labels = "can reelect", col = "gray20")
+text(10,2.2, labels = "member is", col = "gray55")
+text(10,1.7, labels = "term-limited", col = "gray55")
 #
 # add individuals
 tmp <- data[, c("ptysh", "individual")]
