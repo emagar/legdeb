@@ -1,0 +1,71 @@
+
+
+Minority rights
+
+Federalist
+
+two ideal types: delegation to supreme authority formal while keeping member's rights 
+
+
+Typology
+
+|----------------------------+--------------+--------------|
+| hi delegation of authority | UK Commons   | US House     |
+|----------------------------+--------------+--------------|
+| lo delegation              | US Senate    |              |
+|----------------------------+--------------+--------------|
+| State of nature here /     | talk/motions | talk/motions |
+|                            | unrestricted | restricted   |
+|----------------------------+--------------+--------------|
+
+
+- minority rights
+(a) open to abuse
+(b) nuclear option: remove them
+(c) risky bet, how likely you become a minority
+
+(d) Similar to UK Commons, and unlike the US House, Cámara retains formally unrestricted talk/motions while delegating power informally to the party. 
+
+264
+|-----------------------------------------+---------------+----------+------------+------------|
+| Debate type (in Spanish)                | Goal          | Durat.   | Selector   | Veto       |
+|-----------------------------------------+---------------+----------+------------+------------|
+| 1. Introduce legislation (iniciativa)   | Author        |          |            |            |
+| - a new law                             | presents      | - 10'    | - member   | - no       |
+| - amend a law                           | the bill      | - 5'     | - member   | - no       |
+|-----------------------------------------+---------------+----------+------------+------------|
+| 2. Committee report (dictamen)          | Move          |          |            |            |
+| - Debate en lo general vs SQ, chair     | for floor     | - 10'    | - comm.maj | - pres.^1  |
+| -   "             "      "   others     | consideration | - 5'     | - member   | - pres.^1  |
+| - negative report                       |               | - 3'     | - comm.maj | - pres.^1  |
+|-----------------------------------------+---------------+----------+------------+------------|
+| 3. Resolutions (puntos de acuerdo)      | Position      |          |            |            |
+| - standard, author                      | taking        | - 10'    | - member   | - comm.maj |
+| - urgent, author (obvia resolución)     |               | - 5'     | - Junta    | - floor    |
+| - other speakers                        |               | - 3'     | - party    | - no       |
+|-----------------------------------------+---------------+----------+------------+------------|
+| 4. Current events (agenda política)     | Position      | < 2hrs   |            |            |
+| - Junta proponent                       | taking        | - 10'    | - Junta    | - no       |
+| - other speakers                        |               | - 5'     | - member   | - no       |
+|-----------------------------------------+---------------+----------+------------+------------|
+| 5. Recognition-granting motions         | Contend with  | < 2hrs   |            |            |
+| - Amendment (reserva), introducer       | speaker or    | - 5'     | - member   | - no       |
+| -   "            "   , others           | project       | - 5'     | - member   | - floor    |
+| - Question to speaker (cuestionamiento) |               | - 3'     | - member   | - speaker  |
+| - Right of reply (alusiones personales) |               | - pres^2 | - Junta    | - no       |
+| - Fact correction (rectificación)       |               | - pres^2 | - member   | - no       |
+|-----------------------------------------+---------------+----------+------------+------------|
+| ^1 = President can delay/prevent speech by granting recommit.                                |
+| ^2 = President set time limit.                                                               |
+|----------------------------------------------------------------------------------------------|
+
+
+Such motions are distinct from points of order 
+
+see Reglamento art. 114 for typified motions
+
+One (/cuestionamiento al orador/) to interrogate the speaker, who must also accept the question be made. 
+
+Another is (/alusiones personales/), to give right of reply to alluded members by recognizing them immediately after the speaker ends. 
+
+And (/rectificación de hechos/) wind up an additional name at the end of the list of speakers. 

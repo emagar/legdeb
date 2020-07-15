@@ -34,11 +34,9 @@
 \usepackage[disable]{todonotes}                            % no show
 %\usepackage[colorinlistoftodos, textsize=small]{todonotes} % show notes
 \newcommand{\emm}[1]{\todo[color=red!15, inline]{\textbf{Eric:} #1}}
-\newcommand{\vp}[1]{\todo[color=green!15, inline]{\textbf{Vale:} #1}}
-\newcommand{\ges}[1]{\todo[color=blue!15, inline]{\textbf{Ges:} #1}}
 
-\usepackage{xr} % allows cross-ref to other file
-\externaldocument{urge15appendix}
+%% \usepackage{xr} % allows cross-ref to other file
+%% \externaldocument{urge15appendix}
 
 %% %for submission: sends figs, tables, and footnotes to last pages
 %% \RequirePackage[nomarkers,nolists]{endfloat}     % sends tables and figures to the end
@@ -65,28 +63,30 @@
 
 \begin{document}
 
-\title{Floor access in Mexico's Cámara de Diputados\thanks{Eric Magar received financial support from the Asociaci\'on Mexicana de Cultura \textsc{a.c.}\ and \textsc{conacyt}'s Sistema Nacional de Investigadores. I thank Fernando Rodríguez Doval, Lupita Vargas Vargas, and one former lawmaker who wished anonymity for shedding light on some parties' internal rules of debate in the period. I am grateful to Ana Lucía Enríquez, Eugenio Solís Flores, Sonia Kuri, and Vidal Mendoza for research assistance. The author is responsible for mistakes and shortcomings in the study. Data and supporting materials necessary to reproduce the quantitative analysis are available for download at \url{https://github.com/emagar/legdeb}.}}
+\title{Floor access in Mexico's Cámara de Diputados\thanks{Eric Magar received financial support from the Asociaci\'on Mexicana de Cultura \textsc{a.c.}\ and \textsc{conacyt}'s Sistema Nacional de Investigadores. For shedding light on major parties' internal rules of debate in the period, I thank Fernando Rodríguez Doval, Lupita Vargas Vargas, and one former lawmaker who wished anonymity. I am grateful to Ana Lucía Enríquez Araiza, Sonia Kuri Kosegarten, Vidal Mendoza Tinoco, and Eugenio Solís Flores, for research assistance. The author is responsible for mistakes and shortcomings in the study. Data and supporting materials necessary to reproduce the quantitative analysis are available at \url{https://github.com/emagar/legdeb}.}}
 \author{Eric Magar \\ Instituto Tecnológico Autónomo de México}
 \date{\today}
 \maketitle
 
 %\newpage
 
+
+
 \begin{abstract}
-\noindent This chapter describes the institutions of legislative debate in the Mexican Cámara de Diputados and assesses predictors of floor participation. Multiple regression models are fit on more than twenty-three thousand speeches between 2006 and 2020. They shows that majority party members get privileged floor access, in both the number of speeches delivered and their word-length, even after accounting for the negative effect of party size. Other status indicators, such as committee chairs, party leaders, and seniority, have more modest but also positive effects in debate. Women speak more than men. And the removal of single-term limits in 2018, which tend to personalize elections, associate with a significant surge in floor participation. 
+\noindent This chapter describes the institutions of legislative debate in the Mexican Cámara de Diputados and assesses predictors of floor participation. Multiple regression models are fit on more than twenty-three thousand speeches between 2006 and 2020. They shows that majority party members get privileged floor access, in both the number of speeches delivered and their word-length, even after accounting for there being more potential speakers in larger parties. Other status indicators, such as committee chairs, party leaders, and seniority, have more modest but also positive effects in debate. Women speak more than men. And the removal of single-term limits in 2018, which tend to personalize elections, associate with a significant surge in floor participation. 
 \newline
 \newline
 \textbf{Keywords}: Floor debate, speech, Congress, presidential democracy, Mexico
 \newline
 \newline
-\textbf{Word count}: 6469 (including abstract and references)
+\textbf{Word count}: 6132 (excluding references)
 \end{abstract}
 
 \newpage
 
 \singlespacing
-\epigraph{In the end, the chamber is a mandarinate where the few decide for all. That doesn't mean that independent voices cannot speak ... Knowledge of the Rules will let you take the pulpit for fact checking by simply raising your hand, or make suspensive motions, or reserve articles from the report under discussion}%
-{---\textsc{Former lawmaker from the left, interviewed on condition of anonymity, June 17th, 2020}}
+\epigraph{In the end, the chamber is a mandarinate where the few decide for all. That doesn't mean that independent voices cannot speak ... Knowledge of the Rules lets you take the pulpit by simply raising your hand for fact checking, or by making suspensive motions, or by reserving articles from the report under discussion.}%
+{\textsc{Former lawmaker from the left, interviewed on condition of anonymity, June 17th, 2020}}
 \doublespacing
 
 
@@ -94,21 +94,17 @@
 
 \section{Introduction} % [max 500 words]
 
-%In the introduction: Summarize the findings Make a paragraph about why Mexico is an interesting case. It would be nice if here, and also throughout the chapter, you could try to link results/the case to separation-of-power overall. Does Mexico fall closer to the American-type or to the Brazilian multiparty type? How does this impact debate? In the introduction, you need to polish the language- English is high quality but it reads a bit too informal at times in the intro.
+Legislative studies are a relatively young field of Mexican politics. Its growth is remarkable, with new research on candidate selection \citep{ascencio.kerevel.cand-sel-beh.2021}; elections and redistricting \citep{magar.altman.mcd.trelles2016pg}; the standing committee system \citep{bejar.Comisiones2009ed.book}; party discipline \citep{tellez-del-rio.2018}; vote trading \citep{lopez.lara.aldf2013}; pork barreling \citep{kerevelPork2015}; procedure and instability \citep{heller.weldon.2003}; gubernatorial influences in roll call voting \citep{rosas.langston.2011}; constitutional amendment \citep{casar.marvan2014book}; executive success \citep{bejarQuienLegisla2012} and conditions for predominance \citep{weldon.1997}; agenda setting \citep{casar.agsetting.2016}; the budget process \citep{weldon.2002}, and more.
 
-%% -describe what the chapter is about, key findings, and distinctive features of the country
+But there is no scholarship on legislative debate in sight. Other than brief and general mentions to the subject, I could find no systematic study of floor access. This chapter takes a step towards filling in this gap by describing the institutions of speech in the Cámara de Diputados and performing a systematic examination of the determinants of floor participation.
 
-Legislative studies are a relatively young field of Mexican politics. And the growth is remarkable. Much has been learned on candidate selection; redistricting; the role of standing committees; party discipline; vote trading; pork barreling; potential and actual instability; gubernatorial coattails and influences in roll call voting; constitutional amendment; executive success and conditions for predominance; agenda setting; the budget process; and more.\footnote{See \citet{ascencio.kerevel.cand-sel-beh.2021,magar.altman.mcd.trelles2016pg,bejar.Comisiones2009ed.book,tellez-del-rio.2018,lopez.lara.aldf2013,kerevelPork2015,heller.weldon.2003,magar.gubCoatMx.2012,rosas.langston.2011,casar.marvan2014book,bejarQuienLegisla2012,weldon.1997,casar.agsetting.2016,weldon.2002}.}
+The case should raise interest beyond area specialists. Mexico has a separation of powers constitution that has experienced divided and unified government in recent years. The three-and-a-half party system is distinct from both North American dualism and systems with extreme fragmentation, such as Brazil. And Mexico recently dropped single-term limits for members of Congress. \citet{proksch-slapin2015book} theorize that personal vote incentives make legislators organize the assembly with high levels of autonomy in floor debate. With little intra-party competition, such incentives were mostly absent in Mexico, but are bound to increase due to electoral reform. 
 
-%Legislative studies are a relatively young field of Mexican politics. But the growth is remarkable. Much has been learned on candidate selection \citep{ascencio.kerevel.cand-sel-beh.2021}; redistricting \citep{magar.altman.mcd.trelles2016pg}; the role of standing committees \citep{bejar.Comisiones2009ed.book}; party discipline \citep{tellez-del-rio.2018}; vote trading \citep{lopez.lara.aldf2013}; pork barreling \citep{kerevelPork2015}; potential and actual instability \citep{heller.weldon.2003}; gubernatorial coattails \citep{magar.gubCoatMx.2012} and influences in roll call voting \citep{rosas.langston.2011}; constitutional amendment \citep{casar.marvan2014book}; executive success \citep{bejarQuienLegisla2012} and conditions for predominance \citep{weldon.1997}; agenda setting \citep{casar.agsetting.2016}; and the budget process \citep{weldon.2002}, among many others.
+The chapter uncovers a tension between formal and informal speech institutions. Formal rules decentralize agenda power by granting members broad rights of recognition to take the floor and deliver speeches. Informal rules channel debate through legislative parties, leaders managing participation in a centralized fashion. The empirical analysis reveals systematic effects of predictors associated with party hierarchies (such as leaders, committee chairs, and majority status) and predictors tied to individual candidate promotion (such as incumbents elected in single-member districts and the prospect of reelection) in the number and length of the speeches that members of Congress deliver. 
 
-But there is no scholarship on legislative debate in sight. Other than brief and general mentions to the subject, I could find no systematic study of floor access. This chapter aims to start filling the void by describing the institutional setting of speech in the Cámara de Diputados and performing a systematic examination of the determinants of floor participation.
+Focus is on the Cámara de Diputados of the bicameral Congress. The chambers have symmetric powers over most legislation, but the Senate is excluded from adoption of the annual budget, and I leave it out. Moreover, due to time constraints, I further narrow the focus to three out of eight Cámara terms since the advent of competitive politics in Mexico. I examine the 60th Legislature (2006-09), the 62nd (2012-15), and the 64th (2018-21) up to the end of the second ordinary year---enough to investigate how the recent removal of term limits affects debate.
 
-A disconnect appears between formal and informal institutions. Formal rules decentralize agenda power by granting members broad rights of recognition to take the floor and deliver speeches. Informal rules channel debate through legislative parties, leaders managing participation in centralized fashion. Unlike the U.K. Parliament, where delegation to the cabinet annuls most private members' formal rights \citep{cox.1987}, the Cámara appears to belong in a middle ground, where the U.S. Senate probably also lies \citep{denhartog.monroe.SenateBook.2011}.
-
-Focus is on the Cámara de Diputados of the bicameral Congress. The chambers have symmetric powers over most legislation, but the Senate is excluded from adoption of the annual budget, and I leave it out. Moreover, due to time constraints, I further narrow the focus to three out of eight Cámara terms since the advent of competitive politics in Mexico. I examine the 60th Legislature (2006-09), the 62nd (2012-15), and the 64th (2018-21) up to the end of the second ordinary year---enough to investigate how the removal of term limits affects debate.
-
-The chapter is organized thus. Section 2 describes political institutions, the party system, and major changes to both. Section 3 describes the institutional setting of legislative debate in the Cámara. It identifies key players, the structure of debate, recognition-granting motions, and how party discipline works as a substitute to centralized agenda power. Section 4 performs data analysis. Multiple regression models reveal the mutual influences of parties and individual rights in the number of speeches deputies make and their length. Section 5 discusses minority rights in the context of Mexican politics, and concludes. 
+The chapter is organized thus. Section 2 describes political institutions, the party system, and major changes to both. Section 3 describes the institutional setting of debate in the Cámara. It identifies key players, the structure of debate, recognition-granting motions, and how party discipline works as a substitute to centralized agenda power. Section 4 performs data analysis. Multiple regression models are fit on the universe of speech in the three periods observed. Section 5 discusses Mexican speech institutions in comparison to stylized versions of the U.K. Parliament and the U.S. Congress. Section 6 concludes. 
 
 \section{Institutions and parties} % [ca 500-1000 words]
 
@@ -170,7 +166,7 @@ The party system of the competitive era had three major and a handful of small o
 %% |--------------+-----+-----+--------+
 %% | Total        | 500 | 500 |    500 |
 
-The three-plus party system came crashing down in the critical election of 2018. After decades of infighting the left finally split. The faction loyal to Andrés Manuel López Obrador, known as AMLO, successfully launched the National Regeneration Movement (Morena), a new party, overcoming formidable entry barriers. This feat paved his way to winning the presidency by a landslide. Riding AMLO's coattails, Morena won a majority in Congress. Inclusion of the incomplete 64th Legislature (data runs up to June 30th, 2020 which marks the end of the second year) brings the single-party unified governmentto contrast with the othr terms: a minority president in the 60th and an informal coalition with opportunistic parties in the 62nd.
+The three-plus party system came crashing down in the critical election of 2018. After decades of infighting the left finally split. The faction loyal to Andrés Manuel López Obrador, known as AMLO, successfully launched the National Regeneration Movement (Morena), a new party, overcoming formidable entry barriers. This feat paved his way to winning the presidency by a landslide. Riding AMLO's coattails, Morena won a majority in Congress. Inclusion of the incomplete 64th Legislature (data runs up to June 30th, 2020 which marks the end of the second year) brings the single-party unified government to contrast with the other terms: a minority president in the 60th and an informal coalition with opportunistic parties in the 62nd.
 
 %\subsection{Legislative parties}
 
@@ -188,103 +184,88 @@ In a surprising recent development, single-term limits were eliminated for selec
 
 % There are a few things missing in section 2:
 % - How do incentives from presidential and divide government play out with electoral systems?
+Given a fair amount of inter-party cooperation to get things done \citep{casarSinMay2013}, members probably need to exploit position-taking to keep some distinction with adversaries. Speech is an evident vehicle. 
 % - Relatedely, what is the importance of party brand for electoral success?
+(a) Campaigns are relatively party-centered for Congress \citep{langston.nd}, but not for other levels such as governors or municipal presidents. These rely on pork---ephemeral vote-buying, not permanent machines) Moreno evidence, FEE
 % - Discuss in more detail the matter of term limits and how it impacts legislative organization
+Elaborate in text, change should make committee slots more valuable. Connect to party vs member with static ambition allowed. 
 
 \section{The rules of debate} % [ca 1500 words]
 
-%% In this section, we need to set the rules of the game for legislative debates. As we have seen in our workshop, there is a high heterogeneity in the institutional setting of legislative debates. Producing a thorough discussion of formal and informal rules across a wide-range of countries is a valuable contribution of the volume to the discipline. Please try to answer the following questions in your country chapter:
-
-%% 1. Who can allocate speaking time to individual MPs? Who controls the legislative agenda – government, parties, MPs, some legislative structure specifically in charge with agenda-setting? In answering this question, you should aim to discuss both formal rules (constitutional rules, rules of procedure), party internal rules (if they exist), and informal rules.
-%% 2. Do individual MPs have a guaranteed right to participate in a debate without party leadership permission? If yes, how much time and in which type of debate? 
-%% 3. How is the debate structured? What are the rules of engagement? Do MPs engage in back-and-forth talk? By contrast, do MPs deliver a debate without interruptions?
-%% 4. Do particular subsets of MPs (e.g. spokesperson or committee members) have formal rights that entitle them to take the floor?
-%% 5. What are the existing types of debates? Please select the 5 most important types of debates and produce a table where you cover the name of the debate (in English and the native language of the country), its goals, particular organization rules to that kind of debate, and the total number of minutes that rules assign to each debate.
-
-%% To conclude this section, please classify the country along Proksch and Slapin’s (2015) contribution. The authors suggest that there are two extreme poles, depending on rules of procedure and electoral system organization. As described by Proksch and Slapin (2015: 96), in some systems, individual MPs are ‘guaranteed access to speaking time’, and ‘backbenchers are granted equal time as party leaders’. In other systems, the rules severely restrict individuals’ access to the floor and parties draft speakers lists, which gives party leaders much more control on this question. A number of countries fall, however, somewhere between these two extreme categories, giving some opportunity for individual MPs to access the floor, but favoring party lists. Please classify your country accordingly. If your country was included in Proksch and Slapin’s study, please refer to this classification when discussing your country’s institutional setting.
-
-A prominent study of agenda power in Mexico aims the focus on the executive in the legislative arena, and only secondarily on intra-cameral institutions. \citet{casar.agsetting.2016} characterizes debate in Congress as centralized: "[governing] bodies have the power ... to conduct floor debates, including assigning turns and time to speakers" (p. 154). The overview of the structure of legislative debate in this section shows that the author must have /de facto/ practice in mind, because formal rules actually decentralize agenda power to a considerable extent. 
-
-%% An overview of the structure of legislative debate shows members who have abdicated most formal speech rights to the party.
-
-%% \citet{casar.agsetting.2016} characterizes debate as party-centered: "[governing] bodies have the power ... to conduct floor debates, including assigning turns and time to speakers" (p. 154). This, we will see, comes from party discipline, because formal institutions establish individual member rights to be recognized by the presiding officer.
-
-%\citet{casar.agsetting.2016} examination of agenda setting puts the focus on results (passage of legislation). Her mention to debate characterizes it as party-centered: "[governing] bodies have the power ... to conduct floor debates, including assigning turns and time to speakers" (p. 154). This, we will see, is not in alignment with formal institutions, which establish individual member rights to be recognized by the presiding officer.
+A prominent study of agenda setting in Mexico aims the focus on the executive in the legislative arena, and only secondarily on intra-cameral institutions. \citet{casar.agsetting.2016} characterizes debate in Congress as centralized: "[governing] bodies have the power ... to conduct floor debates, including assigning turns and time to speakers" (p. 154). The overview of the structure of legislative debate in this section shows that this view has /de facto/ practice in mind, because formal rules actually decentralize agenda power to a considerable extent. 
 
 %\subsection{The boards}
 
-The Cámara's Rules \citep{reglamentoDipMx.2019} has prescriptions for debate, the Organic Law \citep{loceum.2019} for congressional organization. There are two governing bodies, the Junta and the Mesa. The *Junta de Coordinación Política* is the Cámara's top decision-making organ. The leaders of all parties with no fewer than five deputies are represented. The majority leader presides the Junta throughout the term. In the absence of a majority party, however, the leaders of the top-three seat holding parties preside the Junta, alternating one year each. The Junta appoints and replaces committee members, prepares each session's order of the day (/orden del día/), and in general makes and enforces party agreements. It decides by majority rule, with members' votes weighted relative to group sizes in the plenary. So majority status is crucial to control the Junta \citep[cf.][]{cox.mccubbins.2005}.
+The Cámara's Rules \citep{reglamentoDipMx.2019} has prescriptions for debate, the Organic Law \citep{loceum.2019} for congressional organization. There are two assembly governing bodies, the Junta and the Mesa. The *Junta de Coordinación Política* is the Cámara's top decision-making organ. The leaders of all parties with no fewer than five deputies are represented. The majority leader presides the Junta throughout the term. In the absence of a majority party, however, the leaders of the top-three seat holding parties preside the Junta, alternating one year each. The Junta appoints and replaces committee members, prepares each session's order of the day (/orden del día/), and in general makes and enforces party agreements. It decides by majority rule, with members' votes weighted relative to group sizes in the plenary. The majority can control the Junta \citep[cf.][]{cox.mccubbins.2005}.
 
 %One is the *Cámara president*, an officer similar to the Speaker in the UK House of Commons. Diputados are expected to address the chamber president, who is responsible for keeping debate orderly and within chamber and congressional rules. Other officers are secretarios, responsible for formalities such as reading bills, committee reports, or other motions presented to the plenary for consideration, announcing the result of roll call votes, an so forth.  
 
-The *Mesa Directiva* is the chamber's steering board. The Mesa chair is the Cámara president /ex-officio/. The Mesa makeup has consensual traits, regardless of there being a majority party or not. It is elected yearly by two-thirds supermajority of Cámara members from candidates proposed by the Junta. While Mesa members can reelect, the chair must rotate between the top-three seat-holding parties, one year each. 
+The *Mesa Directiva* is the chamber's steering board. The Mesa chair is the Cámara president /ex-officio/. The Mesa makeup has consensual traits even when a party has the majority. The Mesa is elected yearly by two-thirds supermajority of Cámara members from Junta-proposed candidates. While Mesa members can reelect, the chair must rotate between the top-three seat-holding parties, one year each. 
 
 %The president recognizes speechmakers and presides over Cámara debates. The Mesa includes deputy presidents and at least one secretary from each parliamentary group. The Mesa follows the session's agenda in the Day's Order (/Orden del Día/) that is mostly set by the Junta. 
 
 % I use the terms party and parliamentary group interchangeably, but groups are in fact more restrictive. A group (/grupo parlamentario/) needs no fewer than five deputies to earn and retain Junta representation. Moreover, groups can only form at the term's outset. Members can freely leave one group and may join another existing group at any time, with immediate effects in vote weights. But defectors cannot form new groups---no doubt raising the cost of lone turncoats. 
 
-Agenda control is formally frail. First, every committee report is guaranteed floor consideration and must be included in the order. If committees were adequate agents of the Junta majority, they might serve as gatekeepers by denying reports to unwanted bills. But the Junta is required to distribute relatively powerful committee chairs proportionally among the parties---chairs distribute the committee's staff and spending with great discretion \citep{casar.2011}. And no party can control more than half of committee members, forcing vote-buying or plain cooperation across the aisles. Therefore, some committees are bound to be preference outliers.
+Agenda control is somewhat decentralized. First, every committee report is guaranteed floor consideration and must be included in the order. Committees have ability to withhold bill reports, granting them a veto over proposals in their jurisdiction. A two-thirds vote in the floor overrides the veto. If committees were adequate agents of the Junta majority \citep[cf.][]{cox.mccubbins.1993}, they might prevent consideration of unwanted bills. But the Junta is required to distribute relatively powerful committee chairs proportionally among the parties---chairs distribute the committee's staff and spending with great discretion \citep{casar.2011}. And no party can control more than half of committee members, forcing vote-buying or plain cooperation across the aisles. Therefore, some committees are bound to be preference outliers.
 
-Second, the open rule is the default for bill consideration in the floor. Debate takes place in two stages. The entire bill is first examined /en lo general/, then articles are considered individually /en lo particular/ \citep[see][]{heller.weldon.nd}. Members can freely reserve articles for deletion or amendment, denying the Junta a useful procedural tool common in other assemblies: the closed rule \citep[eg.,][]{cox.2006,dion.huber.1996}.
+Second, the default method for bill consideration in the floor has unrestricted introduction of amendments to the bill reported. Debate takes place in two stages. The entire bill is first examined /en lo general/, then articles are considered individually /en lo particular/ \citep[see][]{heller.weldon.nd}. Members can freely reserve articles for particular deletion, amendment, or expansion, denying the Junta a useful procedural tool common in other assemblies: the take-it-or-leave-it rule \citep[eg.,][]{cox.2006,dion.huber.1996}.
 
-Third, and most relevant to this chapter, speakers self-select. Individual members are entitled to take the floor when recognized by the presiding officer, for a duration set by rules or by party agreements. And recognition is permissive. Introducing amendments to a report, for instance, grants right of recognition to take the floor. Party leaders get the first round of debate slots for a list of speakers of their choice, but cannot preclude others from adding their names to that list afterwards, making debate resemble first-come-first-serve after the party appointees have spoken. The limit here is the floor, who can decide to vote the motion or to continue debating. 
+Third, and most relevant to this chapter, speakers self-select. Individual members are entitled to take the floor when recognized by the presiding officer, for a duration set by rules or by /ad-hoc/ party agreements. And recognition is permissive. Introducing amendments to a report, for instance, grants right of recognition to take the floor. True, party leaders assign speakers for the first round of debate slots. But they cannot formally preclude others from adding their names to the list of speakers afterwards, making debate resemble first-come-first-serve after the party appointees have spoken. The limit is the floor, who can decide to vote the motion or to continue debating. 
 
 %%Formally, deputies enjoy equal rights and duties. With respect to deliberation, all are entitled to take the floor when recognized by the presiding officer, for a duration set by rules or by party agreements. However, as in assemblies worldwide, members with status tend to have many more rights, the rest many more duties. What defines status changes from one assembly to the next \citep{cox.2006}. In the Cámara, party leaders in general, and majority party leaders in particular sit atop the status pyramid. But when it comes to speech, individual members retain debate rights that set the basis for minority rights. 
 
 %\subsection{The structure of debate}
 
-Rules set limits for different kinds of debate summarized in Table \ref{T:types}. The first entry are drafters of new legislation, who get first recognition to take the floor in order to persuade fellow lawmakers. The time limit is ten minutes when the draft is a new law, five minutes when it changes existing statutes. Bills whose author has not had a chance to present before the session ends migrate to the next day's order upon author's request /viva voce/ (otherwise they are referred to committee.) The rightmost columns report who selects the speaker---self-selection by drafting a bill, in this case---and who, if anyone, can veto the speaker's recognition---no one here. Deputies speaking next get five minutes each. 
+Rules typify limits for different kinds of debate summarized in Table \ref{T:types}. The first entry are drafters of new legislation, who get first recognition to take the floor in order to persuade fellow lawmakers. The time limit is ten minutes when the draft is a new law, five minutes when it changes existing statutes. Bills whose author has not had a chance to present before the session ends migrate to the next day's order upon author's request /viva voce/ (otherwise they are referred to committee.) The rightmost columns report who selects the speaker---self-selection by drafting a bill, in this case---and who, if anyone, can veto the speaker's recognition---no one here. %Deputies speaking next get five minutes each. 
 
 \begin{table}
   \begin{scriptsize}
     \begin{verbatim}
-|----------------------------------------+---------------+---------+------------+------------|
-| Debate type (in Spanish)               | Goal          | Durat.  | Selector   | Veto       |
-|----------------------------------------+---------------+---------+------------+------------|
-| 1. Introduce legislation (iniciativa)  | Author        |         |            |            |
-| - a new law                            | presents      | - 10'   | - member   | - no       |
-| - amend a law                          | the bill      | - 5'    | - member   | - no       |
-|----------------------------------------+---------------+---------+------------+------------|
-| 2. Committee report (dictamen)         | Move          |         |            |            |
-| - Debate en lo general vs SQ, chair    | for floor     | - 10'   | - comm.maj | - pres.^1  |
-| -   "             "      "   others    | consideration | - 5'    | - members  | - pres.^1  |
-| - Amendments (debate en lo particular) |               | - 5'    | - members  | - no       |
-| - negative report                      |               | - 3'    | - comm.maj | - pres.^1  |
-|----------------------------------------+---------------+---------+------------+------------|
-| 3. Resolutions (puntos de acuerdo)     | Position      |         |            |            |
-| - standard, author                     | taking        | - 10'   | - member   | - comm.maj |
-| - urgent, author (obvia resolución)    |               | - 5'    | - Junta    | - floor    |
-| - other speakers                       |               | - 3'    | - party    | - no       |
-|----------------------------------------+---------------+---------+------------+------------|
-| 4. Current events (agenda política)    | Position      | < 2hrs  |            |            |
-| - Junta proponent                      | taking        | - 10'   | - Junta    | - no       |
-| - other speakers                       |               | - 5'    | - member   | - no       |
-|----------------------------------------+---------------+---------+------------+------------|
-| ^1 = President can delay/prevent speech by granting recommit.                                |
-|--------------------------------------------------------------------------------------------|
+|-----------------------------------------+---------------+-----------+------------+------------|
+| Debate type (in Spanish)                | Goal          | Durat.    | Selector   | Veto       |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| 1. Introduce legislation (iniciativa)   | Author        |           |            |            |
+| - a new law                             | presents      | - 10'     | - member   | - no       |
+| - amend a law                           | the bill      | - 5'      | - member   | - no       |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| 2. Committee report (dictamen)          | Move          |           |            |            |
+| - Debate en lo general vs SQ, chair     | for floor     | - 10'     | - comm.maj | - pres.^1  |
+| -   "             "      "   others     | consideration | - 5'      | - member   | - floor    |
+| - negative report                       |               | - 3'      | - comm.maj | - pres.^1  |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| 3. Recognition-granting motions         | Contend with  |           |            |            |
+| - Amendment (reserva), introducer       | speaker or    | - 5'      | - member   | - no       |
+| -   "            "   , others           | project       | - 5'      | - member   | - floor    |
+| - Question to speaker (cuestionamiento) |               | - 3'      | - member   | - speaker  |
+| - Right of reply (alusiones personales) |               | - pres.^2 | - member   | - no       |
+| - Fact correction (rectificación)       |               | - pres.^2 | - member   | - no       |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| 4. Resolutions (puntos de acuerdo)      | Position      |           |            |            |
+| - standard, author                      | taking        | - 10'     | - member   | - comm.maj |
+| - urgent, author (obvia resolución)     |               | - 5'      | - Junta    | - floor    |
+| - other speakers                        |               | - 3'      | - party    | - no       |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| 5. Current events (agenda política)     | Position      | < 2hrs    |            |            |
+| - Junta proponent                       | taking        | - 10'     | - Junta    | - no       |
+| - other speakers                        |               | - 5'      | - member   | - no       |
+|-----------------------------------------+---------------+-----------+------------+------------|
+| ^1 = President can delay/prevent speech by granting recommit.                                 |
+| ^2 = President sets time limit.                                                               |
+|-----------------------------------------------------------------------------------------------|
 \end{verbatim}
   \end{scriptsize}
 \caption{Types of debate}\label{T:types}
 \end{table}
 
-Other speech types grant right of first recognition differently. Debate /en lo general/ grants ten minutes (fifteen in constitutional amendments) to the reporting committee chairperson or designated handler of the report. The Cámara president can delay debate by recommitting the bill---and possibly prevent it if the committee kills the bill. /En lo particular/ amendments and Cámara resolutions grant first recognition to the proposing member. 
+Other speech types grant right of first recognition differently. Debate /en lo general/ grants ten minutes (fifteen in constitutional amendments) to the reporting committee chairperson or designated handler of the report. The only check is not too robust: the Cámara president can delay this intervention by recommitting the bill---and possibly prevent it if the committee kills the bill. /En lo particular/ amendments and Cámara resolutions grant first recognition to the proposing member.
 
-Party-selected speakers get five minutes each, in reverse-size order, after the first /en lo general/ speech. Members who request it then get five minutes each, the president arranging them in rounds, one for one against. After six such rounds, the floor can either proceed to vote, or continue with blocks of three such rounds. When the report deals with issues of great interest, debate can go on for several hours.
+Party-selected speakers get five minutes each, in reverse-size order, right after the chair's speech. Persuading to vote against /en lo general/ kills the bill. Members who request it then get five minutes each, the president arranging them in rounds, one for one against. After six such rounds, a previous question motion is made: the floor can either proceed to vote, or continue with blocks of three such rounds if the majority allows it. When the report deals with issues of great interest, debate can go on for several hours.
 
-%Floor (108) must approve member requests to consider an article separately from general discussion (deletion amendment?)
+Cámara resolutions (/proposiciones con punto de acuerdo/) are a debate type that is tailor-made for members' position-taking needs. If adopted, resolutions become the opinion of the chamber on some specific issue. But party leader support is a must: resolutions require urgent status (/urgente u obvia resolución/) in order to avoid committee referral and move directly to the floor. Only the Junta can request that the floor grants urgent status to at most two resolutions per session. If granted, the proposer takes the floor for five minutes. Parties then appoint one speaker each, for three minutes. The floor can then decide the previous question to vote the resolution, or open rounds of debate with self-appointed speakers.
 
-%Votos en lo particular = another window for dissenters. Minority report. Minority reports get floor consideration only when floor rejects the committee report. 
+Current events (/agenda política/) are party leaders' position-taking venue. The Junta determines up to two themes for debate before consideration of reports and new bills, party leaders appointing one speaker each. The promoting party speaker gets first recognition for 10 minutes, others 5 minutes each, and talk in reverse-size order. Current events debate cannot exceed two hours per session. 
 
-%Discusión en lo particular = introduce amendments to committee report (who can do it? who can block? 110 silence suggests that any member can do it --- open rule unless rules are suspended?) Proposer gets 5 minute speech, then for/againsts get 5 minute each.
-
-Cámara resolutions (/proposiciones con punto de acuerdo/) are tailor-made for members' position-taking needs. If adopted, resolutions become the opinion of the chamber on some specific issue. But party leader support is a must. Resolutions require urgent status (/urgente u obvia resolución/) in order to avoid committee referral and move directly to the floor; only the Junta can request that the floor grants urgent status to at most two resolutions per session. If granted, the proposer takes the floor for five minutes. Parties then appoint one speaker each, for three minutes. The floor can then decide to vote the resolution, or open rounds of debate with self-appointed speakers.
-
-Current events (/agenda política/) are party leaders' position-taking venue. The Junta determines up to two themes for debate before consideration of reports and bills, party leaders appointing one speaker each. The promoting party speaker gets first recognition for 10 minutes, others 5 minutes each, and talk in reverse-size order. Current events debate cannot exceed two hours per session. 
-
-%\subsection{Recognition-granting motions}
-Debate under such rules becomes a succession of punctuated, mostly uninterrupted short speeches. Members can approximate back-and-forth talk, at least occasionally, by catching the president's eye from their seats in order to interrupt with a motion. The president has discretion to deny, or grant up to three minutes to elaborate. Such motions are distinct from points of order (which members can also make, see Reglamento art. 114 for typified motions). They grant recognition to speak. One (/cuestionamiento al orador/) to interrogate the speaker, who must also accept the question be made. Another is (/alusiones personales/), to give right of reply to alluded members by recognizing them immediately after the speaker ends. And (/rectificación de hechos/) wind up an additional name at the end of the list of speakers. 
-
-%\subsection{Party discipline as alternative to centralized agenda power}
+Members make motions, by catching the president's eye from their seats, to interrupt the speaker. The president has discretion to deny, or grant up to three minutes to elaborate. Such motions are distinct from points of order (which members can also make, see Reglamento art. 114 for typified motions). They grant recognition to speak. /Cuestionamiento al orador/ is to interrogate the speaker, who must also accept the question be made. /Alusiones personales/ gives right of reply to alluded members by recognizing them immediately after the speaker ends. And /rectificación de hechos/ wind up an additional name at the end of the list of speakers. 
 
 Rules like these are ill-designed to prevent plenary bottlenecks \citep{cox.2006}. Even in the presence of a majority party, individual members retain speaking rights that water down the Junta's efforts to cartelize the legislative process. Absent formidable party discipline, preventing dilatory tactics would be enormously difficult. The final section elaborates. 
 
@@ -344,7 +325,7 @@ Part B: Dichotomous variables
 | 64th     | 70.6 | 29.4 | 100 | 9978 |
     \end{verbatim}
   \end{scriptsize}
-\caption{Variable descriptives}\label{T:descriptives}
+\caption{Variable descriptive statistics}\label{T:descriptives}
 \end{table}
 
 Debate length is more intuitive when expressed as members' daily totals instead of the period totals analyzed. In the median session, 36 different speakers contributed to daily debate, and six days had over 100 speakers. (The appendix has more descriptives.) Considering speakers only, the overall median daily speech length is 606 words. Mild term effects show up---the 60th period-by-period medians slightly above and the 64th slightly below the overall median---but period distributions are, in general, similar. The clearest exceptions are extraordinary periods. Models therefore also control for term and period type effects.
@@ -590,7 +571,7 @@ Other forms of status also associate positively to floor access, with results so
 
 %Figure \ref{F:avgmgeff} reports changes in the average predicted number of words associated with unit changes in explanatory variables, using model 2 estimates. Marginal effects make negative binomial regression coefficients interpretable. It is clear in the plot that the largest effect by far is attributable to majority status. Other things constant (at mean values), members in the majority party each gave between 1.75 and 2.25 more speeches per period than the rest of the Cámara. Multiplication of that average by Morena's 254 members in the 64th Legislature produces over 500 additional plenary speeches---47 percent of all words in the median ordinary period. OJO: NEED TO DEDUCT SIZE 51 --- better with predicted plot
 
-I also find positive effects of seniority and gender that resonate with the bivariate patterns of floor access. The coefficient for *women* is not robust to random member effects (accounting for zero-inflation also bears on impact). This is probably due to the concentration of debate by women highlighted above, some deputies taking the floor disproportionally more than others. Overall, the effect of gender appears to be on par with that of one additional term of seniority in Figure \ref{F:avgmgeff}, which reports average marginal effects.
+I also find positive effects of seniority and gender that resonate with the bivariate patterns of floor access. The coefficient for *women* is not robust to random member effects (accounting for zero-inflation also bears on impact). This is probably due to the concentration of debate by women highlighted above, some deputies taking the floor disproportionately more than others. Overall, the effect of gender appears to be on par with that of one additional term of seniority in Figure \ref{F:avgmgeff}, which reports average marginal effects.
 
 \begin{figure}
   \centering
@@ -624,61 +605,79 @@ A null finding of interest involves the method of election. The coefficient for 
 \end{figure}
 
 
-
-\section{Discussion: minority rights} % [ca 1000 words]
+\section{Informal impermeability} % [ca 1000 words]
 
 %% In this section, you can feel free to make model extensions that have interest in the light of the chapter you are exploring. Please do not forget to explain the variables in use, as well as why they are important for your country. Include a table of results plus a plot for marginal effects. 
 
-- Formally decentralized, party discipline centralizes floor access.
-- Notion of minority rights should help compare.
-- (50 year comparisons)
-- Victorian Parliament 1820--1870: Eff Secret, delegation to cabinet achieved de facto centralization; were rights formally withdrawn? Think not see uk chapter
-- US Senate c1900--1950 went from unanimous consent to 60% cloture, retained rights for larger minorities, but removed rights formally, denhartog/wawro
-- US House 1850--1900, large centralization, formal removal of minority rights, see Brady/McCubbins
-- Mex has not changed formal, which retains important minority rights (schedule all reports, amendments default, add yourself as speaker...)
-- Tomas de tribuna
+Where do the Cámara's debate institutions sit relative to other stylized assemblies? Figure \ref{F:comparison} does a simple comparative exercise by intersecting the permeability of floor access and the degree of informality in the constraints adopted.
 
-%% suspension of rules by Conferencia typified only for discharge, two-thirds. Art 77 cpeum. 
-%% Reglamento amendments by 2/3 vote
-%% Presiding officer can summon public force to restore order, but in practice never used. 
-%% Can kill the mike, but others can raise their voices
+\begin{figure}
+  \centering
+    \begin{tikzpicture}
+      \node at (-2, 2) {US House};
+      \node at ( 2, 2) {UK Commons};
+      \node at ( 0, 0) {Cámara};
+      \node at ( 0,-2.5) {US Senate};
+      \draw (-.25, .25) -- (-1.75, 1.75);
+      \draw ( .25, .25) -- ( 1.75, 1.75);
+      \draw (0,   -.25) -- ( 0,   -2.25);
+      \draw[<->] (-2.25,-4) node[left] {\emph{more formal}} -- node[below] {\emph{constraints}} (2.25,-4) node[right] {\emph{more informal}};
+      \draw[<->] (-5,-2.75) node[below] {\emph{more permeable}} -- node[sloped,above] {\emph{floor access}} (-5,2.25) node[above] {\emph{more impermeable}};
+%      \draw[<->] (-5,-2.75) node[below] {\emph{less restrictive}} -- (-5,2.25) node[above] {\emph{more restrictive}};
+    \end{tikzpicture}  
+\caption{Formal and informal restrictions to members' legislative rights}\label{F:comparison}
+\end{figure}
+
+Make the Cámara less permeable and more informal, get the U.K. House of Commons. As plenary time became a scarce commodity with suffrage extension and industrialization, British private members gradually abdicated their parliamentary rights, delegating all-encompassing legislative authority to the cabinet \citep{cox.1987}. But speaking time in the Commons remains formally reserved for individual MPs, who are recognized by a non-partisan Speaker (Blumenau and Damiani in this volume). Therefore the efficient secret of British politics that turned backbenchers into legislative nonentities by the mid-1880s was and remains an informal arrangement, a superimposition of party hierarchy over formal procedure. Disruption of the party system inevitably reinstates formal member prerogatives, to some extent at least. To the cabinet ministers' dismay, the Brexit section that split both parties since the 2016 referendum resurrected many of the Speaker's agenda-setting powers that had been dormant for decades---if not centuries \citep{economist-bercow.2019}.
+
+Make less permeable but more formal, get the U.S. House. The adoption of Reed's rules in the 1880s achieved much the same centralization of agenda power as in Commons---allowing the Speaker to curb the minority's power to delay and to select what bills to consider in what order \citep{denhartog.2004phd,cox.mccubbins.2005}. Particular to debate, the crucial innovation empowered the Speaker to refuse to recognize members seeking to make dilatory motions, making floor access impermeable. Unlike Commons, however, the House has routinely written these constraints in the rules it adopts every two years at the start of each term.  
+
+Last, add permeability while keeping informality more or less constant, get the U.S. Senate. Cloture to stop debate requires three-fifth of Senate floor support, against majority for the Cámara's previous question (Gelman and Goplerud, this volume). After a committee reports out a bill, it is automatically included in the calendar, as in the Cámara. However, by precedent, the majority leader, in consultation with the minority leader, schedules what bill in the calendar shall be considered next \citep{roberts-smith.2007,campbell.cox.mccubbins.2002}. Absent this /informal/ rule, the leader's negative agenda power would be severely weakened and ineffective.
+
+Why so many assemblies weaken members' legislative rights through informal mechanisms, but retain those rights formally in place is an interesting puzzle. The central intuition in Riker's work offers a clue: every majority is the sum of minorities. There is no guarantee that the tide won't turn in the near future, majorities losing elections or splitting to become minorities. Retaining members' formal rights in place is an insurance policy to remain somewhat relevant when all else fails. \citet{wawro.schickler.filibuster.2007} document routine threats to "go nuclear" and remove minority rights in today's polarized Senate, yet the filibuster remains firmly in place.
+
+
+%% - One difficulty = changing Reglamento requires two-thirds vote. 
+%% - Tomas de tribuna
+%% - suspension of rules by Conferencia typified only for discharge, two-thirds. Art 77 cpeum. 
+%% - Presiding officer can summon public force to restore order, but in practice never used. 
+%% - Can kill the mike, but others can raise their voices
 %% 4. Para atender una situación no prevista en el Reglamento, el Presidente podrá dictar una resolución de carácter general, siempre que haya la opinión favorable de la Mesa Directiva y de la Junta. En caso contrario, este tipo de resoluciones sólo tendrán efecto con la aprobación de la mayoría simple del Pleno.
 
 
 \section{Conclusion} % [ca 500 words]
 
-(Forthcoming)
+Tension lies at the heart of legislative debate in the Cámara. On one hand, parties have informally, but effectively managed to reign in members' capacity to take the floor. The effects that the chapter's regression models uncovered for the majority, for leaders, and for committee chairs are all channeled through party structures in the Junta. On the other hand, formal rules grant individual members rights of recognition to take the floor and, we have seen, these take many guises. The effect attributable to SMDs after the removal of term limits is, in all likelihood, associated to renovated personal vote incentives that members face. 
 
-%concluding discussion of general patterns of speechmaking (institutions and empirical results in terms of background variables)
+Whether or not the informal solution to avoid plenary bottlenecks continues to operate as it has so far in the Cámara is uncertain. Little intra-party competition used to remove personal vote incentives that leads members to differentiate by taking the floor in Proksch and Slapin's model. With the removal of term limits, incumbents with static ambition may soon start overwhelming the system by exploiting the formal autonomy of floor debate in their need to strengthen their electoral connection.
 
-Tension lies at the heart of legislative debate in the Cámara. On one hand, intra-party institutions have informally, but effectively managed to reign in members' capacity to take the floor. The effects that multivariate models uncovered for the majority, for leaders, and for committee chairs are all channeled through party structures in the Junta. On the other hand, formal institutions grant individual members formal rights of recognition to take the floor and, we have seen, these take many guises. The effect attributable to SMDs after the removal of term limits is, in all likelihood, associated to renovated personal vote incentives that members face. 
+It is important to keep in mind that the place of debate in the legislative process is /after/ negative agenda filters. Agenda-setting lets leaders prevent consideration of motions when they anticipate debate to go in undesired directions---speakers opening issues that threaten to divide the majority. When and if parties can no longer prevent delays as they have, pressure to reform the rules will inevitably build up. Reform could give leaders strong ex-ante vetoes to prevent moving unwanted bills to the floor, precluding debate; by removing the formal rights that render floor access so permeable; or both. 
 
-Whether or not the informal solution to avoid plenary bottlenecks will continue to operate as it has so far is uncertain. Incumbents, some of them at least, may soon start overwhelming the system in their need to strengthen their electoral connection. The collapse of the three-party system in 2018 also plays against. Perhaps the heterogeneous coalition that gave Morena unified control of government will manage to consolidate, imposing a new informal arrangement, in spite of the 2020 covid depression.
+%But secondary is not the same as unimportant. Position taking is a central activity in electoral connection \citep{mayhew.1974} and home style \citep{fenno.1978} models of political ambition. And plenary debate is the chief position taking tool in the chamber. 
 
-In any event, examination of legislative debate has offered an interesting and illuminating perspective on some of the challenges that Mexican parties now face.   
+%Proksch and Slapin theorize that personal vote incentives make legislators organize the assembly with high levels of autonomy in floor debate. 
 
+%With little intra-party competition, such incentives are low in Mexico, but they are bound to increase due to the removal of single-term limits. 
 
-
-
-
+%The collapse of the three-party system in 2018 also plays against. Perhaps the heterogeneous coalition that gave Morena unified control of government will manage to consolidate, imposing a new informal arrangement, in spite of the 2020 covid depression.
 
 %% - A Legislature (with Roman numerals for reasons I ignore) is an elected chamber for a legislative term, called a Congress in the U.S. Concurrent with presidential elections the chamber of deputies renovates in whole, and again at the presidential mid-term. Diputados remain three years in office and were single term-limited up to 2021. The 2021 mid-term election will be the first since 1932 to allow incumbents on the ballot, a major change in Mexican legislative politics.
 %% - Legislative years break into two "ordinary periods", one covering the months of September through December, inclusive, another February through April, also inclusive. "Extraordinary periods" may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of aggregation in the analysis. 
 %% - A plenary session is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Jucopo so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days. (A session in North-American legislative parlance is a Mexican period.)
 
-\singlespacing
-
 \section{Appendix}
 
 \subsection{Mexican terminology}
 
-- A *Legislature* is an elected chamber for a legislative term, between two congressional elections. The Mexican Congress relies on Roman numerals to distinguish consecutive Legislatures since the second half of the Nineteenth century.
+The terms legislature, period, and session have ambiguous meanings in different assemblies that I have studied. I define their meaning in Mexican legislative politics.
 
-- Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, another February through April, all inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider a specific bill. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Periods are the units of observation in the analysis. 
+- A *Legislature* is an elected chamber of deputies for a legislative term, between two congressional elections. The Mexican Congress relies on Roman numerals to distinguish consecutive Legislatures since the second half of the Nineteenth century. This chapter covers the LX, LXII, and LXIV Legislatures.
 
-- A *plenary session* is a specific date in the calendar when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Junta so decides. Diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days.
+- Legislative years break into two *ordinary legislative periods*, one covering the months of September through December, another February through April, all inclusive. *Extraordinary legislative periods* may be convened during the recess in order to consider specific legislation. Analysis aggregates each member's speeches in the duration of a given period (merging together all extraordinary periods that year, if any). So members in a legislative year like 2012-13 (that had no extraordinary periods) have two word aggregates in the dataset, one for each ordinary period; in a year like 2013-14 (that did), they have three word aggregates in the data. Member-periods are the units of observation in the analysis. 
 
-\subsection{Dependent variable descriptives}
+- A *plenary session* is a specific day when diputados met. During ordinary periods, sessions are usually held on Tuesdays and Thursdays, and may be scheduled in other weekdays if the Junta so decides. For instance, diputados met on forty and thirty-one days in the first and second ordinary periods of 2013-14, respectively, and nine days in extraordinary periods, for a yearly total of eighty session days.
+
+\subsection{Dependent variable summary statistics}
 
 Figure \ref{F:dv-hist} describes both flavors of the dependent variables. And Figure \ref{F:quantiles} portrays member daily aggregates across the periods analyzed. For clarity, this plot includes speakers only (keep in mind that non-speakers are included in the period aggregates analyzed.)
 
@@ -801,6 +800,8 @@ Figure \ref{F:dv-hist} describes both flavors of the dependent variables. And Fi
 %% \end{table} 
 
 %\listofendnotes
+
+\singlespacing
 
 \bibliographystyle{apsr}
 
