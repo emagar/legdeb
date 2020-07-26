@@ -772,28 +772,54 @@ data$dextra[sel] <- 1
 ############################################
 ## nwords, nspeech and nterms (from data) ##
 ############################################
-table(data$nterms[data$dpresoff==0])
-sel <- which(data$nterms==0 & data$dpresoff==0)
-mean(data$dv.nword[sel])
-mean(data$dv.nspeech[sel])
+tmp <- data[data$dfem==1,] # subset women
+table(tmp$nterms[tmp$dpresoff==0])
+sel <- which(tmp$nterms==0 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
 length(sel)
-sel <- which(data$nterms >0 & data$dpresoff==0)
-mean(data$dv.nword[sel])
-mean(data$dv.nspeech[sel])
+sel <- which(tmp$nterms >0 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
 length(sel)
-sel <- which(data$nterms==1 & data$dpresoff==0)
-mean(data$dv.nword[sel])
-mean(data$dv.nspeech[sel])
+sel <- which(tmp$nterms==1 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
 length(sel)
-sel <- which(data$nterms==2 & data$dpresoff==0)
-mean(data$dv.nword[sel])
-mean(data$dv.nspeech[sel])
+sel <- which(tmp$nterms==2 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
 length(sel)
-sel <- which(data$nterms >2 & data$dpresoff==0)
-mean(data$dv.nword[sel])
-mean(data$dv.nspeech[sel])
+sel <- which(tmp$nterms >2 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
 length(sel)
-unique(data$nom[sel])
+unique(tmp$nom[sel])
+
+tmp <- data[data$dfem==0,] # subset men
+table(tmp$nterms[tmp$dpresoff==0])
+sel <- which(tmp$nterms==0 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
+length(sel)
+sel <- which(tmp$nterms >0 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
+length(sel)
+sel <- which(tmp$nterms==1 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
+length(sel)
+sel <- which(tmp$nterms==2 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
+length(sel)
+sel <- which(tmp$nterms >2 & tmp$dpresoff==0)
+mean(tmp$dv.nword[sel])
+mean(tmp$dv.nspeech[sel])
+length(sel)
+unique(tmp$nom[sel])
+
 
 
 #######################################
@@ -919,9 +945,6 @@ f2z <- formula("dv.nspeech ~ log(ev.pot.dys)  + dmaj + ptysh  + dleader + dchair
 fit2z <- zeroinfl(formula = f2, data=data, dist = "poisson", subset = dpresoff==0) 
 summary(fit2z)$coefficients
 
-help(AIC)
-
-
 #################
 ## LOGIT MODEL ##
 #################
@@ -992,19 +1015,20 @@ mar2 <- summary(mar2)
 tmp <-  c(11,12,4,13,6,3,2,8,9,10,1,5,7);   # sort rows so coefs appear in same order as in table
 data.frame(1:13,mar2[,1],tmp)[order(tmp),] # view sort tmp's order
 mar2 <- mar2[order(tmp),]
-tmp <- c("Tenure",
+tmp <- c("Tenure (exposure)",
          "Majority",
          "Party leader",
          "Comm. chair",
-         "Seniority",
+         "Previous terms",
          "Woman",
          "Party size",
          "SMD",
          "SMD x reelection",
-         "Suplente",
-         "62nd Leg.",
-         "64th Leg.",
-         "Extraordinary")
+         "Suplente (not reported)",
+         "62nd Leg. (not reported)",
+         "64th Leg. (not reported)",
+         "Extraordinary (not reported)")
+mar2$factor <- tmp
 
 #drop some regressors to not report them
 mar2.dup <- mar2
@@ -1012,7 +1036,8 @@ mar2 <- mar2[1:9,]
 tmp <- tmp[1:9]
 
 #pdf(file = "../plots/avgMgEffects.pdf", width = 7, height = 5)
-#png(filename = "../plots/avgMgEffects.png", height = 480, width = 480)
+#png(filename = "../plots/avgMgEffects.png", height = 340, width = 480)
+#tiff(filename = "../plots/avgMgEffects.tif", height = 340, width = 480)
 par(mar=c(4,2,2,2)+0.1) # drop title space and left space
 plot(x=c(-1.5,2.5),#)(-8250,1850),
      y=-c(1,nrow(mar2)),
@@ -1070,7 +1095,8 @@ sims2 <- within(sims2, {
 ## PLOT SIMULATIONS ##
 ######################
 #pdf (file = "../plots/predictedWords.pdf", width = 7, height = 5)
-#png(filename = "../plots/predictedWords.png", height = 480, width = 480)
+#png(filename = "../plots/predictedWords.png", height = 340, width = 480)
+#tiff(filename = "../plots/predictedWords.tif", height = 340, width = 480)
 par(mar=c(4,4,2,2)+0.1) # drop title space and left space
 plot(sims2$ptysh, sims2$UL, ylim = c(0,max(sims2$UL)), axes = FALSE, type = "n",
      main = "", xlab = "Speechmaker's party size (%)", ylab = "Predicted speeches per member in period")

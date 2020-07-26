@@ -520,13 +520,13 @@ nrow(dips) # debug
 ###################################################
 ## figure out intervals when diputado was active ##
 ###################################################
-dips$in1  <- ymd(dips$ yrin1*10000 + dips$ moin1*100 + dips$ dyin1)
-dips$out1 <- ymd(dips$yrout1*10000 + dips$moout1*100 + dips$dyout1)
-dips$in2  <- ymd(dips$ yrin2*10000 + dips$ moin2*100 + dips$ dyin2)
-dips$out2 <- ymd(dips$yrout2*10000 + dips$moout2*100 + dips$dyout2)
-dips$in3  <- ymd(dips$ yrin3*10000 + dips$ moin3*100 + dips$ dyin3)
-# clean
-dips$yrin1<- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- dips$yrin3<- dips$moin3 <- dips$dyin3 <- NULL
+## dips$in1  <- ymd(dips$ yrin1*10000 + dips$ moin1*100 + dips$ dyin1)
+## dips$out1 <- ymd(dips$yrout1*10000 + dips$moout1*100 + dips$dyout1)
+## dips$in2  <- ymd(dips$ yrin2*10000 + dips$ moin2*100 + dips$ dyin2)
+## dips$out2 <- ymd(dips$yrout2*10000 + dips$moout2*100 + dips$dyout2)
+## dips$in3  <- ymd(dips$ yrin3*10000 + dips$ moin3*100 + dips$ dyin3)
+## # clean
+## dips$yrin1 <- dips$moin1 <- dips$dyin1 <- dips$yrout1 <- dips$moout1 <- dips$dyout1 <- dips$yrin2<- dips$moin2 <- dips$dyin2 <- dips$yrout2 <- dips$moout2 <- dips$dyout2 <- dips$yrin3<- dips$moin3 <- dips$dyin3 <- NULL
 # fix these by hand, if any, in dip.csv file
 sel <- which(is.na(dips$in2)==FALSE & is.na(dips$out1)==TRUE)
 sel

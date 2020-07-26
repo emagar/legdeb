@@ -1,5 +1,18 @@
 
 
+
+|            | Mean number | Mean number |                |                |
+|            | of speeches | of speeches | Member-periods | Member-periods |
+| Past terms |       women |         men |          women |            men |
+|------------+-------------+-------------+----------------+----------------|
+|          0 |        1.94 |        1.69 |           3015 |           4944 |
+|         >0 |        2.95 |        2.57 |            610 |           1409 |
+|          1 |        3.02 |        2.36 |            483 |           1102 |
+|          2 |        2.74 |        3.66 |            115 |            229 |
+|         3+ |        1.92 |        2.36 |             12 |             78 |
+
+------------------
+
 Minority rights
 
 Federalist
