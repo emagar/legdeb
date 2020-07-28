@@ -3,6 +3,7 @@ estenograficas/tmp.csv
 tmp/
 data/manipulated-speeches-*.RData
 mail/gaby.txt
+paper/envios-editors/figure_*.tif
 
 # History files
 .Rhistory

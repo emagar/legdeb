@@ -562,6 +562,7 @@ write.csv(women, file = "data-for-women-figure-mexico.csv")
 # do barplot
 #pdf(file = paste(gd, "women-bar.pdf", sep = ""), height = 5, width = 7)
 #png(filename = paste(gd, "women-bar.png", sep = ""), height = 340, width = 480)
+#tiff(filename = paste(gd, "women-bar.tif", sep = ""), height = 340, width = 480)
 abcd <- c(0,.25,.5,.75)+.125 # increments for 3 cols .25-wide, centered at .5
 par(mar=c(0,4,0,1)+0.1) # bottom, left, top, and right. The default is c(5.1, 4.1, 4.1, 2.1)
 plot(x = 1:5, y = seq(-6,55,length.out = 5), ylab = "Percentage", xlab = "", type = 'n', axes = FALSE)
@@ -576,6 +577,7 @@ for (p in 1:4){
 }
 legend(4,55, legend = c("% speeches","% words","% women"), fill = c("gray85","gray60","gray35"))
 #dev.off()
+
 rm(abcd,i,l,p,sel,sel1,sel2,sel.row,tmp,tmp2,tmp3,tmp.dips,tmp.dy,tmp.path) # clean
 
 #############
