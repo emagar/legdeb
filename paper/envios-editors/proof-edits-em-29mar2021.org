@@ -1,0 +1,27 @@
+I found no queries from the editor. I have some changes, all minor. I couldn't edit the text (it appears protected) so I list them below. Best, -e
+
+Edits ch. 28
+Eric Magar
+29-3-2021
+
+- abstract: replace "even after accounting for there being more potential speakers in larger parties" with "even after accounting for larger parties having more potential speakers".
+- epigraph: replace "anonyymity" with "anonymity"
+-p. 4: Replace "Local competition was generally between the PRI and another major" with "With few exceptions, local competition was between the PRI and another major party". 
+- p. 5: Replace "Weak parties in the electorate lie in sharp contrast to strong legislative parties, which they draw from electoral rules" with "Weakness in the electorate lies in sharp contrast to their strength in the legislature, which parties draw from electoral rules".
+- p. 5: Replace "The Junta appoints members" with "The Junta (see next section) appoints members"   
+- p. 9" Replace "Rules typify limits for different kinds of debate summarized in Table 28.1" with "Table 28.1 summarizes how rules typify limits for different kinds of debate". 
+- p. 11: Replace "Rules like these are ill-designed to prevent plenary bottlenecks" with "Rules of this sort seem ill-designed to prevent plenary bottlenecks". 
+- p. 11: replace "responsible of selecting speakers" with "responsible for selecting speakers". 
+- p. 11: Replace "with longer speaker lists" with "with longer speaker lines".
+- p. 16: Replace "The more personal vote should generate higher demand for floor access" with "Other things constant, I expect the personalization of the vote to raise demand for floor access"
+- p. 17" Replace "Unlike other chapters, models exclude party fixed effects" with "Models exclude party fixed effects". 
+- p. 17: Replace "Specifications vary the regressors" with "Regressors vary". 
+- p. 18: Replace "associates with a predicted drop" with "predicts a drop".
+- p. 19: Replace "But look at the change" with "Pay attention to the change". 
+- p. 19: Replace "but sufficient to cancel the negative pull" with "it fully cancels the negative pull". 
+- Table 28.3: In note, add "Standars errors in parentheses. 
+
+
+
+
+

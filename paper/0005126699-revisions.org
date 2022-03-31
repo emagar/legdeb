@@ -1,0 +1,110 @@
+Changes to chapter 28
+Proof revisions by author
+
+- p. 1/572 
+Replace: pork-barreling (Kerevell 2015) 
+with: pork-barreling (Kerevel 2015)
+
+- p. 1/572 The footnote's title does not match the chapter's title, it should be 
+Eric Magar, Mexico: Parties and Floor Access in the Cámara de Diputados In: Politics of Legislative Debates OPI. Edited by Hanna Bäck, Marc Debus, and Jorge M. Fernandes, Oxford University Press. © Oxford University Press 2021. DOI: 10.1093/oso/9780198849063.003.0028
+
+- p. 3/574 
+Replace: gives national and state party leaders control
+with: gives national and state party leaders tight control 
+
+- p. 3/574 footnote
+Replace: opens room
+with: opened room
+
+- p. 5/576 
+Replace: The majority can control the Junta
+with: The majority can thus control the Junta
+
+- p. 6/577 Table 28.1 
+Replace: Debate en lo general vs SQ, chair
+with: En lo general debate by chair
+
+- p. 6/577 Table 28.1, next line
+Replace: “ “ “, Others
+with: By others
+
+- p. 6/577 Table 28.1, second bullet of #3
+Replace: “ “, Others
+with: By others 
+
+- p. 6/577 Table 28.1, third bullet of #3 (shortened text should remove dual-line table entry, clarifying). 
+Replace: Question to speaker
+with: Query
+
+- p. 6/577 Table 28.1, footnote
+Replace: President can delay/prevent speech by granting recommit
+with: The Cámara president can delay/prevent speech by granting a recommit
+
+- p. 6/577 Table 28.1, footnote
+Replace: President sets time limit
+with: The Cámara president sets the time limit
+
+- p. 6/577 Table 28.1, overall (change should remove one dual-line entry, gaining space for the table footnote while clarifying the table)
+Replace: comm.maj
+with: comm.***
+and add a table footnote: *** Committee majority
+
+- p. 7/578 
+Replace: prevent it if the committee kills the bill
+with: prevent it if the new committee kills the bill
+
+- p. 8/579 
+Replace: One commonality (in this very small sample) is the informal erosion
+with: One commonality in my very small sample is the informal erosion
+
+- p. 9/580 footnote
+Replace: Common terms have ambiguous meanings
+with: Common words have ambiguous meanings
+
+- p. 9/580 footnote
+Replace: A Legislature is a term, the Cámara between two congressional elections
+with: A "Legislature" is a Cámara term between two congressional elections
+
+- p. 9/580 footnote
+Replace: Legislative years break into two ordinary legislative periods, one covering
+with: Legislative years break into two ordinary "periods", one covering
+
+- p. 9/580 footnote
+Replace: And a plenary session is a specific day when diputados met
+with: And a plenary "session" is a specific day when diputados met
+
+- p. 9/580
+Replace: Four are extraordinary periods
+with: Four were extraordinary periods
+
+- p. 9/580
+Replace: Mean days per extraordinary period was 5.3, 31.4 for
+with: Mean days per extraordinary period was 5.3, and 31.4 for
+
+- p. 9/580
+Replace: at 3.1, the standard deviation
+with: at 3.1 speeches, the standard deviation
+
+- p. 12/583
+Replace: A hint that the removal
+with: This hints that the removal
+
+- p. 12/583
+Replace: Kerevell 2015
+with: Kerevel 2015
+
+- p. 19/590 Acknowledgements have quotation marks that must be removed. It should read thus: 
+Eric Magar received financial support from the Asociación Mexicana de Cultura A.C. and CONACYT's Sistema Nacional de Investigadores. For shedding light on major parties' internal rules of debate in the period, I thank former Deputies Fernando Rodríguez Doval, Lupita Vargas Vargas, and one who wished anonymity. I am grateful to Ana Lucía Enríquez Araiza, Sonia Kuri Kosegarten, Vidal Mendoza Tinoco, and Eugenio Solís Flores, for research assistance. The author is responsible for mistakes and shortcomings in the study. Data and supporting materials necessary to reproduce the quantitative analysis are available at https://github.com/emagar/legdeb.
+
+- p. 21/592
+Replace: Kerevell, Yann P.
+with: Kerevel, Yann P.
+
+- p. 21/592
+Replace: legitimidade
+with: legitimidad
+
+- p. 21/592
+Molinar 1991 is a book, drop double quotes and italicize title, which is El tiempo de la legitimidad. Elecciones, autoritarismo y
+democracia en México
+
