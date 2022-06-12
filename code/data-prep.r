@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 library(zoo) # has na.locf function used below
 library(lubridate) # date handling
 library(plyr) # used for recodes
@@ -449,7 +451,12 @@ all.dips <- vector("list", length(all.legs)) # will receive all data
 #
 for (l in 1:length(all.legs)){
     #l <- 1 # debug
-    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
+    if (Sys.info()[["user"]]=="eric"){
+        tmp.path <- "../../rollcall/DipMex/data/diputados/dip"
+    } else {
+        tmp.path <- "https://raw.githubusercontent.com/emagar/dipMex/master/data/diputados/dip"
+    }
+    tmp.path <- paste0(tmp.path , all.legs[l], ".csv") # add filename to path
     dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
     #head(dips) # debug
     # add leg

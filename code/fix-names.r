@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##################################
 ## Script invoked from legdeb.r ##
 ## fixes legislator names       ##

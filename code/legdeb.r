@@ -1,16 +1,20 @@
-################################################################################
+# -*- coding: utf-8 -*-
+#################################################################################
 ## USE data-prep.r FIRST TO PREPARE DATA FRAMES WITH DIPUTADO-BY-DIPUTADO DATA ##
 #################################################################################
 
 library(lubridate) # date handling
-library(MASS) # negbin estimation
+library(MASS)      # negbin estimation
 
 rm(list = ls())
 
+# where files are stored in local machine
+pth <- "/home/eric/Downloads/Desktop/data/"
+
 # paths
-dd <- "/home/eric/Downloads/Desktop/data/leg-debate/data/"
-wd <- "/home/eric/Downloads/Desktop/data/leg-debate/"
-gd <- "/home/eric/Downloads/Desktop/data/leg-debate/plots/"
+dd <- paste0(pth, "leg-debate/data/")  # data directory
+wd <- paste0(pth, "leg-debate/")       # working directory
+gd <- paste0(pth, "leg-debate/plots/") # plot directory
 setwd(dd)
 
 # custom greps
@@ -49,8 +53,14 @@ all.dips <- vector("list", length(all.legs)) # will receive all data
 #
 for (l in 1:length(all.legs)){
     #l <- 1 # debug
-    tmp.path <- paste("../../rollcall/DipMex/data/diputados/dip", all.legs[l], ".csv", sep = "")
-    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE)
+    ## choose file path depending on the computer
+    if (Sys.info()[["user"]]=="eric"){
+        tmp.path <- "../../rollcall/DipMex/data/diputados/dip"
+    } else {
+        tmp.path <- "https://raw.githubusercontent.com/emagar/dipMex/master/data/diputados/dip"
+    }
+    tmp.path <- paste0(tmp.path , all.legs[l], ".csv") # add filename to path
+    dips <- read.csv(file = tmp.path, stringsAsFactors = FALSE) # read file
     #head(dips) # debug
     # add leg
     dips$leg <- all.legs[l];
@@ -108,7 +118,7 @@ rownames(data.dy) <- NULL
 head(data.dy)
 rm(data.member.day.60,data.member.day.62,data.member.day.64) # clean
 
-# drop redundant column
+# drop redundant columns
 data$doath <- data$agg <- NULL
 data$dv.nword.sh <- data$dv.nword / data$ev.pot.sh # fix dv using share, not pct in denom
 ## sel <- grep.e("CUEVAS MELO",data$nom)
