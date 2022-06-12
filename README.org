@@ -4,7 +4,7 @@ Last revision: 2022-06-11
 
 # Export to md: M-x org-md-export-to-markdown
 
-* Description of /Text-as-data analysis of floor debate in Mexico's chamber of deputies/ repository
+* Description of /Text-as-data analysis of floor debate in Mexico's Chamber of Deputies/ repository
 - Author: Eric Magar
 - Email: emagar at itam dot mx
 The repository contains data and code to replicate analysis in the Mexico chapter of a recent book on legislative debate worldwide. The main script used for analysis is ~code/legdeb.r~. Script ~code/data-prep.r~ turned raw speeches into ~R~-format structured data in files ~data/speech-day-6x.RData~ (daily aggregates) and ~data/speech-periodo-6x.RData~ (period aggregates).

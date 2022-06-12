@@ -1,13 +1,13 @@
-- [Description of *Text-as-data analysis of floor debate in Mexico's chamber of deputies* repository](#org8b7b164)
-- [Files in the repository and how to cite them](#org91a6559)
-- [Acknowledgements](#orgea07e59)
+- [Description of *Text-as-data analysis of floor debate in Mexico's Chamber of Deputies* repository](#org97a450d)
+- [Files in the repository and how to cite them](#orgc7967ac)
+- [Acknowledgements](#org5ae0e88)
 
 Last revision: 2022-06-11
 
 
-<a id="org8b7b164"></a>
+<a id="org97a450d"></a>
 
-# Description of *Text-as-data analysis of floor debate in Mexico's chamber of deputies* repository
+# Description of *Text-as-data analysis of floor debate in Mexico's Chamber of Deputies* repository
 
 -   Author: Eric Magar
 -   Email: emagar at itam dot mx
@@ -15,7 +15,7 @@ Last revision: 2022-06-11
 The repository contains data and code to replicate analysis in the Mexico chapter of a recent book on legislative debate worldwide. The main script used for analysis is `code/legdeb.r`. Script `code/data-prep.r` turned raw speeches into `R`-format structured data in files `data/speech-day-6x.RData` (daily aggregates) and `data/speech-periodo-6x.RData` (period aggregates).
 
 
-<a id="org91a6559"></a>
+<a id="orgc7967ac"></a>
 
 # Files in the repository and how to cite them
 
@@ -37,7 +37,7 @@ You are free to download and modify the data (see the LICENSE document) provided
 ```
 
 
-<a id="orgea07e59"></a>
+<a id="org5ae0e88"></a>
 
 # Acknowledgements
 

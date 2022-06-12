@@ -1,0 +1,15 @@
+Dear Simon, it is good to hear from you.
+
+You will find all the code and data I used for the Mexico chapter in repository https://github.com/emagar/legdeb.
+
+The main script used for analysis is code/legdeb.r, while script code/data-prep.r is in charge of turning raw speeches into R-format structured data in files data/speech-day-6x.RData (daily aggregates) and data/speech-periodo-6x.RData (period aggregates). I added comments profusely in the scripts to try to walk you through the processes. Let me know if you need clarifications.
+
+I also have a favor to ask about Swiss roll call voting data. I show documentary called Le Génie Suisse to one of my classes on parliamentary negotiation. It is the story of a killer amendment that illustrates Riker eloquently.
+
+A few years ago, I tried unsuccessfully to retrieve information about the votes in the film (the law in question was an embargo to GMOs dating back to the year 2001). Parliament's web page seemed to distribute roll call votes for the most recent years only. Could you please point to whom I should get in touch with to obtain this sort of information?
+
+Thanks in advance.
+
+Best
+
+-e
