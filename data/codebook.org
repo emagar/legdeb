@@ -7,45 +7,40 @@ See the published text for details.
 - ~leg~ = Legislature numeral 60, 62 or 64.
 - ~agg~ = aggregation unit: member-legislative period.
 - ~sel.agg~ = Legislature + year + legislative period, eg. 62y2-1 for observations corresponding to the first ordinary period of the second year of the 62nd Legislature.
-# - ~ord~ = 
-# - ~n~ =
 - ~edo~ = member's state abbreviation (may differ from commonly used abbreviations, eg. Chiapas is `cps', not `chis' so that sorting alphabetically preserves the order set by /edon/)
 - ~id~ = member's id: state + district + p/s for propietario/suplente. 
 - ~birth~ = member's birth year.
+- ~age~ = member's age at the start of the Legislature.
 - ~postulo~ = electoral party or coalition.
 - ~part~ = legislative party.
 - ~dsup~ = dummy equal 1 if member was elected as a substitute (/suplente/), 0 otherwise (/propietario/). 
 - ~cabecera~ = member's district administrative head. 
-- ~lider~ = member's leadership post, if any.
-- ~prescom~ = dummy equal 1 if member was a committee chair, 0 otherwise (/propietario/). 
-- ~repite~ = member's previous Congressional experience (sequential Legislatures if prior deputy, `sen' if prior senator). 
 - ~doath~ = dummy equal 1 if member took the oath of office (/toma de protesta/), 0 otherwise. 
 - ~nom~ = member's name.
+- ~dv.nspeech~ = number of speeches member made in the period.
 - ~dv.nword~ = absolute total words member spoke in the period.
 - ~dv.nword.sh~ = relative total words member spoke in the period, ie. ~dv.nword~ / ~ev.pot.sh~.
 - ~ev.pot.dys~ = session days the member served in the legislative period.
 - ~ev.all.dys~ = total session days in the legislative period. 
 - ~ev.pot.sh~ = by share of the period the member served, ie. ~ev.pot.dys~ / ~ev.all.dys~. 
 - ~dfem~ = dummy equal 1 if member was a woman, 0 otherwise. 
-- ~ptysh~ = share of seats controlled by the member's party.
+- ~ptysh~ = share of seats controlled by the member's legislative party.
 - ~dpastleg~ = dummy equal 1 if member had prior Congressional experience, 0 otherwise. 
-- ~age~ = member's age at the start of the Legislature.
 - ~dpan~ = dummy equal 1 if member's party was PAN, 0 otherwise. 
 - ~dpri~ = dummy equal 1 if member's party was PRI, 0 otherwise. 
 - ~dmorena~ = dummy equal 1 if member's party was Morena, 0 otherwise. 
 - ~dleft~ = dummy equal 1 if member's party was PRD, 0 otherwise. 
 - ~doport~ = dummy equal 1 if member's party was an opportunistic party, 0 otherwise. 
-# - ~dwithpres~ = 
 - ~dchair~ = dummy equal 1 if member was committee chair, 0 otherwise. 
 - ~dleader~ = dummy equal 1 if member held a leadership post (/coordinador/), 0 otherwise. 
 - ~dsmd~ = dummy equal 1 if member elected in single-member district, 0 otherwise. 
 - ~dpresoff~ = dummy equal 1 if member was chamber president, 0 otherwise. 
-- ~dv.nspeech~ = number of speeches member made in the period.
+- ~lider~ = member's leadership post, if any.
+- ~prescom~ = committe that member chaired in the period, if any. 
+- ~repite~ = member's previous Congressional experience (sequential Legislatures if prior deputy, `sen' if prior senator). 
 * Variables in file ~data/all-dips-list.RData~
 File includes object `all.dips', which is a list of dataframes, one per Legislature. So, eg., all.dips$leg60 is a dataframe of all members of the 60th Legislature.
 - ~leg~ = Legislature numeral.
-# - ord 
-# - n 
 - ~pila~ = member's first name and middle names, if any.
 - ~patmat~ = member's last names (patronym and matronym).
 - ~id~ = member's id: state + district + p/s for propietario/suplente. 

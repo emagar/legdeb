@@ -1,14 +1,14 @@
-- [Description of *Text-as-data analysis of floor debate in Mexico's Chamber of Deputies* repository](#org01cc312)
-- [Files in the repository and how to cite them](#orgcd75692)
-- [Codebook](#org2d654e8)
-  - [Variables in files data/speech-periodo-\*.RData](#orge4149f9)
-  - [Variables in file data/all-dips-list.RData](#org476af4f)
-- [Acknowledgements](#orgf651056)
+- [Description of *Text-as-data analysis of floor debate in Mexico's Chamber of Deputies* repository](#orga3615e4)
+- [Files in the repository and how to cite them](#orgfc873f9)
+- [Codebook](#orga144f39)
+  - [Variables in files data/speech-periodo-\*.RData](#org96ad2e6)
+  - [Variables in file data/all-dips-list.RData](#org860a210)
+- [Acknowledgements](#org7709069)
 
 Last revision: 2022-09-03
 
 
-<a id="org01cc312"></a>
+<a id="orga3615e4"></a>
 
 # Description of *Text-as-data analysis of floor debate in Mexico's Chamber of Deputies* repository
 
@@ -18,7 +18,7 @@ Last revision: 2022-09-03
 The repository contains data and code to replicate analysis in the Mexico chapter of a recent book on legislative debate worldwide. The main script used for analysis is `code/legdeb.r`. Script `code/data-prep.r` turned raw speeches into `R`-format structured data in files `data/speech-day-6x.RData` (daily aggregates) and `data/speech-periodo-6x.RData` (period aggregates).
 
 
-<a id="orgcd75692"></a>
+<a id="orgfc873f9"></a>
 
 # Files in the repository and how to cite them
 
@@ -40,12 +40,12 @@ You are free to download and modify the data (see the LICENSE document) provided
 ```
 
 
-<a id="org2d654e8"></a>
+<a id="orga144f39"></a>
 
 # Codebook
 
 
-<a id="orge4149f9"></a>
+<a id="org96ad2e6"></a>
 
 ## Variables in files data/speech-periodo-\*.RData
 
@@ -89,7 +89,7 @@ See the published text for details.
 -   `dv.nspeech` = number of speeches member made in the period.
 
 
-<a id="org476af4f"></a>
+<a id="org860a210"></a>
 
 ## Variables in file data/all-dips-list.RData
 
@@ -122,7 +122,7 @@ File includes object \`all.dips', which is a list of dataframes, one per Legisla
 -   `nom` = member's name.
 
 
-<a id="orgf651056"></a>
+<a id="org7709069"></a>
 
 # Acknowledgements
 
