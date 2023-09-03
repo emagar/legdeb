@@ -2,7 +2,7 @@
 #+AUTHOR: Eric Magar
 #+DATE: 3sep2023
 Last revision: 2023-09-03
-* Variables in files data/speech-periodo-*.RData
+* Variables in files ~data/speech-periodo-*.RData~
 See the published text for details. 
 - ~leg~ = Legislature numeral 60, 62 or 64.
 - ~agg~ = aggregation unit: member-legislative period.
@@ -41,7 +41,7 @@ See the published text for details.
 - ~dsmd~ = dummy equal 1 if member elected in single-member district, 0 otherwise. 
 - ~dpresoff~ = dummy equal 1 if member was chamber president, 0 otherwise. 
 - ~dv.nspeech~ = number of speeches member made in the period.
-* Variables in file data/all-dips-list.RData
+* Variables in file ~data/all-dips-list.RData~
 File includes object `all.dips', which is a list of dataframes, one per Legislature. So, eg., all.dips$leg60 is a dataframe of all members of the 60th Legislature.
 - ~leg~ = Legislature numeral.
 # - ord 
