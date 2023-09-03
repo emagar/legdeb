@@ -1,33 +1,8 @@
-#+TITLE: Replication files for text-as-data analysis of floor debate in Mexico's chamber of deputies
+#+TITLE: Codebook for data in /Text-as-data analysis of floor debate in Mexico's Chamber of Deputies/
 #+AUTHOR: Eric Magar
-Last revision: 2022-09-03
-
-# Export to md: M-x org-md-export-to-markdown
-
-* Description of /Text-as-data analysis of floor debate in Mexico's Chamber of Deputies/ repository
-- Author: Eric Magar
-- Email: emagar at itam dot mx
-The repository contains data and code to replicate analysis in the Mexico chapter of a recent book on legislative debate worldwide. The main script used for analysis is ~code/legdeb.r~. Script ~code/data-prep.r~ turned raw speeches into ~R~-format structured data in files ~data/speech-day-6x.RData~ (daily aggregates) and ~data/speech-periodo-6x.RData~ (period aggregates).
-* Files in the repository and how to cite them
-You are free to download and modify the data (see the LICENSE document) provided you give proper credit to this source. 
-The cite is Eric Magar (2021) "Mexico: Parties and Floor Access in the Cámara de Diputados" in /Politics of Legislative Debates/ edited by Hanna Bäck, Marc Debus, and Jorge M. Fernandes, Oxford: Oxford University Press, pp. 572-93 (pdf available [[https://github.com/emagar/leg-debate/tree/master/paper/legdeb04.pdf][here]]). BibTeX entry: 
-
-#+BEGIN_SRC
-@incollection{magar.2021,
-	author = {Magar, Eric},
-	title = {Mexico: Parties and Floor Access in the C\'amara de Diputados},
-	booktitle = {Politics of Legislative Debates},
-	editor = {B\"ack, Hanna and Debus, Marc and Fernandes, Jorge M.},
-	publisher = {Oxford University Press},
-	address = {Oxford},
-	pages = {572--93},
-        doi = {10.1093/oso/9780198849063.003.0028},
-        isbn = {9781421415543},
-	year = 2021
-}
-#+END_SRC
-* Codebook
-** Variables in files data/speech-periodo-*.RData
+#+DATE: 3sep2023
+Last revision: 2023-09-03
+* Variables in files data/speech-periodo-*.RData
 See the published text for details. 
 - ~leg~ = Legislature numeral 60, 62 or 64.
 - ~agg~ = aggregation unit: member-legislative period.
@@ -66,7 +41,7 @@ See the published text for details.
 - ~dsmd~ = dummy equal 1 if member elected in single-member district, 0 otherwise. 
 - ~dpresoff~ = dummy equal 1 if member was chamber president, 0 otherwise. 
 - ~dv.nspeech~ = number of speeches member made in the period.
-** Variables in file data/all-dips-list.RData
+* Variables in file data/all-dips-list.RData
 File includes object `all.dips', which is a list of dataframes, one per Legislature. So, eg., all.dips$leg60 is a dataframe of all members of the 60th Legislature.
 - ~leg~ = Legislature numeral.
 # - ord 
@@ -95,5 +70,3 @@ File includes object `all.dips', which is a list of dataframes, one per Legislat
 - ~ptysh~ = share of seats controlled by the member's party.
 - ~nom~ = member's name.
 
-* Acknowledgements
-I acknowledge financial support from the Asociación Mexicana de Cultura A.C. and CONACYT's Sistema Nacional de Investigadores. I am grateful to Ana Lucía Enríquez Araiza, Sonia Kuri Kosegarten, Vidal Mendoza Tinoco, and Eugenio Solís Flores, for research assistance. The author is responsible for mistakes and shortcomings in the study.
